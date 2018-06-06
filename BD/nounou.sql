@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 06 juin 2018 à 11:59
+-- Généré le :  mer. 06 juin 2018 à 18:59
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `dateA` date NOT NULL,
   `emailA` varchar(25) NOT NULL,
   `passwordA` varchar(128) NOT NULL,
-  `sessionA` varchar(128) NOT NULL,
-  `telephoneA` float(8,0) NOT NULL,
+  `sessionA` varchar(128) DEFAULT NULL,
+  `telephoneA` float(10,0) NOT NULL,
   `presentationA` varchar(255) NOT NULL,
   PRIMARY KEY (`idA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -207,16 +207,16 @@ CREATE TABLE IF NOT EXISTS `nounou` (
   `nomN` varchar(25) NOT NULL,
   `dateN` date NOT NULL,
   `emailN` varchar(25) NOT NULL,
-  `passwordA` varchar(128) NOT NULL,
-  `sessionN` varchar(128) NOT NULL,
-  `telephoneN` float(8,0) NOT NULL,
+  `passwordN` varchar(128) NOT NULL,
+  `sessionN` varchar(128) DEFAULT NULL,
+  `telephoneN` float(10,0) NOT NULL,
   `presentationN` varchar(255) NOT NULL,
   `experienceN` varchar(255) NOT NULL,
   `photoN` varchar(255) NOT NULL,
   `candidatureN` tinyint(1) DEFAULT '0',
   `bloqueN` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`idN`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
