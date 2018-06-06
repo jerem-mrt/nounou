@@ -754,6 +754,10 @@ http://www.tooplate.com/view/2098-health
   #appointment {
     padding-top: 100px;
   }
+  
+  #appointment div {
+      margin-top: 10px;
+  }
 
   #appointment label {
     color: #393939;
@@ -771,9 +775,14 @@ http://www.tooplate.com/view/2098-health
     transition: all ease-in-out 0.4s;
   }
 
-  #appointment input,
-  #appointment select {
+  #appointment input {
     height: 45px;
+  }
+  
+  #appointment select {
+      height : 150px;
+      width: 200px;
+      margin-top: 20px;
   }
 
   #appointment button#cf-submit {
