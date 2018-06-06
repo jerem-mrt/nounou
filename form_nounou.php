@@ -168,10 +168,11 @@ http://www.tooplate.com/view/2098-health
                                           <input type="email" name='email'><br />
                                   </div>
                                   
-                                 
-
-                                   
-                                  
+                                 <div class="col-md-12 col-sm-12">
+                                      <label for="password">Mot de passe</label> <br />
+                                          <input type="password" name='password'><br />
+                                  </div>
+                
                                   <div class="col-md-12 col-sm-12">
                                         <label for="presentation">Présentation</label>
                                         <textarea class="form-control" rows="5" id="presentation" name="presentation" placeholder="Présentez-vous en quelques mots."></textarea>
@@ -183,28 +184,35 @@ http://www.tooplate.com/view/2098-health
                                    </div>
                                   
                                   <div class="col-md-12 col-sm-12">
+                                  <select name="langue[]" multiple="multiple" height="300" width="500">
+                                      <?php
+                                      // On réalise la reqûete permettant de récupérer les langues
+                                      $requeteLangue = $bd->query('SELECT langue FROM langue;');
+                                      $listeLangue = [];
+                                      
+                                      // On construit un array en parcourant les réponses retournées.
+                                      while ($donnees = $requeteLangue->fetch()) {
+                                          $listeLangue[] = $donnees[0];
+                                          
+                                      }
+                                      
+                                      // On construit dynamiquement la liste déroulante grâce à l'array créé.
+                                                                              select_option($listeLangue);
+                                                                              ?>
+                                  </select>
+                                  </div>
+                                  
+                                  <div class="col-md-12 col-sm-12">
                                         <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
-                                        <label for="photo">Votre photo</label>
+                                        <label for="photo">Votre photo</label> (Elle ne doit pas dépasser 2mo et doit être au format JPGEG, PNG ou GIF.)
                                         <input type="file" id="fichier" name="photo" accept="image/x-png,image/gif,image/jpeg" >
                                    </div>
                                   
-                                        <button type="submit" class="form-control" id="cf-submit" name="submit">Soumettez votre candidature</button>
+                                  
+                                        <button type="submit" class="form-control" id="cf-submit">Soumettez votre candidature</button>
                                    </div>
                               </div>
-                        </form>
-                         
-                         <div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-  <label class="form-check-label" for="defaultCheck1">
-    Default checkbox
-  </label>
-</div>
-<div class="form-check">
-  <input class="form-check-input" type="checkbox" value="" id="mardis" disabled>
-  <label class="form-check-label" for="defaultCheck2">
-    Disabled checkbox
-  </label>
-</div>
+                         </form>
                     </div>
 
                </div>
