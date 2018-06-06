@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 06 juin 2018 à 07:59
--- Version du serveur :  5.7.19
--- Version de PHP :  5.6.31
+-- Généré le :  mer. 06 juin 2018 à 11:59
+-- Version du serveur :  5.7.21
+-- Version de PHP :  5.6.35
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -62,6 +62,24 @@ CREATE TABLE IF NOT EXISTS `disponibiliteponctuelle` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `disponibiliterecurrente`
+--
+
+DROP TABLE IF EXISTS `disponibiliterecurrente`;
+CREATE TABLE IF NOT EXISTS `disponibiliterecurrente` (
+  `idN` int(5) NOT NULL,
+  `idDr` int(5) NOT NULL AUTO_INCREMENT,
+  `recurrence` int(1) NOT NULL,
+  `heureD` time NOT NULL,
+  `heureF` time NOT NULL,
+  PRIMARY KEY (`idDr`),
+  KEY `fk-idN` (`idN`),
+  KEY `fk-idJ` (`recurrence`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `enfant`
 --
 
@@ -101,6 +119,32 @@ CREATE TABLE IF NOT EXISTS `habite` (
   PRIMARY KEY (`depcom`,`idN`),
   KEY `fk-habiteN` (`idN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `jours`
+--
+
+DROP TABLE IF EXISTS `jours`;
+CREATE TABLE IF NOT EXISTS `jours` (
+  `idJ` int(1) NOT NULL,
+  `jours` varchar(10) NOT NULL,
+  PRIMARY KEY (`idJ`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `jours`
+--
+
+INSERT INTO `jours` (`idJ`, `jours`) VALUES
+(1, 'lundis'),
+(2, 'mardis'),
+(3, 'mercredis'),
+(4, 'jeudis'),
+(5, 'vendredis'),
+(6, 'samedis'),
+(7, 'dimanches');
 
 -- --------------------------------------------------------
 
@@ -36589,6 +36633,13 @@ INSERT INTO `ville` (`depcom`, `dep`, `nomV`) VALUES
 --
 ALTER TABLE `disponibiliteponctuelle`
   ADD CONSTRAINT `fk-dispo` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `disponibiliterecurrente`
+--
+ALTER TABLE `disponibiliterecurrente`
+  ADD CONSTRAINT `fk-idJ` FOREIGN KEY (`recurrence`) REFERENCES `jours` (`idJ`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk-idN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `garde`
