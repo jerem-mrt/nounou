@@ -213,7 +213,7 @@ CREATE TABLE IF NOT EXISTS `nounou` (
   `presentationN` varchar(255) NOT NULL,
   `experienceN` varchar(255) NOT NULL,
   `photoN` varchar(255) NOT NULL,
-  `candidatureN` tinyint(1) DEFAULT '0',
+  `accepteN` tinyint(1) DEFAULT '0',
   `bloqueN` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`idN`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
