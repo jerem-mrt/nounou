@@ -45,7 +45,7 @@ else {
 
 // On vérifie que l'utilisateur n'est pas déjà inscrit. Retourne TRUE s'il n'est pas déjà inscrit. 
 function verifyEmail ($bd, $email) {
-    $requete = $bd->query ("SELECT * FROM nounou WHERE email='" . $email . "';");
+    $requete = $bd->query ("SELECT * FROM nounou WHERE emailN='" . $email . "';");
     
    // On vérifie qu'aucune adresse e-mail correspondante n'est renvoyée.
     if ($requete) {
@@ -55,5 +55,32 @@ function verifyEmail ($bd, $email) {
         return true;
     }
 };
+
+function whichId4Mail($bd, $table, $email){
+    $champId ='';
+    $champMail = '';
+    
+    if ($table === "nounou") {
+        $champId = 'idN';
+        $champMail = 'emailN';
+    }
+    
+    else if ($table === "parent") {
+        $champId = 'idP';
+        $champMail = 'emailP';
+    }
+    
+    else if ($table === "admin") {
+        $champId = 'idA';
+        $champMail = 'emailA';
+    }
+    
+    else {
+        return FALSE;
+    }
+    $requete = $bd->query ("SELECT " . $champId . " FROM " . $table . " WHERE " . $champMail ."='" . $email . "';");
+    $resultat = $requete->fetch();
+    return $resultat[0];
+}
 
 ?>

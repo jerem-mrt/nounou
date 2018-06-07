@@ -77,7 +77,46 @@ http://www.tooplate.com/view/2098-health
      </section>
 
 
-     
+     <!-- HOME -->
+     <section id="home" class="slider" data-stellar-background-ratio="0.5">
+          <div class="container">
+               <div class="row">
+
+                         <div class="owl-carousel owl-theme">
+                              <div class="item item-first">
+                                   <div class="caption">
+                                        <div class="col-md-offset-1 col-md-10">
+                                             <h3>Let's make your life happier</h3>
+                                             <h1>Healthy Living</h1>
+                                             <a href="#team" class="section-btn btn btn-default smoothScroll">Meet Our Doctors</a>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="item item-second">
+                                   <div class="caption">
+                                        <div class="col-md-offset-1 col-md-10">
+                                             <h3>Aenean luctus lobortis tellus</h3>
+                                             <h1>New Lifestyle</h1>
+                                             <a href="#about" class="section-btn btn btn-default btn-gray smoothScroll">More About Us</a>
+                                        </div>
+                                   </div>
+                              </div>
+
+                              <div class="item item-third">
+                                   <div class="caption">
+                                        <div class="col-md-offset-1 col-md-10">
+                                             <h3>Pellentesque nec libero nisi</h3>
+                                             <h1>Your Health Benefits</h1>
+                                             <a href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Read Stories</a>
+                                        </div>
+                                   </div>
+                              </div>
+                         </div>
+
+               </div>
+          </div>
+     </section>
 
 
      <!-- MAKE AN APPOINTMENT -->
@@ -86,24 +125,25 @@ http://www.tooplate.com/view/2098-health
                <div class="row">
                    <div class="col-md-12 col-sm-12" align='center'>
                        <div class="col-md-12 col-sm-12">
-                       <h2>Espace membre</h2>
+                       <h3>Espace membre parents</h3>
                        </div>
                        
                        <div class="col-md-12 col-sm-12">
-                           <h5>Avant de vous connecter, merci de nous préciser si ...</h5>
+                       <h5>Connectez-vous</h5>
                        </div>
                     
-                    <div class="col-md-6 col-sm-6">
-                      <h3><a href="login_parent.php">Vous êtes un parent ?</a></h3>   
-                           <i>Insérer une icône ici</i>
-                   </div>
-                   
-                   <div class="col-md-6 col-sm-6">
-                       <h3><a href="login_nounou.php">Vous êtes une nounou ?</a></h3>  
-                       <i>Insérer une icône ici</i>
+                   <form id="login" method="post" action="connexion.php">
+                   <div class="col-md-12 col-sm-12">
+                       
+                           <label for ='email'>E-mail</label>
+                           <input type="text" id="email" name="email">      
                    </div>
                        
-                  
+                  <div class="col-md-12 col-sm-12">
+                           
+                            <label for ='password'>Mot de passe</label>
+                            <input type="password" id="password" name="password">      
+                   </div>
                    </form>
                    </div>
                </div>

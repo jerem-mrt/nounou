@@ -12,14 +12,14 @@ if (verifyDefinedName(['nom', 'prenom', 'date', 'telephone', 'email', 'password'
     
     // On vérifie que l'utilisateur a rempli chaque champ.
     if (verifierChamps()) {
-        $nom = mysql_real_escape_string ($_POST['nom']);
-    $prenom = mysql_real_escape_string ($_POST['prenom']);
+        $nom = addslashes($_POST['nom']);
+    $prenom = addslashes($_POST['prenom']);
     $dateNaissance = $_POST['date'];
     $telephone = $_POST['telephone'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $presentation = mysql_real_escape_string ($_POST['presentation']);
-    $experience = mysql_real_escape_string ($_POST['experience']);
+    $presentation = addslashes($_POST['presentation']);
+    $experience = addslashes($_POST['experience']);
     $langue = $_POST['langue'];
     $namefile = md5(uniqid(rand(), true));
     $ext = pathinfo($_FILES['photo']['name']);
@@ -37,7 +37,15 @@ $resultat = move_uploaded_file($_FILES['photo']['tmp_name'],$cheminacces);
         if(verifyEmail($bd, $email)){
     
              $queryInsert = "INSERT INTO nounou (nomN, prenomN, dateN, telephoneN, emailN, passwordN, presentationN, experienceN, photoN) VALUES ('" . $nom . "', '" . $prenom . "', '" . $dateNaissance . "', " . $telephone . ", '" . $email . "', '" . $password . "', '" . $presentation . "', '" . $experience . "', '" . $namefile . $ext ."');";
-            $bd->query("SET NAMES UTF8;");
+            foreach($langue as $key){
+                $id = whichId4Mail($bd, 'nounou', $email);
+                $quelLangue = $bd->query('SELECT abreviation FROM langue WHERE langue=' . $key . "';");
+                $abreviation = $quelLangue->fetch();
+                $abreviation = $abreviation[0];
+                $ajoutLangue = "INSERT INTO parle (abreviation, idN) VALUES ('" . $abreviation . "', '" . $id . "');";
+                $bd->exec($ajoutLangue);
+            }
+             
             $bd->query($queryInsert);
             var_dump($queryInsert);
             echo "<p> \n Felicitation votre inscription est réussie. <br /> \n Il ne vous reste plus qu'à attendre que votre compte soit confirmé par l'administrateur.<br /></p>";

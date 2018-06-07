@@ -77,7 +77,7 @@ http://www.tooplate.com/view/2098-health
      </section>
 
 
-     
+    
 
 
      <!-- MAKE AN APPOINTMENT -->
@@ -86,24 +86,25 @@ http://www.tooplate.com/view/2098-health
                <div class="row">
                    <div class="col-md-12 col-sm-12" align='center'>
                        <div class="col-md-12 col-sm-12">
-                       <h2>Espace membre</h2>
+                       <h3>Espace membre nounou</h3>
                        </div>
                        
                        <div class="col-md-12 col-sm-12">
-                           <h5>Avant de vous connecter, merci de nous préciser si ...</h5>
+                       <h5>Connectez-vous</h5>
                        </div>
                     
-                    <div class="col-md-6 col-sm-6">
-                      <h3><a href="login_parent.php">Vous êtes un parent ?</a></h3>   
-                           <i>Insérer une icône ici</i>
-                   </div>
-                   
-                   <div class="col-md-6 col-sm-6">
-                       <h3><a href="login_nounou.php">Vous êtes une nounou ?</a></h3>  
-                       <i>Insérer une icône ici</i>
+                   <form id="login" method="post" action="connexion.php">
+                   <div class="col-md-12 col-sm-12">
+                       
+                           <label for ='email'>E-mail</label>
+                           <input type="text" id="email" name="email">      
                    </div>
                        
-                  
+                  <div class="col-md-12 col-sm-12">
+                           
+                            <label for ='password'>Mot de passe</label>
+                            <input type="password" id="password" name="password">      
+                   </div>
                    </form>
                    </div>
                </div>
