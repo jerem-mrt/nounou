@@ -12,10 +12,12 @@ if (verifyDefinedName(['nom', 'prenom', 'date', 'telephone', 'email', 'password'
     
     // On vérifie que l'utilisateur a rempli chaque champ.
     if (verifierChamps()) {
+        var_dump($_POST);
         $nom = addslashes($_POST['nom']);
     $prenom = addslashes($_POST['prenom']);
     $dateNaissance = $_POST['date'];
     $telephone = $_POST['telephone'];
+   // $ville = $_POST['nomV'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $presentation = addslashes($_POST['presentation']);
@@ -37,14 +39,14 @@ $resultat = move_uploaded_file($_FILES['photo']['tmp_name'],$cheminacces);
         if(verifyEmail($bd, $email)){
     
              $queryInsert = "INSERT INTO nounou (nomN, prenomN, dateN, telephoneN, emailN, passwordN, presentationN, experienceN, photoN) VALUES ('" . $nom . "', '" . $prenom . "', '" . $dateNaissance . "', " . $telephone . ", '" . $email . "', '" . $password . "', '" . $presentation . "', '" . $experience . "', '" . $namefile . $ext ."');";
-            foreach($langue as $key){
-                $id = whichId4Mail($bd, 'nounou', $email);
-                $quelLangue = $bd->query('SELECT abreviation FROM langue WHERE langue=' . $key . "';");
-                $abreviation = $quelLangue->fetch();
-                $abreviation = $abreviation[0];
-                $ajoutLangue = "INSERT INTO parle (abreviation, idN) VALUES ('" . $abreviation . "', '" . $id . "');";
-                $bd->exec($ajoutLangue);
-            }
+//            foreach($langue as $key){
+//                $id = whichId4Mail($bd, 'nounou', $email);
+//                $quelLangue = $bd->query('SELECT abreviation FROM langue WHERE langue=' . $key . "';");
+//                $abreviation = $quelLangue->fetch();
+//                $abreviation = $abreviation[0];
+//                $ajoutLangue = "INSERT INTO parle (abreviation, idN) VALUES ('" . $abreviation . "', '" . $id . "');";
+//                $bd->exec($ajoutLangue);
+//            }
              
             $bd->query($queryInsert);
             var_dump($queryInsert);

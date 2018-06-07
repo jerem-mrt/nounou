@@ -127,7 +127,7 @@
 
                                    <div class="col-md-12 col-sm-12 ui-widget">
                                         <label for="nomV">Ville</label>
-                                        <input id="nomV">
+                                        <input type='text' id="nomV">
                                    </div>
 
                                   <div class="col-md-12 col-sm-12">
@@ -182,6 +182,21 @@
      </section>
 
 
+     <table class="table table-bordered table-striped">
+         <thead>
+             
+             <tr><th>*****</th></tr>
+             <tr><th>*****</th></tr>
+         
+         </thead>
+         <tbody>
+             
+             <tr><td>*****</td></tr>
+             <tr><td>*****</td></tr>
+         
+         </tbody>
+     </table>
+     
      <!-- FOOTER -->
      <footer data-stellar-background-ratio="5">
           <div class="container">
@@ -267,6 +282,16 @@
                </div>
           </div>
      </footer>
+     <!-- SCRIPTS -->
+     <?php
+     script("bootstrap.min.js");
+     script("jquery.sticky.js");
+     script("jquery.stellar.min.js");
+     script("wow.min.js");
+     script("smoothscroll.js");
+     script("owl.carousel.min.js");
+     script("custom.js");
+     ?>
     <script>
     $(function(){
         $("#nomV").autocomplete({
@@ -276,16 +301,5 @@
         });
     });
     </script>
-     <!-- SCRIPTS -->
-     <?php
-     script("jquery.js");
-     script("bootstrap.min.js");
-     script("jquery.sticky.js");
-     script("jquery.stellar.min.js");
-     script("wow.min.js");
-     script("smoothscroll.js");
-     script("owl.carousel.min.js");
-     script("custom.js");
-     ?>
 </body>
 </html>
