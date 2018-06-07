@@ -222,7 +222,7 @@ input[type=submit] {
                                    </div>
 
                                    <div class="col-md-12 col-sm-12 autocomplete">
-                                         <label for="telephoneP">Ville</label>
+                                         <label for="nomV">Ville</label>
                                         <input id="nomV" type="text" name="nomV" placeholder="Votre ville">
                                    </div>
 
