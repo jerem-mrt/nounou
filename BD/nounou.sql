@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `emailA` varchar(25) NOT NULL,
   `passwordA` varchar(128) NOT NULL,
   `sessionA` varchar(128) DEFAULT NULL,
-  `telephoneA` float(10,0) NOT NULL,
+  `telephoneA` varchar(10) NOT NULL,
   `presentationA` varchar(255) NOT NULL,
   PRIMARY KEY (`idA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `nounou` (
   `emailN` varchar(25) NOT NULL,
   `passwordN` varchar(128) NOT NULL,
   `sessionN` varchar(128) DEFAULT NULL,
-  `telephoneN` float(10,0) NOT NULL,
+  `telephoneN` varchar(10) NOT NULL,
   `presentationN` varchar(255) NOT NULL,
   `experienceN` varchar(255) NOT NULL,
   `photoN` varchar(255) NOT NULL,
