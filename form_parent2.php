@@ -24,6 +24,7 @@
     
 
       <?php
+      
         stylesheet("animate.css");
         stylesheet("bootstrap.min.css");
         stylesheet("font-awesome.min.css");
