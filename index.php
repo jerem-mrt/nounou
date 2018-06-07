@@ -3,7 +3,7 @@
         include 'form.php';
         include 'css.php';
         include 'header.php';
-        include 'footer.php';
+        
     
 ?><!DOCTYPE html>
 <html lang="en">
@@ -62,7 +62,7 @@
                          <li><a href="#team" class="smoothScroll">Doctors</a></li>
                          <li><a href="#news" class="smoothScroll">News</a></li>
                          <li><a href="#google-map" class="smoothScroll">Contact</a></li>-->
-                         <li class="appointment-btn"><a href="#appointment">Se connecter</a></li>
+                         <li class="appointment-btn"><a href="login.php">Se connecter</a></li>
                     </ul>
                </div>
 
@@ -102,7 +102,7 @@
                                         <div class="col-md-offset-1 col-md-10">
                                              <!--<<h3>Pellentesque nec libero nisi</h3>-->
                                             <h1>Un service disponible 7j/7</h1>
-                                             <a href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Read Stories</a>
+                                            <a href="login.php" class="section-btn btn btn-default btn-blue smoothScroll">Se connecter</a>
                                         </div>
                                    </div>
                               </div>
@@ -118,68 +118,33 @@
           <div class="container">
                <div class="row">
 
-                    <div class="col-md-12 col-sm-12">
-                         <img src="images/appointment-image.jpg" class="img-responsive" alt="">
+                  
+
+                    <div id='about' class="col-md-12 col-sm-12">
+                         <h2 align="left">Plus d'informations</h2> 
                     </div>
+                   <div class="wow fadeInUp" data-wow-delay="0.8s">
+                            <div class="col-md-12 col-sm-12">
+                                <h3 align="center">Qui sommes-nous ?</h3> 
+                                <p>
+                                    Située au cœur de l’agglomération, l'agence Kangourou Kids Evry est spécialiste de la garde d'enfants à domicile. 
+                                    Nos gardes d'enfants régulières ou ponctuelles sont assurées par des professionnelles qualifiées et soigneusement sélectionnées.
+                                    Nos équipes, dont une spécialiste de la petite enfance, sont à votre disposition pour mettre en place une solution fiable de garde d'enfants.
+                                </p>
+                            </div>
 
-                    <div class="col-md-12 col-sm-12">
-                         <!-- CONTACT FORM HERE -->
-                         <form autocomplete="off" id="appointment-form" role="form" method="post" action="form_parent_action.php" enctype="multipart/form-data">
+                            <div class="col-md-12 col-sm-12">
+                                <h3 align="center">Nos avantages</h3> 
+                                <ul>
+                                    <li>Des nounous disponibles dans toute la France</li>
+                                </ul>
+                            </div>
 
-                              <!-- SECTION TITLE -->
-                              <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
-                                   <h2 align="center">Postulez en tant que parent</h2>
-                              </div>
+                        </div>
+                </div>
 
-                              <div class="wow fadeInUp" data-wow-delay="0.8s">
-                                   <div class="col-md-12 col-sm-12">
-                                      <?php
-                                        input_text("Nom de famille", "nomP", "Votre nom"); ?>
-                                       
-                                   </div>
+         </div>
 
-                                   <div class="col-md-12 col-sm-12 autocomplete">
-                                         <label for="telephoneP">Ville</label>
-                                        <input id="nomV" type="text" name="nomV" placeholder="Votre ville">
-                                   </div>
-
-                                  <div class="col-md-12 col-sm-12">
-                                        <label for="telephoneP">N° de téléphone</label>
-                                        <input type="tel" class="form-control" id="phone" name="telephoneP" placeholder="Téléphone">
-                                  </div>
-
-                                  <div class="col-md-12 col-sm-12">
-                                      <label for="email">Email</label> <br />
-                                          <input type="email" name='email'><br />
-                                  </div>
-
-
-
-                                  <!--L'idée serait qu'en fonction du nombre sélectionner apparaissent X Champs
-                                  avec prénom date de naissances / restrictions alimentaires etc....
-                                Si l'utilisateur met + : il faudrait qu'une zone de texte apparaissent pour qu'elle écrive son nombre-->
-                                  <div class="col-md-12 col-sm-12">
-                                    <label for="nbEnfants">Nombre d'enfants</label>
-                                  <input type="radio" name="nbEnfants" value="1"/> 1
-                                  <input type="radio" name="nbEnfants" value="2"/> 2
-                                  <input type="radio" name="nbEnfants" value="3"/> 3
-                                  <input type="radio" name="nbEnfants" value="4"/> 4
-                                  <input type="radio" name="nbEnfants" value="+"/> +
-                                  </div>
-
-                                  <div class="col-md-12 col-sm-12">
-                                        <label for="remarques">Informations générales</label>
-                                        <textarea class="form-control" rows="5" id="remarques" name="remarques" placeholder="Si vos enfants ont des contraintes alimentaires, des allergies..."></textarea>
-                                   </div>
-
-                                        <button type="submit" class="form-control" id="cf-submit" name="submit">Envoyer</button>
-                                   </div>
-                              </div>
-                        </form>
-                    </div>
-
-               </div>
-          </div>
      </section>
 
 
@@ -187,6 +152,7 @@
      
  <!-- SCRIPTS -->
      <?php
+     include 'footer.php';
      script("jquery.js");
      script("bootstrap.min.js");
      script("jquery.sticky.js");
