@@ -18,7 +18,7 @@
                <div class="row">
 
                     <div class="col-md-4 col-sm-5">
-                         <p>Annonces de nounous près de chez vous</p>
+                         <p>Un Projet Web par Adrien LEBRET et Jérémie MAROTTE</p>
                     </div>
                          
                     <div class="col-md-8 col-sm-7 text-align-right">
