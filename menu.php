@@ -22,7 +22,17 @@
                          <li><a href="#team" class="smoothScroll">Doctors</a></li>
                          <li><a href="#news" class="smoothScroll">News</a></li>
                          <li><a href="#google-map" class="smoothScroll">Contact</a></li>-->
-                         <li class="appointment-btn"><a href="login.php">Se connecter</a></li>
+                         <?php 
+                         if(isset($_SESSION['id'])) {
+                             echo '<li ><b>' . $_SESSION['prenom'] .' ' . $_SESSION['nom'] . '</b></li>';
+                             echo '<li class="appointment-btn deconnexion"><a href="disconnect.php">Se déconnecter</a></li>';
+                         
+                                 
+                         }
+                         else {
+                             echo '<li class="appointment-btn"><a href="login.php">Se connecter</a></li>';                         
+                         }
+                         ?>
                     </ul>
                </div>
 

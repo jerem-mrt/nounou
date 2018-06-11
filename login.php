@@ -1,4 +1,5 @@
 <?php
+        session_start();
         require_once 'database.php';
         require_once 'form.php';
         require_once 'css.php';

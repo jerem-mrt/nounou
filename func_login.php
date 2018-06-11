@@ -159,7 +159,7 @@ function connectMail($bd, $table, $email, $password) {
         }
     }
 }
-var_dump($_SESSION);
+
 // Prendre en compte le cas où une nounou est bloquée ou son compte est en attente de validation.
 
 ?>

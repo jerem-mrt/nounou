@@ -32,5 +32,6 @@ function connect_bdd($serveur, $utilisateur, $mot_de_passe){
 }
 
 $bd=connect_bdd($serveur, $utilisateur, $mot_de_passe);
-$bd->query("SET NAMES UTF8;");
+$bd->query("SET NAMES UTF8;")
+ ;
 ?>
