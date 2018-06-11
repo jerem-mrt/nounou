@@ -49,5 +49,7 @@ function case_a_cocher($liste) {
     echo "</div>";
 };
 
-
+function fromTimetoTime($name){
+    echo 'de <input type="time" name="heureD' . $name . '" > à <input type="time" name="heureF' . $name . '">';
+}
 ?>

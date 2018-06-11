@@ -59,7 +59,8 @@ require_once 'css.php';
         <section id="container-login data-stellar-background-ratio="3">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 col-sm-12" margin-top='10%' align='center'>
+                    <<div class="col-md-12 col-sm-12" align='center'></div>
+                    <div class="col-md-12 col-sm-12" align='center'>
                         <?php
                         if (isset($_SESSION['id'])) {
                             $_SESSION = array();

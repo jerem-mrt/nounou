@@ -124,7 +124,7 @@ function whatIsPass4ThisMail($bd, $table, $email) {
     $champs = whichChamp($bd, $table);
     $requete = $bd->query("SELECT " . $champs[2] . " FROM " . $table . " WHERE " . $champs[1] . "='" . $email . "';");
     $passwordHache = $requete->fetch();
-    var_dump($passwordHache);
+    //var_dump($passwordHache);
     return $passwordHache[$champs[2]];
 }
 
@@ -132,7 +132,7 @@ function whatIsPrenom4ThisMail($bd, $table, $id) {
     $champs = whichChamp($bd, $table);
     $requete = $bd->query("SELECT " . $champs[2] . " FROM " . $table . " WHERE " . $champs[1] . "='" . $email . "';");
     $passwordHache = $requete->fetch();
-    var_dump($passwordHache);
+    //var_dump($passwordHache);
     return $passwordHache[$champs[2]];
 }
 
@@ -151,6 +151,7 @@ function connectMail($bd, $table, $email, $password) {
                 $_SESSION['id'] = $id;
                 $_SESSION['prenom'] = whichPrenom4Id($bd, $table, $id);
                 $_SESSION['nom'] = whichNom4Id($bd, $table, $id);
+                $_SESSION['role'] = $table;
                 ;
                 echo 'Vous êtes connecté !';
             } else {
@@ -160,6 +161,40 @@ function connectMail($bd, $table, $email, $password) {
     }
 }
 
+function verifyConnect ($role) {
+    if (isset($SESSION) && isset($SESSION['role'])){
+    if($SESSION['role'] = $role) {
+            return true;
+    }
+    }
+    else {
+        return false;
+    }
+}
+
+function checkOutBloque ($bd, $id) {
+    $requete = $bd->query("SELECT bloqueN FROM nounou WHERE idN ='" . $id . "';");
+    $bloque = $requete->fetch();
+    $bloque = intval($bloque[0]);
+    if ($bloque !== 0) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+function checkOutCandidature ($bd, $id) {
+    $requete = $bd->query("SELECT accepteN FROM nounou WHERE idN ='" . $id . "';");
+    $accepte = $requete->fetch();
+    $accepte = intval($accepte[0]);
+    if ($accepte === 1) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
 // Prendre en compte le cas où une nounou est bloquée ou son compte est en attente de validation.
 
 ?>
