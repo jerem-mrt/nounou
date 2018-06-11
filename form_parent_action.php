@@ -9,7 +9,21 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
     if (verifierChamps()) {
         var_dump($_POST);
         $nomP = addslashes($_POST['nomP']);
+        
+        // Le formulaire transmet le nom de la ville, nous souhaitons de notre côté le 'depcom'
         $nomV = 4061; //addslashes($_POST['nomV']);
+        //$nomV = addslashes($_POST['nomV']);
+        
+       /* //$requete1 = "SELECT depcom FROM ville WHERE upper(nomV) LIKE upper(:nomV)";
+        //$requete1 = $bd->prepare('SELECT depcom FROM ville WHERE nomV LIKE :nomV');
+        //$requete1->execute(array('nomV' => $nomV));
+        //$depcom = $bd->query($requete1);
+        
+        $requete1 = $bd->prepare('SELECT depcom FROM ville WHERE nomV = ?');
+        $requete1->execute(array($nomV));
+        $depcom = $requete1->fetchAll();*/
+        
+        
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $nbEnfants = $_POST['nbEnfants'];
@@ -19,11 +33,16 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
         if (!verifyEmail($bd, $email)) {
 
          
-            $requete =  "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $nomV . "')";
-            $bd->exec($requete);
+            $requete2 =  "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $nomV . "')";
+            $bd->exec($requete2);
             
-            echo "<p> \n Felicitation votre inscription est réussie. <br /> \n "
-            . "Il ne vous reste plus qu'à lister vos enfants.<br /></p>"; // if nbEnfant = 1 ... sinon mettre au pluriel
+            echo "<p> \n Felicitation votre inscription est réussie. <br /> \n ";
+            if($nbEnfants > 1){
+                echo "Il ne vous reste plus qu'à lister vos ". $nbEnfants ." enfants.<br /></p>"; // if nbEnfant = 1 ... sinon mettre au pluriel
+            } else { // == 1
+                echo "Il ne vous reste plus qu'à lister votre enfant.<br /></p>";
+            }
+            
         } else {
             echo "Vous êtes déjà inscrit";
         }
