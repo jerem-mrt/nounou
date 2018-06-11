@@ -18,19 +18,8 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
         // Après avoir vérifié que l'utilisateur n'est pas déjà inscrit, on l'insère dans notre BDD.
         if (!verifyEmail($bd, $email)) {
 
-//           $queryInsert = "INSERT INTO parent (nomP, emailP, passwordP, depccom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', " . $nomV . ");";
-//            foreach($langue as $key){
-//                $id = whichId4Mail($bd, 'nounou', $email);
-//                $quelLangue = $bd->query('SELECT abreviation FROM langue WHERE langue=' . $key . "';");
-//                $abreviation = $quelLangue->fetch();
-//                $abreviation = $abreviation[0];
-//                $ajoutLangue = "INSERT INTO parle (abreviation, idN) VALUES ('" . $abreviation . "', '" . $id . "');";
-//                $bd->exec($ajoutLangue);
-//            }
-            //$bd->query($queryInsert);
-            //var_dump($queryInsert);
-
-            $requete =  "INSERT INTO parent (nomP, emailP, passwordP, depccom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', " . $nomV . ");";
+         
+            $requete =  "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $nomV . "')";
             $bd->exec($requete);
             
             echo "<p> \n Felicitation votre inscription est réussie. <br /> \n "
