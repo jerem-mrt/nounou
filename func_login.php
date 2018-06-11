@@ -72,14 +72,20 @@ function whichChamp($bd, $table) {
         $champId = 'idN';
         $champMail = 'emailN';
         $champPassword = 'passwordN';
+        $champPrenom = 'prenomN';
+        $champNom = 'nomN';
     } else if ($table === "parent") {
         $champId = 'idP';
         $champMail = 'emailP';
-        $champFoyer = 'passwordP';
+        $champPassword = 'passwordP';
+        $champPrenom = 'prenomP';
+        $champNom = 'nomP';
     } else if ($table === "admin") {
         $champId = 'idA';
         $champMail = 'emailA';
         $champPassword = 'passwordA';
+        $champPrenom = 'prenomA';
+        $champNom = 'nomA';
     } else {
         return FALSE;
     }
@@ -87,8 +93,24 @@ function whichChamp($bd, $table) {
     $res[] = $champId;
     $res[] = $champMail;
     $res[] = $champPassword;
+    $res[] = $champPrenom;
+    $res[] = $champNom;
 
     return $res;
+}
+
+function whichPrenom4Id($bd, $table, $id) {
+    $champs = whichChamp($bd, $table);
+    $requete = $bd->query("SELECT " . $champs[3] . " FROM " . $table . " WHERE " . $champs[0] . "='" . $id . "';");
+    $resultat = $requete->fetch();
+    return $resultat[0];
+}
+
+function whichNom4Id($bd, $table, $id) {
+    $champs = whichChamp($bd, $table);
+    $requete = $bd->query("SELECT " . $champs[4] . " FROM " . $table . " WHERE " . $champs[0] . "='" . $id . "';");
+    $resultat = $requete->fetch();
+    return $resultat[0];
 }
 
 function whichId4Mail($bd, $table, $email) {
@@ -99,6 +121,14 @@ function whichId4Mail($bd, $table, $email) {
 }
 
 function whatIsPass4ThisMail($bd, $table, $email) {
+    $champs = whichChamp($bd, $table);
+    $requete = $bd->query("SELECT " . $champs[2] . " FROM " . $table . " WHERE " . $champs[1] . "='" . $email . "';");
+    $passwordHache = $requete->fetch();
+    var_dump($passwordHache);
+    return $passwordHache[$champs[2]];
+}
+
+function whatIsPrenom4ThisMail($bd, $table, $id) {
     $champs = whichChamp($bd, $table);
     $requete = $bd->query("SELECT " . $champs[2] . " FROM " . $table . " WHERE " . $champs[1] . "='" . $email . "';");
     $passwordHache = $requete->fetch();
@@ -117,8 +147,11 @@ function connectMail($bd, $table, $email, $password) {
         } else {
             if ($isPasswordCorrect) {
                 session_start();
-                $_SESSION['id'] = $resultat['id'];
-                $_SESSION['pseudo'] = $pseudo;
+                $id = whichId4Mail($bd, $table, $email);
+                $_SESSION['id'] = $id;
+                $_SESSION['prenom'] = whichPrenom4Id($bd, $table, $id);
+                $_SESSION['nom'] = whichNom4Id($bd, $table, $id);
+                ;
                 echo 'Vous êtes connecté !';
             } else {
                 echo 'Mauvais identifiant ou mot de passe !';
@@ -126,6 +159,7 @@ function connectMail($bd, $table, $email, $password) {
         }
     }
 }
+var_dump($_SESSION);
 // Prendre en compte le cas où une nounou est bloquée ou son compte est en attente de validation.
 
 ?>

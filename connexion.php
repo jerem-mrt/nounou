@@ -14,4 +14,6 @@ else if ($_POST='parent') {
     connectMail($bd, 'parent', $email, $password);
 }
 }
+
+var_dump($_SESSION);
 ?>
