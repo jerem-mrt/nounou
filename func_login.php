@@ -63,25 +63,66 @@ function verifyEmail($bd, $email) {
 
 ;
 
-function whichId4Mail($bd, $table, $email) {
+function whichChamp($bd, $table) {
     $champId = '';
     $champMail = '';
 
     if ($table === "nounou") {
         $champId = 'idN';
         $champMail = 'emailN';
+        $champPassword = 'passwordN';
     } else if ($table === "parent") {
         $champId = 'idP';
         $champMail = 'emailP';
+        $champFoyer = 'passwordP';
     } else if ($table === "admin") {
         $champId = 'idA';
         $champMail = 'emailA';
+        $champPassword = 'passwordA';
     } else {
         return FALSE;
     }
-    $requete = $bd->query("SELECT " . $champId . " FROM " . $table . " WHERE " . $champMail . "='" . $email . "';");
+    $res = [];
+    $res[] = $champId;
+    $res[] = $champMail;
+    $res[] = $champPassword;
+}
+
+function whichId4Mail($bd, $table, $email) {
+    $champs = whichChamp($bd, $table)
+    $requete = $bd->query("SELECT " . $champs[0] . " FROM " . $table . " WHERE " . $champs[1] . "='" . $email . "';");
     $resultat = $requete->fetch();
     return $resultat[0];
 }
 
+function whatIsPass4ThisMail($bd, $table, $email) {
+    $requete = $bd->prepare("SELECT " . $champPassword . " FROM " . $table . " WHERE " . $champMail . "= :email;");
+    $requete = $bd->execute(array(
+        'email' => $email));
+    $passwordHache = $requete->fetch();
+    return $passwordHache;
+}
+
+function connectMail($bd, $table, $email) {
+    if (whatIsPass4ThisMail($bd, $table, $email)) {
+        // Comparaison du pass envoyé via le formulaire avec la base
+        $isPasswordCorrect = password_verify($_POST['pass'], $passwordHache);
+
+        if (!$resultat) {
+            echo 'Mauvais identifiant ou mot de passe !';
+        } else {
+            if ($isPasswordCorrect) {
+                session_start();
+                $_SESSION['id'] = $resultat['id'];
+                $_SESSION['pseudo'] = $pseudo;
+                echo 'Vous êtes connecté !';
+            } else {
+                echo 'Mauvais identifiant ou mot de passe !';
+            }
+        }
+    }
+}
+
+echo whatIsPass4ThisMail($bd, 'nounou', 'jeremie.marotte@gmail.com');
 ?>
+

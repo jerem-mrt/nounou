@@ -6,6 +6,8 @@ if (verifyDefinedName(['email', 'password'])) {
     if (verifierChamps()) {
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        
+        
 
         if ($requete = $bd->query("SELECT * FROM nounou WHERE email='" . $email . "' and passwordN='" . $password . "');")) {
             
@@ -15,7 +17,7 @@ if (verifyDefinedName(['email', 'password'])) {
     echo "Vous allez être redirigé vers la page de connexion.";
 }
 
-//TP espae client
+//TP espcae client
 $req = $bd->prepare("SELECT * FROM nounou WHERE email=':email');";
 $resultat = $req->fetch();
 
