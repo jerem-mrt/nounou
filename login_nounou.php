@@ -89,15 +89,15 @@ require_once 'css.php';
                         <form class="form-signin" id="login" method="post" action="connexion.php">
                             <h3>Espace membre nounou</h3><br><br>
                             <label for="inputEmail">Email</label> <br>
-                            <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus><br>
+                            <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Adresse mail" required autofocus><br>
 
                             <label for="inputPassword">Mot de passe</label>
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                            <div class="checkbox mb-3">
-                                <label>
-                                    <input type="checkbox" value="remember-me"> Remember me
-                                </label>
-                            </div>
+                            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+                            
+                                    
+                                    <input type="hidden" name="role" value="nounou">
+                                
+                           
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Se connecter</button>
 
                         </form>

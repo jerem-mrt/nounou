@@ -86,29 +86,32 @@ function whichChamp($bd, $table) {
     $res[] = $champId;
     $res[] = $champMail;
     $res[] = $champPassword;
+
+    return $res;
 }
 
 function whichId4Mail($bd, $table, $email) {
-    $champs = whichChamp($bd, $table)
+    $champs = whichChamp($bd, $table);
     $requete = $bd->query("SELECT " . $champs[0] . " FROM " . $table . " WHERE " . $champs[1] . "='" . $email . "';");
     $resultat = $requete->fetch();
     return $resultat[0];
 }
 
 function whatIsPass4ThisMail($bd, $table, $email) {
-    $requete = $bd->prepare("SELECT " . $champPassword . " FROM " . $table . " WHERE " . $champMail . "= :email;");
-    $requete = $bd->execute(array(
-        'email' => $email));
+    $champs = whichChamp($bd, $table);
+    $requete = $bd->query("SELECT " . $champs[2] . " FROM " . $table . " WHERE " . $champs[1] . "='" . $email . "';");
     $passwordHache = $requete->fetch();
-    return $passwordHache;
+    var_dump($passwordHache);
+    return $passwordHache[$champs[2]];
 }
 
-function connectMail($bd, $table, $email) {
+function connectMail($bd, $table, $email, $password) {
     if (whatIsPass4ThisMail($bd, $table, $email)) {
         // Comparaison du pass envoyé via le formulaire avec la base
-        $isPasswordCorrect = password_verify($_POST['pass'], $passwordHache);
+        $passwordHache = whatIsPass4ThisMail($bd, $table, $email);
+        $isPasswordCorrect = password_verify($_POST['password'], $passwordHache);
 
-        if (!$resultat) {
+        if (!verifyEmail($bd, $email)) {
             echo 'Mauvais identifiant ou mot de passe !';
         } else {
             if ($isPasswordCorrect) {
@@ -122,7 +125,6 @@ function connectMail($bd, $table, $email) {
         }
     }
 }
-
-echo whatIsPass4ThisMail($bd, 'nounou', 'jeremie.marotte@gmail.com');
+// Prendre en compte le cas où une nounou est bloquée ou son compte est en attente de validation.
 ?>
 
