@@ -52,13 +52,14 @@ function verifyEmail($bd, $email) {
     $res = $requete->fetch();
 //    $requete = $bd->query ("SELECT count(*) NB_RES FROM nounou WHERE emailN='" . $email . "';");
 
-    var_dump($res);
     // On vérifie qu'aucune adresse e-mail correspondante n'est renvoyée.
     if ($res['NB_RES'] > 0) {
-        return false;
+        $return = true;
     } else {
-        return true;
+        $return = false;
     }
+    
+    return $return;
 }
 
 ;
@@ -109,7 +110,7 @@ function connectMail($bd, $table, $email, $password) {
     if (whatIsPass4ThisMail($bd, $table, $email)) {
         // Comparaison du pass envoyé via le formulaire avec la base
         $passwordHache = whatIsPass4ThisMail($bd, $table, $email);
-        $isPasswordCorrect = password_verify($_POST['password'], $passwordHache);
+        $isPasswordCorrect = password_verify($password, $passwordHache);
 
         if (!verifyEmail($bd, $email)) {
             echo 'Mauvais identifiant ou mot de passe !';
@@ -126,5 +127,6 @@ function connectMail($bd, $table, $email, $password) {
     }
 }
 // Prendre en compte le cas où une nounou est bloquée ou son compte est en attente de validation.
+
 ?>
 

@@ -36,7 +36,7 @@ if (verifyDefinedName(['nom', 'prenom', 'date', 'telephone', 'email', 'password'
         }
 
         // Après avoir vérifié que l'utilisateur n'est pas déjà inscrit, on l'insère dans notre BDD.
-        if (verifyEmail($bd, $email)) {
+        if (!verifyEmail($bd, $email)) {
 
             $queryInsert = "INSERT INTO nounou (nomN, prenomN, dateN, telephoneN, emailN, passwordN, presentationN, experienceN, photoN) VALUES ('" . $nom . "', '" . $prenom . "', '" . $dateNaissance . "', " . $telephone . ", '" . $email . "', '" . $password . "', '" . $presentation . "', '" . $experience . "', '" . $namefile . $ext . "');";
 //            foreach($langue as $key){
