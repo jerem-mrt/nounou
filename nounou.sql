@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 06 juin 2018 à 18:59
--- Version du serveur :  5.7.21
--- Version de PHP :  5.6.35
+-- Généré le :  lun. 11 juin 2018 à 12:40
+-- Version du serveur :  5.7.19
+-- Version de PHP :  5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `emailA` varchar(25) NOT NULL,
   `passwordA` varchar(128) NOT NULL,
   `sessionA` varchar(128) DEFAULT NULL,
-  `telephoneA` varchar(10) NOT NULL,
+  `telephoneA` float(10,0) NOT NULL,
   `presentationA` varchar(255) NOT NULL,
   PRIMARY KEY (`idA`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -104,20 +104,6 @@ CREATE TABLE IF NOT EXISTS `garde` (
   `idN` int(5) NOT NULL,
   KEY `fk-gardeN` (`idN`),
   KEY `fk-gardeE` (`idE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `habite`
---
-
-DROP TABLE IF EXISTS `habite`;
-CREATE TABLE IF NOT EXISTS `habite` (
-  `depcom` int(5) NOT NULL,
-  `idN` int(5) NOT NULL,
-  PRIMARY KEY (`depcom`,`idN`),
-  KEY `fk-habiteN` (`idN`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -209,14 +195,23 @@ CREATE TABLE IF NOT EXISTS `nounou` (
   `emailN` varchar(25) NOT NULL,
   `passwordN` varchar(128) NOT NULL,
   `sessionN` varchar(128) DEFAULT NULL,
-  `telephoneN` varchar(10) NOT NULL,
+  `telephoneN` float(10,0) NOT NULL,
   `presentationN` varchar(255) NOT NULL,
   `experienceN` varchar(255) NOT NULL,
   `photoN` varchar(255) NOT NULL,
   `accepteN` tinyint(1) DEFAULT '0',
   `bloqueN` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`idN`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  `depcom` int(5) NOT NULL,
+  PRIMARY KEY (`idN`),
+  KEY `fk-habiteN` (`depcom`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `nounou`
+--
+
+INSERT INTO `nounou` (`idN`, `prenomN`, `nomN`, `dateN`, `emailN`, `passwordN`, `sessionN`, `telephoneN`, `presentationN`, `experienceN`, `photoN`, `accepteN`, `bloqueN`, `depcom`) VALUES
+(1, 'Jeanne', 'Garros', '1995-01-01', 'jgarros@gmail.com', '$2y$10$has7fNx5XDj1P0zA1EqSdOLTRrFOjNkw.bSaqV7Cd8DKOemcD2gZK', NULL, 630959808, 'fgd\'sfg', 'fgdg', '0f0d55d5b773ce54f32e9a9ad570087fjpg', 0, 0, 1012);
 
 -- --------------------------------------------------------
 
@@ -228,9 +223,11 @@ DROP TABLE IF EXISTS `parent`;
 CREATE TABLE IF NOT EXISTS `parent` (
   `idP` int(5) NOT NULL AUTO_INCREMENT,
   `nomP` varchar(25) NOT NULL,
-  `prenomP` varchar(25) NOT NULL,
-  `dateN` date NOT NULL,
-  PRIMARY KEY (`idP`)
+  `emailP` varchar(25) NOT NULL,
+  `passwordP` varchar(128) NOT NULL,
+  `depcom` int(5) NOT NULL,
+  PRIMARY KEY (`idP`),
+  KEY `fk-habiteP` (`depcom`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -36649,18 +36646,23 @@ ALTER TABLE `garde`
   ADD CONSTRAINT `fk-gardeN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `habite`
---
-ALTER TABLE `habite`
-  ADD CONSTRAINT `fk-habiteI` FOREIGN KEY (`depcom`) REFERENCES `ville` (`depcom`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk-habiteN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Contraintes pour la table `lie`
 --
 ALTER TABLE `lie`
   ADD CONSTRAINT `fk-lieE` FOREIGN KEY (`idE`) REFERENCES `enfant` (`idE`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk-lieP` FOREIGN KEY (`idP`) REFERENCES `parent` (`idP`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `nounou`
+--
+ALTER TABLE `nounou`
+  ADD CONSTRAINT `fk-habiteN` FOREIGN KEY (`depcom`) REFERENCES `ville` (`depcom`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `parent`
+--
+ALTER TABLE `parent`
+  ADD CONSTRAINT `fk-habiteP` FOREIGN KEY (`depcom`) REFERENCES `ville` (`depcom`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `parle`
