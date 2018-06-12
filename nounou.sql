@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  lun. 11 juin 2018 à 12:40
--- Version du serveur :  5.7.19
--- Version de PHP :  5.6.31
+-- Généré le :  mar. 12 juin 2018 à 09:36
+-- Version du serveur :  5.7.21
+-- Version de PHP :  5.6.35
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -45,34 +45,18 @@ CREATE TABLE IF NOT EXISTS `admin` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `disponibiliteponctuelle`
+-- Structure de la table `disponibilite`
 --
 
-DROP TABLE IF EXISTS `disponibiliteponctuelle`;
-CREATE TABLE IF NOT EXISTS `disponibiliteponctuelle` (
+DROP TABLE IF EXISTS `disponibilite`;
+CREATE TABLE IF NOT EXISTS `disponibilite` (
+  `idN` int(5) NOT NULL,
   `idD` int(5) NOT NULL AUTO_INCREMENT,
-  `idN` int(5) NOT NULL,
-  `date` date NOT NULL,
-  `heureD` time NOT NULL,
-  `heureF` time NOT NULL,
-  PRIMARY KEY (`idD`),
-  KEY `fk-dispo` (`idN`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `disponibiliterecurrente`
---
-
-DROP TABLE IF EXISTS `disponibiliterecurrente`;
-CREATE TABLE IF NOT EXISTS `disponibiliterecurrente` (
-  `idN` int(5) NOT NULL,
-  `idDr` int(5) NOT NULL AUTO_INCREMENT,
+  `date` date DEFAULT NULL,
   `recurrence` int(1) NOT NULL,
   `heureD` time NOT NULL,
   `heureF` time NOT NULL,
-  PRIMARY KEY (`idDr`),
+  PRIMARY KEY (`idD`),
   KEY `fk-idN` (`idN`),
   KEY `fk-idJ` (`recurrence`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -228,7 +212,14 @@ CREATE TABLE IF NOT EXISTS `parent` (
   `depcom` int(5) NOT NULL,
   PRIMARY KEY (`idP`),
   KEY `fk-habiteP` (`depcom`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `parent`
+--
+
+INSERT INTO `parent` (`idP`, `nomP`, `emailP`, `passwordP`, `depcom`) VALUES
+(1, 'MArotte', 'jeremie.marotte@gmail.com', '$2y$10$hKpg/1fQa05vVTU4YS67s.VjLSJqVr6YkAFJLP4g1dy9nBLelzu3G', 4061);
 
 -- --------------------------------------------------------
 
@@ -36626,15 +36617,9 @@ INSERT INTO `ville` (`depcom`, `dep`, `nomV`) VALUES
 --
 
 --
--- Contraintes pour la table `disponibiliteponctuelle`
+-- Contraintes pour la table `disponibilite`
 --
-ALTER TABLE `disponibiliteponctuelle`
-  ADD CONSTRAINT `fk-dispo` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `disponibiliterecurrente`
---
-ALTER TABLE `disponibiliterecurrente`
+ALTER TABLE `disponibilite`
   ADD CONSTRAINT `fk-idJ` FOREIGN KEY (`recurrence`) REFERENCES `jours` (`idJ`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk-idN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
 
