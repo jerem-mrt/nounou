@@ -95,7 +95,7 @@ include 'header.php';
                                     <input type="radio" name="nbEnfants" value="2"/> 2
                                     <input type="radio" name="nbEnfants" value="3"/> 3
                                     <input type="radio" name="nbEnfants" value="4"/> 4
-                                    <input type="radio" name="nbEnfants" value="+"/> 5
+                                    <input type="radio" name="nbEnfants" value="5"/> 5
                                 </div>
 
                                 <!--<div class="col-md-12 col-sm-12">

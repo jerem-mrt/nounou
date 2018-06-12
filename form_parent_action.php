@@ -11,9 +11,14 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
         $nomP = addslashes($_POST['nomP']);
         
         // Le formulaire transmet le nom de la ville, nous souhaitons de notre côté le 'depcom'
-        $nomV = 4061; //addslashes($_POST['nomV']);
+        $nomV = $_POST['nomV'];
         //$nomV = addslashes($_POST['nomV']);
-        
+        $requete1 = $bd->query("SELECT depcom FROM ville WHERE  nomV = '".$nomV."';");
+        var_dump($requete1);
+        $depcom = $requete1->fetch();
+                var_dump($depcom);
+        $depcom = $depcom[0];
+                var_dump($depcom);
        /* //$requete1 = "SELECT depcom FROM ville WHERE upper(nomV) LIKE upper(:nomV)";
         //$requete1 = $bd->prepare('SELECT depcom FROM ville WHERE nomV LIKE :nomV');
         //$requete1->execute(array('nomV' => $nomV));
@@ -33,7 +38,7 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
         if (!verifyEmail($bd, $email)) {
 
          
-            $requete2 =  "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $nomV . "')";
+            $requete2 =  "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $depcom . "')";
             $bd->exec($requete2);
             
             echo "<p> \n Felicitation votre inscription est réussie. <br /> \n ";
