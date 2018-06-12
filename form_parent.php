@@ -80,9 +80,9 @@ include 'header.php';
                                     <input type="email" name='email'><br />
                                 </div>
                                 <div class="col-md-12 col-sm-12">
-                                      <label for="password">Mot de passe</label> <br />
-                                          <input type="password" name='password'><br />
-                                  </div>
+                                    <label for="password">Mot de passe</label> <br />
+                                    <input type="password" name='password'><br />
+                                </div>
 
 
 
@@ -104,10 +104,10 @@ include 'header.php';
                                 </div>-->
 
                                 <button type="submit" class="form-control" id="cf-submit">Envoyer</button>
-                                
+
                             </div>
+                        </form>
                     </div>
-                    </form>
                 </div>
 
             </div>
@@ -115,17 +115,16 @@ include 'header.php';
     </section>
 
 
-    
     <!-- SCRIPTS -->
-<?php
-script("bootstrap.min.js");
-script("jquery.sticky.js");
-script("jquery.stellar.min.js");
-script("wow.min.js");
-script("smoothscroll.js");
-script("owl.carousel.min.js");
-script("custom.js");
-?>
+    <?php
+    script("bootstrap.min.js");
+    script("jquery.sticky.js");
+    script("jquery.stellar.min.js");
+    script("wow.min.js");
+    script("smoothscroll.js");
+    script("owl.carousel.min.js");
+    script("custom.js");
+    ?>
     <script>
         $(function () {
             $("#nomV").autocomplete({

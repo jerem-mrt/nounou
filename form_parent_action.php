@@ -1,6 +1,7 @@
 <?php
 
 require_once 'func_login.php';
+require_once 'func_action.php';
 
 // On vérifie que l'utilisateur est bien passé par le boutton submit.
 if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
@@ -35,7 +36,7 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
 
 
         // Après avoir vérifié que l'utilisateur n'est pas déjà inscrit, on l'insère dans notre BDD.
-        if (!verifyEmail($bd, $email)) {
+        if (!verifyEmail($bd, $email, 'parent')) {
 
          
             $requete2 =  "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $depcom . "')";
