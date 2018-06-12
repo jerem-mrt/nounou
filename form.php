@@ -73,4 +73,41 @@ function listeCreneauxJours($liste) {
 }
 
 $listeJours = ['Lundis', 'Mardis', 'Mercredis', 'Jeudis', 'Vendredis', 'Jeudis', 'Vendredis', 'Samedis', 'Dimanches'];
+
+function numJours($jour) {
+    $a;
+    if ($jour = 'lundis'){
+        return $a = 1;
+    }
+    else if ($jour = 'mardis'){
+        return $a = 2;
+    }
+    else if ($jour = 'mercredis'){
+        return $a = 3;
+    }
+    else if ($jour = 'mercredis'){
+        return $a = 4;
+    }
+    else if ($jour = 'jeudis'){
+        return $a = 5;
+    }
+    else if ($jour = 'vendredis'){
+        return $a = 6;
+    }
+    else if ($jour = 'samedis'){
+        return $a = 7;
+    }
+    else if ($jour = 'dimanches'){
+        return $a = 8;
+    }
+}
+
+function normaliser_array($liste){
+    $res = [];
+    foreach($liste as $value) {
+        $a = normaliser_text($value);
+        $res[] = $a;
+    }
+    return $res;
+}
 ?>

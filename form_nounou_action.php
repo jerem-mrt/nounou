@@ -1,6 +1,7 @@
 <?php
 require_once 'func_action.php';
 require_once 'func_login.php';
+require_once 'database.php';
 
 // On vérifie que l'utilisateur est bien passé par le boutton submit.
 if (verifyDefinedName(['nom', 'prenom', 'date', 'telephone', 'email', 'password', 'presentation', 'langue'])) {
@@ -12,7 +13,12 @@ if (verifyDefinedName(['nom', 'prenom', 'date', 'telephone', 'email', 'password'
         $prenom = addslashes($_POST['prenom']);
         $dateNaissance = $_POST['date'];
         $telephone = $_POST['telephone'];
-        // $ville = $_POST['nomV'];
+        $ville = $_POST['nomV'];
+        $requete = $bd->query('SELECT depcom FROM ville WHERE nomV ="' . $ville . '";');
+        echo 'SELECT depcom FROM ville WHERE nomV =' . $ville . ');';
+        $depcom = $requete->fetch();
+        $depcom = intval($depcom[0]);
+        var_dump($depcom);
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $presentation = addslashes($_POST['presentation']);
@@ -31,9 +37,8 @@ if (verifyDefinedName(['nom', 'prenom', 'date', 'telephone', 'email', 'password'
         }
 
         // Après avoir vérifié que l'utilisateur n'est pas déjà inscrit, on l'insère dans notre BDD.
-        if (!verifyEmail($bd, $email)) {
-
-            $queryInsert = "INSERT INTO nounou (nomN, prenomN, dateN, telephoneN, emailN, passwordN, presentationN, experienceN, photoN) VALUES ('" . $nom . "', '" . $prenom . "', '" . $dateNaissance . "', " . $telephone . ", '" . $email . "', '" . $password . "', '" . $presentation . "', '" . $experience . "', '" . $namefile . $ext . "');";
+        if (!verifyEmail($bd, $email, 'nounou')) {
+            $queryInsert = "INSERT INTO nounou (nomN, prenomN, dateN, telephoneN, emailN, passwordN, presentationN, experienceN, photoN, depcom) VALUES ('" . $nom . "', '" . $prenom . "', '" . $dateNaissance . "', " . $telephone . ", '" . $email . "', '" . $password . "', '" . $presentation . "', '" . $experience . "', '" . $namefile . $ext . "', " . $depcom . ");";
 //            foreach($langue as $key){
 //                $id = whichId4Mail($bd, 'nounou', $email);
 //                $quelLangue = $bd->query('SELECT abreviation FROM langue WHERE langue=' . $key . "';");

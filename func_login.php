@@ -8,38 +8,7 @@
 //include 'database.php';
 
 // Vérifier que chacun des champs est bien rempli.
-function verifyDefinedName($listeName) {
-    $err = 1;
-    foreach ($listeName as $key) {
-        if (isset($_POST[$key])) {
-            $err = 0;
-        }
-    }
-    if ($err === 0) {
-        return true;
-    }
-}
 
-function verifierChamps() {
-    //var_dump($_POST);
-    $err = [];
-    foreach ($_POST as $key => $value) {
-        if (!empty($value)) {
-            
-        } else {
-            $err[] = "Le champ " . $key . " n'a pas été complété. <br />";
-        }
-    }
-    if (sizeof($err) !== 0) {
-        foreach ($err as $key) {
-            echo $key;
-        }
-        return false;
-    } else {
-        return true;
-    }
-//var_dump($err);
-}
 
 // On vérifie que l'utilisateur n'est pas déjà inscrit. Retourne TRUE s'il n'est pas déjà inscrit. 
 function verifyEmail($bd, $table, $email) {
@@ -195,7 +164,7 @@ function checkOutCandidature($bd, $id) {
 // Prendre en compte le cas où une nounou est bloquée ou son compte est en attente de validation.
 function redirectUnconnected($role, $lien) {
     if (!verifyConnect($role)) {
-        header("'Location:" . $lien);
+        header("Location: " . $lien);
         exit();
     }
 }
