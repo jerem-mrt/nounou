@@ -53,7 +53,7 @@ include 'header.php';
 
                     <div class="col-md-12 col-sm-12">
                         <!-- FORMULAIRE RECHERCHE NOUNOU -->
-                    <form id="appointment-form" role="form" method="post" action="form_recherche_nounou.php" enctype="multipart/form-data">
+                        <form id="appointment-form" role="form" method="post" action="form_recherche_nounou.php" enctype="multipart/form-data">
 
                             <!-- SECTION TITLE -->
                             <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
@@ -89,7 +89,7 @@ include 'header.php';
                                 <button type="submit" class="form-control" id="cf-submit">Rechercher</button>
 
                             </div>
-                       </form>
+                        </form>
 
                     </div>
                 </div>
@@ -122,15 +122,28 @@ include 'header.php';
             echo "<td> $donnees[prenomN] </td>";
             echo "<td> $donnees[nomN] </td>";
             echo "<td> $donnees[dateN] </td>";
-            echo "<td> $donnees[depcom] </td>";
-            
+
+            // Equivalent depcom - nom ville
+
+            $requete1 = $bd->query("SELECT nomV FROM ville WHERE  depcom = '" . $donnees['depcom'] . "';");
+            //var_dump($requete1);
+            $nomV = $requete1->fetch();
+            //var_dump($depcom);x
+            $nomV = $nomV[0];
+
+            echo "<td> $nomV </td>";
+
             // Bouton de réservation
             // Ouverture d'un formulaire, et tous les champs sont hidden (valeurs ci-dessus)
             // Et la méthode post ira vers form_reservation_action.php
-            
+
+            // /!\ RAJOUTER DES HIDDENS DE L'HEURE ET DE LA DATE /!\ 
             echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation_action.php" enctype="multipart/form-data">'
-            . '<button type="submit" class="form-control" id="cf-submit">Réserver</button></form></td>';
-            
+            . '<input type="hidden" value="' . $donnees['prenomN'] . '" />'
+            . '<input type="hidden" value="' . $donnees['nomN'] . '" />'
+            . '<button type="submit" class="form-control" id="cf-submit">Réserver</button>'
+            . '</form></td>';
+
             echo "</tr>";
         }
         echo '</tbody></table>';

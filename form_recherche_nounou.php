@@ -61,37 +61,39 @@ include 'header.php';
                             </div>
 
                             <div class="wow fadeInUp" data-wow-delay="0.8s">
-                                
-                                 <!-- Ville -->
-                                
-                                <div class="col-md-0 col-sm-4 ui-widget">
-                                    <label for="nomV">Ville</label><p></p>
+
+                                <!-- Ville -->
+
+                                <div class="col-md-0 col-sm-3 ui-widget">
+                                    <label for="nomV">Ville</label></p>
                                     <input id="nomV" type="text" name="nomV" placeholder="Votre ville">
                                 </div>
-                                
+
                                 <!-- Département -->
-                                <!-- Faire en sorte que l'utilisateur ne saisisse que des chiffres -->
+                                <!-- Faire en sorte que l'utilisateur ne saisisse que des chiffres
+                                et surtout que lorsqu'il saisit la ville, que ça change automatiquement le num du département
+                                
+                                <div class="col-md-3 col-sm-6">
+                                    <label for="dep">Departement</label>
+                                    <input id="nomV" type="text" name="dep" placeholder="Votre departement">
+                                </div>--> 
+
+                                <!-- Plage horaire -->
                                 <!-- ????????????????? -->
-                                
-                               <!-- Date de recherche --> 
-                                <div class="col-md-4 col-sm-8">
-                                        <label for="date">Jour de garde</label>
-                                        <input type="date" name="date" id="date" class="form-control">
+                                <div class="col-md-6 col-sm-12">
+                                    <label>Garde ponctuelle </label><p></p>
+                                    <input type="date" name="dispo[date][]"> de <input type="time" name="dispo[heureD][]"> à <input type="time" name="dispo[heureF][]">.
                                 </div>
-                               
-                               <!-- Plage horaire -->
-                               <!-- ????????????????? -->
 
 
-                                
-                              
+
 
                                 <button type="submit" class="form-control" id="cf-submit">Rechercher</button>
-                                
+
                             </div>
-                            </form>
+                        </form>
                     </div>
-                    
+
                 </div>
 
             </div>
@@ -99,17 +101,17 @@ include 'header.php';
     </section>
 
 
-    
+
     <!-- SCRIPTS -->
-<?php
-script("bootstrap.min.js");
-script("jquery.sticky.js");
-script("jquery.stellar.min.js");
-script("wow.min.js");
-script("smoothscroll.js");
-script("owl.carousel.min.js");
-script("custom.js");
-?>
+    <?php
+    script("bootstrap.min.js");
+    script("jquery.sticky.js");
+    script("jquery.stellar.min.js");
+    script("wow.min.js");
+    script("smoothscroll.js");
+    script("owl.carousel.min.js");
+    script("custom.js");
+    ?>
     <script>
         $(function () {
             $("#nomV").autocomplete({
