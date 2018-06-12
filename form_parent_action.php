@@ -15,11 +15,11 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
         $nomV = $_POST['nomV'];
         //$nomV = addslashes($_POST['nomV']);
         $requete1 = $bd->query("SELECT depcom FROM ville WHERE  nomV = '".$nomV."';");
-        var_dump($requete1);
+        //var_dump($requete1);
         $depcom = $requete1->fetch();
-                var_dump($depcom);
+                //var_dump($depcom);
         $depcom = $depcom[0];
-                var_dump($depcom);
+                //var_dump($depcom);
        /* //$requete1 = "SELECT depcom FROM ville WHERE upper(nomV) LIKE upper(:nomV)";
         //$requete1 = $bd->prepare('SELECT depcom FROM ville WHERE nomV LIKE :nomV');
         //$requete1->execute(array('nomV' => $nomV));
