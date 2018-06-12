@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 12 juin 2018 à 09:36
+-- Généré le :  mar. 12 juin 2018 à 20:10
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -59,7 +59,19 @@ CREATE TABLE IF NOT EXISTS `disponibilite` (
   PRIMARY KEY (`idD`),
   KEY `fk-idN` (`idN`),
   KEY `fk-idJ` (`recurrence`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `disponibilite`
+--
+
+INSERT INTO `disponibilite` (`idN`, `idD`, `date`, `recurrence`, `heureD`, `heureF`) VALUES
+(4, 1, NULL, 0, '00:00:00', '00:00:00'),
+(4, 2, NULL, 0, '00:00:00', '00:00:00'),
+(4, 3, NULL, 0, '11:00:00', '14:00:00'),
+(4, 4, NULL, 0, '00:00:00', '00:00:00'),
+(4, 5, NULL, 0, '11:00:00', '14:00:00'),
+(4, 6, NULL, 0, '00:00:00', '00:00:00');
 
 -- --------------------------------------------------------
 
@@ -108,13 +120,13 @@ CREATE TABLE IF NOT EXISTS `jours` (
 --
 
 INSERT INTO `jours` (`idJ`, `jours`) VALUES
-(1, 'lundis'),
-(2, 'mardis'),
-(3, 'mercredis'),
-(4, 'jeudis'),
-(5, 'vendredis'),
-(6, 'samedis'),
-(7, 'dimanches');
+(0, 'lundis'),
+(1, 'mardis'),
+(2, 'mercredis'),
+(3, 'jeudis'),
+(4, 'vendredis'),
+(5, 'samedis'),
+(6, 'dimanches');
 
 -- --------------------------------------------------------
 
@@ -188,14 +200,15 @@ CREATE TABLE IF NOT EXISTS `nounou` (
   `depcom` int(5) NOT NULL,
   PRIMARY KEY (`idN`),
   KEY `fk-habiteN` (`depcom`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `nounou`
 --
 
 INSERT INTO `nounou` (`idN`, `prenomN`, `nomN`, `dateN`, `emailN`, `passwordN`, `sessionN`, `telephoneN`, `presentationN`, `experienceN`, `photoN`, `accepteN`, `bloqueN`, `depcom`) VALUES
-(1, 'Jeanne', 'Garros', '1995-01-01', 'jgarros@gmail.com', '$2y$10$has7fNx5XDj1P0zA1EqSdOLTRrFOjNkw.bSaqV7Cd8DKOemcD2gZK', NULL, 630959808, 'fgd\'sfg', 'fgdg', '0f0d55d5b773ce54f32e9a9ad570087fjpg', 0, 0, 1012);
+(1, 'Jeanne', 'Garros', '1995-01-01', 'jgarros@gmail.com', '$2y$10$has7fNx5XDj1P0zA1EqSdOLTRrFOjNkw.bSaqV7Cd8DKOemcD2gZK', NULL, 630959808, 'fgd\'sfg', 'fgdg', '0f0d55d5b773ce54f32e9a9ad570087fjpg', 0, 0, 1012),
+(4, 'Jérémie', 'Marotte', '1997-11-07', 'jeremie.marotte@gmail.com', '$2y$10$RB5yK/c.2SqjdbOvZYKpneVmR0ByLwezVkJvmYl7tFHZaf0W6Jt12', NULL, 750247808, 'efv', 'efb', '388859d5de1241b7d9a01d96e66d38d7jpg', 0, 0, 80679);
 
 -- --------------------------------------------------------
 

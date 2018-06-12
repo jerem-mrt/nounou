@@ -72,7 +72,7 @@ function listeCreneauxJours($liste) {
     }
 }
 
-$listeJours = ['Lundis', 'Mardis', 'Mercredis', 'Jeudis', 'Vendredis', 'Jeudis', 'Vendredis', 'Samedis', 'Dimanches'];
+$listeJours = ['Lundis', 'Mardis', 'Mercredis', 'Jeudis', 'Vendredis', 'Samedis', 'Dimanches'];
 
 function numJours($jour) {
     $a;
