@@ -13,6 +13,11 @@ define ('LO07_DB_HOST', 'mysql:host=localhost;dbname=nounou');
 
 $database = mysqli_connect(LO07_DB_HOST, LO07_DB_USER, LO07_DB_PASSWORD, LO07_DB_NAME) or die ('Impossible de se connecter Ã  MySql : ' + mysqli_connect_error());
 */
+
+// On déclare l'url d'accès du site
+define('SITE_URL', 'http://localhost/nounou/');
+
+// On définit la configuration mysql
 $serveur = 'mysql:host=localhost;dbname=nounou';
 $utilisateur = 'root';
 $mot_de_passe = '';

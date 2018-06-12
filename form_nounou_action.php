@@ -1,10 +1,5 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+require_once 'func_action.php';
 require_once 'func_login.php';
 
 // On vérifie que l'utilisateur est bien passé par le boutton submit.

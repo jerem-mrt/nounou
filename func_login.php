@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-include 'database.php';
+//include 'database.php';
 
 // Vérifier que chacun des champs est bien rempli.
 function verifyDefinedName($listeName) {
@@ -42,23 +42,22 @@ function verifierChamps() {
 }
 
 // On vérifie que l'utilisateur n'est pas déjà inscrit. Retourne TRUE s'il n'est pas déjà inscrit. 
-function verifyEmail($bd, $email) {
+function verifyEmail($bd, $table, $email) {
 
-    $requete = $bd->prepare('SELECT count(*) NB_RES FROM nounou WHERE emailN=:email'); //j'effectue ma requête SQL grâce au mot-clé LIKE
+    $requete = $bd->prepare('SELECT count(*) NB_RES FROM ' . $table . ' WHERE emailN=:email'); //j'effectue ma requête SQL grâce au mot-clé LIKE
     $data = array(
         'email' => $email
     );
     $requete->execute($data);
     $res = $requete->fetch();
 //    $requete = $bd->query ("SELECT count(*) NB_RES FROM nounou WHERE emailN='" . $email . "';");
-
     // On vérifie qu'aucune adresse e-mail correspondante n'est renvoyée.
     if ($res['NB_RES'] > 0) {
         $return = true;
     } else {
         $return = false;
     }
-    
+
     return $return;
 }
 
@@ -142,7 +141,7 @@ function connectMail($bd, $table, $email, $password) {
         $passwordHache = whatIsPass4ThisMail($bd, $table, $email);
         $isPasswordCorrect = password_verify($password, $passwordHache);
 
-        if (!verifyEmail($bd, $email)) {
+        if (!verifyEmail($bd, $table, $email)) {
             echo 'Mauvais identifiant ou mot de passe !';
         } else {
             if ($isPasswordCorrect) {
@@ -161,41 +160,44 @@ function connectMail($bd, $table, $email, $password) {
     }
 }
 
-function verifyConnect ($role) {
-    if (isset($SESSION) && isset($SESSION['role'])){
-    if($SESSION['role'] = $role) {
+function verifyConnect($role) {
+    if (isset($_SESSION) && isset($_SESSION['role'])) {
+        if ($_SESSION['role'] = $role) {
             return true;
-    }
-    }
-    else {
+        }
+    } else {
         return false;
     }
 }
 
-function checkOutBloque ($bd, $id) {
+function checkOutBloque($bd, $id) {
     $requete = $bd->query("SELECT bloqueN FROM nounou WHERE idN ='" . $id . "';");
     $bloque = $requete->fetch();
     $bloque = intval($bloque[0]);
     if ($bloque !== 0) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-function checkOutCandidature ($bd, $id) {
+function checkOutCandidature($bd, $id) {
     $requete = $bd->query("SELECT accepteN FROM nounou WHERE idN ='" . $id . "';");
     $accepte = $requete->fetch();
     $accepte = intval($accepte[0]);
     if ($accepte === 1) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
-// Prendre en compte le cas où une nounou est bloquée ou son compte est en attente de validation.
 
+// Prendre en compte le cas où une nounou est bloquée ou son compte est en attente de validation.
+function redirectUnconnected($role, $lien) {
+    if (!verifyConnect($role)) {
+        header("'Location:" . $lien);
+        exit();
+    }
+}
 ?>
 
