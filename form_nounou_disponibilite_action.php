@@ -25,9 +25,11 @@ redirectUnconnected('nounou', SITE_URL . 'login_nounou.php');
                         $heureD = $_POST[$name][0];
                         $heureF = $_POST[$name][1];
                         $jours = numJours($key);
-                        $query = "INSERT INTO disponibilite (idN, recurrence, heureD, heureF) VALUES ('" . $_SESSION['id'] . "' , '" . $jours . "', '" . $heureD . "', '" . $heureF . "');";
-                        var_dump($query);
-                        $bd->query($query);
+                        if (!verifyRecurrenceAlreadySaved($bd, $_SESSION['id'], $jours, $heureD, $heureF)) {
+                            $query = "INSERT INTO disponibilite (idN, recurrence, heureD, heureF) VALUES ('" . $_SESSION['id'] . "' , '" . $jours . "', '" . $heureD . "', '" . $heureF . "');";
+                            var_dump($query);
+                            $bd->query($query);
+                        }
                     }
                 }
             } else if ($recurrence === "tous-les-jours-travailles") {
@@ -39,22 +41,28 @@ redirectUnconnected('nounou', SITE_URL . 'login_nounou.php');
                     $heureD = $_POST['creneauxD'][0];
                     $heureF = $_POST['creneauxD'][1];
                     $jours = numJours($key);
-                    $query = "INSERT INTO disponibilite (idN, recurrence, heureD, heureF) VALUES ('" . $_SESSION['id'] . "' , '" . $jours . "', '" . $heureD . "', '" . $heureF . "');";
-                    var_dump($query);
-                    $bd->query($query);
+                    if (!verifyRecurrenceAlreadySaved($bd, $_SESSION['id'], $jours, $heureD, $heureF)) {
+                        $query = "INSERT INTO disponibilite (idN, recurrence, heureD, heureF) VALUES ('" . $_SESSION['id'] . "' , '" . $jours . "', '" . $heureD . "', '" . $heureF . "');";
+                        var_dump($query);
+                        $bd->query($query);
+                    }
                 }
             } else if ($recurrence === "tous-les-jours") {
-                for ($i = 0; $i < 7; $i++) {
+                for ($i = 0; $i < sizeof($listeJours); $i++) {
                     $joursSelectionnes[] = $listeJours[$i];
+                    
                 }
-                $joursSelectionnes = normaliser_array($joursSelectionnes);
+                echo 'joursSelections';
+                
+               $joursSelectionnes = normaliser_array($joursSelectionnes);
                 foreach ($joursSelectionnes as $key) {
                     $heureD = $_POST['creneauxD'][0];
                     $heureF = $_POST['creneauxD'][1];
-                    $jours = numJours($key);
-                    $query = "INSERT INTO disponibilite (idN, recurrence, heureD, heureF) VALUES ('" . $_SESSION['id'] . "' , '" . $jours . "', '" . $heureD . "', '" . $heureF . "');";
-                    var_dump($query);
-                    $bd->query($query);
+                    $jours = numJours($key);$
+                    if (!verifyRecurrenceAlreadySaved($bd, $_SESSION['id'], $jours, $heureD, $heureF)) {
+                        $query = "INSERT INTO disponibilite (idN, recurrence, heureD, heureF) VALUES ('" . $_SESSION['id'] . "' , " . $jours . ", '" . $heureD . "', '" . $heureF . "');";
+                        $bd->query($query);
+                    }
                 }
 
 
@@ -70,9 +78,11 @@ redirectUnconnected('nounou', SITE_URL . 'login_nounou.php');
                     var_dump($dateDispoHeureF);
 
                     for ($i = 0; $i < sizeof($dateDispoPonctuelle); $i++) {
-                        $query = "INSERT INTO disponibilite (idN, date, heureD, heureF) VALUES ('" . $_SESSION['id'] . "' , '" . $dateDispoPonctuelle[i] . "', '" . $dateDispoHeureD[i] . "', '" . $dateDispoHeureF[i] . "');";
-                        var_dump($query);
-                        $bd->query($query);
+                        if (!verifyPonctuelleAlreadySaved($bd, $idN, $dateDispoPonctuelle[i], $dateDispoHeureD[i], $dateDispoHeureF[i])) {
+                            $query = "INSERT INTO disponibilite (idN, date, heureD, heureF) VALUES ('" . $_SESSION['id'] . "' , '" . $dateDispoPonctuelle[i] . "', '" . $dateDispoHeureD[i] . "', '" . $dateDispoHeureF[i] . "');";
+                            var_dump($query);
+                            $bd->query($query);
+                        }
                     }
                 }
             }

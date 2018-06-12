@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//include 'database.php';
+include 'database.php';
 
 // Vérifier que chacun des champs est bien rempli.
 
@@ -168,5 +168,41 @@ function redirectUnconnected($role, $lien) {
         exit();
     }
 }
+
+function verifyRecurrenceAlreadySaved($bd, $idN, $recurrence, $heureD, $heureF) {
+    $query = $bd->query('SELECT heureD, heureF, recurrence FROM disponibilite WHERE idN =' . $idN . ';');
+    $res = $query->fetchAll();
+    foreach ($res as $key => $value) {
+        $err;
+        $listeJours = ['Lundis', 'Mardis', 'Mercredis', 'Jeudis', 'Vendredis', 'Samedis', 'Dimanches'];
+        if (intval($value['recurrence']) === $recurrence) {
+            if($value['heureD'] <= $heureD OR $heureD OR $value['heureF'] OR $value['heureD'] OR $heureF OR $heureF <= $value['heureF']) {
+                $messageErreur = '<p>Vous avez déjà indiqué être disponible les ' . strtolower($listeJours[$recurrence]) . " de " . $heureD . " à " . $heureF . ". </p>"
+                        . "<p>Supprimez votre disponibilité des " . strtolower($listeJours[$recurrence]) . " de " . $value['heureD'] . " à " . $value['heureF'];
+                echo $messageErreur;
+                return true;
+            }
+        }
+    }
+    
+}
+
+function verifyPonctuelleAlreadySaved($bd, $idN, $date, $heureD, $heureF) {
+    $query = $bd->query('SELECT heureD, heureF, date FROM disponibilite WHERE idN =' . $idN . ';');
+    $res = $query->fetchAll();
+    foreach ($res as $key => $value) {
+        $err;
+        if ($value['date'] === $date) {
+            if($value['heureD'] >= $heureD && $heureD <= $value['heureF'] && $value['heureD'] <= $heureF && $heureF <= $value['heureF']) {
+                $messageErreur = '<p>Vous avez déjà indiqué être disponible le ' . $date . " de " . $heureD . " à " . $heureF . ". </p>"
+                        . "<p>Supprimez votre disponibilité du " . $date . " de " . $value['heureD'] . " à " . $value['heureF'];
+                echo $messageErreur;
+                return true;
+            }
+        }
+    }
+    
+}
+
 ?>
 

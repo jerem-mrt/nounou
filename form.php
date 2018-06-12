@@ -76,29 +76,26 @@ $listeJours = ['Lundis', 'Mardis', 'Mercredis', 'Jeudis', 'Vendredis', 'Samedis'
 
 function numJours($jour) {
     $a;
-    if ($jour = 'lundis'){
+    if ($jour === 'lundis'){
+        return $a = 0;
+    }
+    else if ($jour === 'mardis'){
         return $a = 1;
     }
-    else if ($jour = 'mardis'){
+    else if ($jour === 'mercredis'){
         return $a = 2;
     }
-    else if ($jour = 'mercredis'){
+    else if ($jour === 'jeudis'){
         return $a = 3;
     }
-    else if ($jour = 'mercredis'){
+    else if ($jour === 'vendredis'){
         return $a = 4;
     }
-    else if ($jour = 'jeudis'){
+    else if ($jour === 'samedis'){
         return $a = 5;
     }
-    else if ($jour = 'vendredis'){
+    else if ($jour === 'dimanches'){
         return $a = 6;
-    }
-    else if ($jour = 'samedis'){
-        return $a = 7;
-    }
-    else if ($jour = 'dimanches'){
-        return $a = 8;
     }
 }
 
