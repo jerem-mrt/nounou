@@ -1,6 +1,7 @@
 <?php
 
 // Vérifier que chacun des champs est bien rempli.
+// Retourne vrai si la liste des champs envoyée est bien défini
 function verifyDefinedName($listeName) {
     $err = 1;
     foreach ($listeName as $key) {
@@ -9,6 +10,19 @@ function verifyDefinedName($listeName) {
         }
     }
     if ($err === 0) {
+        return true;
+    }
+}
+
+// Renvoie vrai si un name est vide.
+function verifyEmptyName($listeName) {
+    $err = 0;
+    foreach ($listeName as $key) {
+        if (empty($_POST[$key])) {
+            $err = $err + 1;
+        }
+    }
+    if ($err !== 0) {
         return true;
     }
 }

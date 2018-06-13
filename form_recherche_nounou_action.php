@@ -3,6 +3,9 @@ include 'database.php';
 include 'form.php';
 include 'css.php';
 include 'header.php';
+
+require_once 'func_login.php';
+require_once 'func_action.php';
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +49,7 @@ include 'header.php';
             </div>
         </section>
 
-        <!-- PARTIE FORMULAIRE-->
+        <!-- PARTIE FORMULAIRE A COPIER DE FORM RECHERCHE NOUNOU-->
         <section id="appointment" data-stellar-background-ratio="3">
             <div class="container">
                 <div class="row">
@@ -97,8 +100,36 @@ include 'header.php';
             </div>
         </section>
         <?php
-// Création du tableau
+        
+        // RECUPERATION DES DONNEE(S) SAISIE(S) PAR L'UTILISATEUR
+        
+        /*
+         * 2 cas possibles :
+         * - les parents font seulement une recherche sur la plage horaire : affichage de toutes les nounous disponible sur ce créneau
+         * - les parents font une recherche sur la ville ET la plage horaire : affichage de toutes les nounous disponible sur ce créneau et dans cette ville
+         * 
+         * A.N. : le cas d'affichage de toutes les nounous n'est pas possible ici
+         */
+        var_dump($_POST);
+        var_dump(verifyEmptyName(['nomV']));
+        
+        if (verifyEmptyName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]', 'nomV'])) {
+            if ((!verifyEmptyName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]'])) && (verifyEmptyName(['nomV']))) {
+                //L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville
+                echo "L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville";
+            } elseif (!verifyEmptyName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]', 'nomV'])) {
+                //L'utilisateur a realise une recherche sur une plage horaire ET sur une ville
+                echo "L'utilisateur a realise une recherche sur une plage horaire ET sur une ville";
+            } else {
+                echo "Aucun champ rempli";
+            }
+        } else {
+            echo "Aucun champ n'est défini";
+        }
 
+
+
+// Création du tableau des nounous en lien avec la recherche
         echo'<table class="table">
   <thead class="thead-dark">
     <tr>
@@ -136,7 +167,6 @@ include 'header.php';
             // Bouton de réservation
             // Ouverture d'un formulaire, et tous les champs sont hidden (valeurs ci-dessus)
             // Et la méthode post ira vers form_reservation_action.php
-
             // /!\ RAJOUTER DES HIDDENS DE L'HEURE ET DE LA DATE /!\ 
             echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation_action.php" enctype="multipart/form-data">'
             . '<input type="hidden" value="' . $donnees['prenomN'] . '" />'
