@@ -5,8 +5,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-include 'database.php';
-
 // Vérifier que chacun des champs est bien rempli.
 
 
