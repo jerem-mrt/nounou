@@ -120,13 +120,13 @@ CREATE TABLE IF NOT EXISTS `jours` (
 --
 
 INSERT INTO `jours` (`idJ`, `jours`) VALUES
-(0, 'lundis'),
-(1, 'mardis'),
-(2, 'mercredis'),
-(3, 'jeudis'),
-(4, 'vendredis'),
-(5, 'samedis'),
-(6, 'dimanches');
+(1, 'lundis'),
+(2, 'mardis'),
+(3, 'mercredis'),
+(4, 'jeudis'),
+(5, 'vendredis'),
+(6, 'samedis'),
+(7, 'dimanches');
 
 -- --------------------------------------------------------
 

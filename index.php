@@ -73,7 +73,7 @@
                                         <div class="col-md-offset-1 col-md-10">
                                              <!--<<h3>Pellentesque nec libero nisi</h3>-->
                                             <h1>Un service disponible 7j/7</h1>
-                                            <a href="login.php" class="section-btn btn btn-default btn-blue smoothScroll">Se connecter</a>
+                                            <a href="inscrire.php" class="section-btn btn btn-default btn-blue smoothScroll">S'inscrire</a>
                                         </div>
                                    </div>
                               </div>

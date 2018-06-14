@@ -8,7 +8,7 @@
 <html lang="fr">
 <head>
 
-     <title>Looking for Nounou.com - Nounou : saisissez vos disponibilités</title>
+     <title>Looking for Nounou.com - Connection</title>
 <!--
 
 Template 2098 Health
@@ -22,8 +22,7 @@ http://www.tooplate.com/view/2098-health
      <meta name="keywords" content="">
      <meta name="author" content="Tooplate">
      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-     <script src="http://localhost/nounou/health-center-master/js/jquery.js"></script>
-     <script src="http://localhost/nounou/health-center-master/js/momentjs.js"></script>
+     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
       <?php 
         stylesheet("animate.css");
         stylesheet("bootstrap.min.css");
@@ -169,13 +168,14 @@ http://www.tooplate.com/view/2098-health
 
      <!-- SCRIPTS -->
      <?php 
+     script("jquery.js");
      script("bootstrap.min.js");
-     script ("jquery.sticky.js");
-     script ("jquery.stellar.min.js");
-     script ("wow.min.js");
-     script ("smoothscroll.js");
-     script ("owl.carousel.min.js");
-     script ("custom.js");
+     script("jquery.sticky.js");
+     script("jquery.stellar.min.js");
+     script("wow.min.js");
+     script("smoothscroll.js");
+     script("owl.carousel.min.js");
+     script("custom.js");
      ?>
 </body>
 </html>

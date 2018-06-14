@@ -30,7 +30,8 @@
                                  
                          }
                          else {
-                             echo '<li class="appointment-btn"><a href="login.php">Se connecter</a></li>';                         
+                             echo '<li class="inscription-btn"><a href="inscrire.php">S\'inscrire</a></li>';                         
+                            echo '<li class="appointment-btn"><a href="login.php">Se connecter</a></li>';                         
                          }
                          ?>
                     </ul>

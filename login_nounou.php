@@ -167,13 +167,14 @@ require_once 'css.php';
 
         <!-- SCRIPTS -->
         <?php
-        script("bootstrap.min.js");
-        script("jquery.sticky.js");
-        script("jquery.stellar.min.js");
-        script("wow.min.js");
-        script("smoothscroll.js");
-        script("owl.carousel.min.js");
-        script("custom.js");
+        script("jquery.js");
+     script("bootstrap.min.js");
+     script("jquery.sticky.js");
+     script("jquery.stellar.min.js");
+     script("wow.min.js");
+     script("smoothscroll.js");
+     script("owl.carousel.min.js");
+     script("custom.js");
         ?>
     </body>
 </html>
