@@ -1,5 +1,7 @@
 <?php
 
+include 'database.php';
+
 // Vérifier que chacun des champs est bien rempli.
 function verifyDefinedName($listeName) {
     $err = 1;
@@ -33,5 +35,12 @@ function verifierChamps() {
     }
 //var_dump($err);
 }
+
+// Récupère le numéro du jour auquel la date correspond.
+function whatNumberOf($date) {
+    $timestamp = strtotime($time);
+    $recurrence = date("N", $timestamp);
+}
+
 
 ?>
