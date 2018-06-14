@@ -64,12 +64,13 @@ include 'header.php';
 
                                 <!-- Ville -->
 
-                                <div class="col-md-0 col-sm-3 ui-widget">
+                                <div class="col-md-0 col-sm-4 ui-widget">
                                     <label for="nomV">Ville</label></p>
                                     <input id="nomV" type="text" name="nomV" placeholder="Votre ville">
                                 </div>
 
                                 <!-- Département -->
+                                
                                 <!-- Faire en sorte que l'utilisateur ne saisisse que des chiffres
                                 et surtout que lorsqu'il saisit la ville, que ça change automatiquement le num du département
                                 
@@ -79,13 +80,11 @@ include 'header.php';
                                 </div>--> 
 
                                 <!-- Plage horaire -->
-                                <!-- ????????????????? -->
-                                <div class="col-md-6 col-sm-12">
+                                
+                                <div class="col-md-4 col-sm-12">
                                     <label>Garde ponctuelle </label><p></p>
-                                    <input type="date" name="dispo[date][]"> de <input type="time" name="dispo[heureD][]"> à <input type="time" name="dispo[heureF][]">.
+                                    <input type="date" name="dispo[date][]" required> de <input type="time" name="dispo[heureD][]" required> à <input type="time" name="dispo[heureF][]" required>.
                                 </div>
-
-
 
 
                                 <button type="submit" class="form-control" id="cf-submit">Rechercher</button>
