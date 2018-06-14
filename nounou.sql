@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 12 juin 2018 à 20:10
--- Version du serveur :  5.7.21
--- Version de PHP :  5.6.35
+-- Généré le :  jeu. 14 juin 2018 à 14:31
+-- Version du serveur :  5.7.19
+-- Version de PHP :  5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -200,7 +200,7 @@ CREATE TABLE IF NOT EXISTS `nounou` (
   `depcom` int(5) NOT NULL,
   PRIMARY KEY (`idN`),
   KEY `fk-habiteN` (`depcom`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `nounou`
@@ -208,7 +208,8 @@ CREATE TABLE IF NOT EXISTS `nounou` (
 
 INSERT INTO `nounou` (`idN`, `prenomN`, `nomN`, `dateN`, `emailN`, `passwordN`, `sessionN`, `telephoneN`, `presentationN`, `experienceN`, `photoN`, `accepteN`, `bloqueN`, `depcom`) VALUES
 (1, 'Jeanne', 'Garros', '1995-01-01', 'jgarros@gmail.com', '$2y$10$has7fNx5XDj1P0zA1EqSdOLTRrFOjNkw.bSaqV7Cd8DKOemcD2gZK', NULL, 630959808, 'fgd\'sfg', 'fgdg', '0f0d55d5b773ce54f32e9a9ad570087fjpg', 0, 0, 1012),
-(4, 'Jérémie', 'Marotte', '1997-11-07', 'jeremie.marotte@gmail.com', '$2y$10$RB5yK/c.2SqjdbOvZYKpneVmR0ByLwezVkJvmYl7tFHZaf0W6Jt12', NULL, 750247808, 'efv', 'efb', '388859d5de1241b7d9a01d96e66d38d7jpg', 0, 0, 80679);
+(4, 'Jérémie', 'Marotte', '1997-11-07', 'jeremie.marotte@gmail.com', '$2y$10$RB5yK/c.2SqjdbOvZYKpneVmR0ByLwezVkJvmYl7tFHZaf0W6Jt12', NULL, 750247808, 'efv', 'efb', '388859d5de1241b7d9a01d96e66d38d7jpg', 0, 0, 80679),
+(5, 'Giselle', 'Wamp', '1960-12-23', 'g.wamp@gmail.com', '$2y$10$kyvgPpxqg5by3JQ48AlDeujfSIsoAF1DpzlcheHGt7ZA51bo4350C', NULL, 687567744, 'Troyenne de naissance, je vis maintenant pres de l UTT', 'A deja garde plusieurs fois les enfants du maire', 'db505117684ee9741034c6c6a2c2e2adpng', 0, 0, 10325);
 
 -- --------------------------------------------------------
 
@@ -36630,58 +36631,11 @@ INSERT INTO `ville` (`depcom`, `dep`, `nomV`) VALUES
 --
 
 --
--- Contraintes pour la table `disponibilite`
---
-ALTER TABLE `disponibilite`
-  ADD CONSTRAINT `fk-idJ` FOREIGN KEY (`recurrence`) REFERENCES `jours` (`idJ`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk-idN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Contraintes pour la table `garde`
 --
 ALTER TABLE `garde`
   ADD CONSTRAINT `fk-gardeE` FOREIGN KEY (`idE`) REFERENCES `enfant` (`idE`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk-gardeN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `lie`
---
-ALTER TABLE `lie`
-  ADD CONSTRAINT `fk-lieE` FOREIGN KEY (`idE`) REFERENCES `enfant` (`idE`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk-lieP` FOREIGN KEY (`idP`) REFERENCES `parent` (`idP`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `nounou`
---
-ALTER TABLE `nounou`
-  ADD CONSTRAINT `fk-habiteN` FOREIGN KEY (`depcom`) REFERENCES `ville` (`depcom`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `parent`
---
-ALTER TABLE `parent`
-  ADD CONSTRAINT `fk-habiteP` FOREIGN KEY (`depcom`) REFERENCES `ville` (`depcom`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `parle`
---
-ALTER TABLE `parle`
-  ADD CONSTRAINT `fk-parleA` FOREIGN KEY (`abreviation`) REFERENCES `langue` (`abreviation`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk-parleN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `possederest`
---
-ALTER TABLE `possederest`
-  ADD CONSTRAINT `fk_idERest` FOREIGN KEY (`idE`) REFERENCES `enfant` (`idE`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_idRRest` FOREIGN KEY (`idR`) REFERENCES `restrictional` (`idR`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `reserve`
---
-ALTER TABLE `reserve`
-  ADD CONSTRAINT `fk-reserveN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk-reserveP` FOREIGN KEY (`idP`) REFERENCES `parent` (`idP`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
