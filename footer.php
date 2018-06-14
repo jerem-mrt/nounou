@@ -15,7 +15,9 @@
                               </div>
                          </div>
                     </div>
-
+                   
+                   <!--REMPLACER EN METTANT LES AUTEURS ADRIEN ET JEREM-->
+                   
                     <div class="col-md-4 col-sm-4">
                          <div class="footer-thumb">
                               <h4 class="wow fadeInUp" data-wow-delay="0.4s">Latest News</h4>

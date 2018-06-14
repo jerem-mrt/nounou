@@ -53,7 +53,7 @@ http://www.tooplate.com/view/2098-health
      <?php include 'menu.php'; ?>
      
      
-     <!-- HOME -->
+     <!-- HOME 
      <section id="home" class="slider" data-stellar-background-ratio="0.5">
           <div class="container">
                <div class="row">
@@ -93,7 +93,7 @@ http://www.tooplate.com/view/2098-health
                </div>
           </div>
      </section>
-
+-->
 
      <!-- MAKE AN APPOINTMENT -->
      <section id="appointment" data-stellar-background-ratio="3">
