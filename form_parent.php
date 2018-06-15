@@ -57,8 +57,9 @@ include 'header.php';
 
                     <div class="col-md-12 col-sm-12">
                         <!-- FORMULAIRE D'INSCRIPTION PARENTS -->
-                        <form id="appointment-form" role="form" method="post" action="form_parent_action.php" enctype="multipart/form-data">
-
+                        <!--<form id="appointment-form" role="form" method="post" action="form_parent_action.php" enctype="multipart/form-data">-->
+                        <!--L'action du formulaire s'effectue dans le fichier form_enfant.php-->
+                        <form id="appointment-form" role="form" method="post" action="form_enfant.php" enctype="multipart/form-data">
                             <!-- SECTION TITLE -->
                             <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
                                 <h2 align="center">Postulez en tant que parent</h2>
