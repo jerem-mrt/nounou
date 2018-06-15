@@ -56,8 +56,5 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
 } else {
     echo "Vous allez être redirigé vers la page d'inscription afin de la compléter.";
 }
- 
-        //Vérifier le numéro
-        // Traiter la photo
-        // Design du formulaire 
+
 ?>
