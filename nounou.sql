@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  jeu. 14 juin 2018 à 14:31
+-- Généré le :  ven. 15 juin 2018 à 14:22
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -36631,11 +36631,57 @@ INSERT INTO `ville` (`depcom`, `dep`, `nomV`) VALUES
 --
 
 --
+-- Contraintes pour la table `disponibilite`
+--
+ALTER TABLE `disponibilite`
+  ADD CONSTRAINT `fk-idN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Contraintes pour la table `garde`
 --
 ALTER TABLE `garde`
   ADD CONSTRAINT `fk-gardeE` FOREIGN KEY (`idE`) REFERENCES `enfant` (`idE`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk-gardeN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `lie`
+--
+ALTER TABLE `lie`
+  ADD CONSTRAINT `fk-lieE` FOREIGN KEY (`idE`) REFERENCES `enfant` (`idE`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk-lieP` FOREIGN KEY (`idP`) REFERENCES `parent` (`idP`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `nounou`
+--
+ALTER TABLE `nounou`
+  ADD CONSTRAINT `fk-habiteN` FOREIGN KEY (`depcom`) REFERENCES `ville` (`depcom`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `parent`
+--
+ALTER TABLE `parent`
+  ADD CONSTRAINT `fk-habiteP` FOREIGN KEY (`depcom`) REFERENCES `ville` (`depcom`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `parle`
+--
+ALTER TABLE `parle`
+  ADD CONSTRAINT `fk-parleA` FOREIGN KEY (`abreviation`) REFERENCES `langue` (`abreviation`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk-parleN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `possederest`
+--
+ALTER TABLE `possederest`
+  ADD CONSTRAINT `fk_idERest` FOREIGN KEY (`idE`) REFERENCES `enfant` (`idE`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk_idRRest` FOREIGN KEY (`idR`) REFERENCES `restrictional` (`idR`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `reserve`
+--
+ALTER TABLE `reserve`
+  ADD CONSTRAINT `fk-reserveN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `fk-reserveP` FOREIGN KEY (`idP`) REFERENCES `parent` (`idP`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
