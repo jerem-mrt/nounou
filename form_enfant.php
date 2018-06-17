@@ -5,8 +5,9 @@
  * 
  * 
  */
-require_once 'func_login.php';
 require_once 'func_action.php';
+require_once 'func_login.php';
+require_once 'database.php';
 
 // On vérifie que l'utilisateur est bien passé par le boutton submit.
 if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
@@ -15,31 +16,32 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
     if (verifierChamps()) {
         //var_dump($_POST);
         $nomP = addslashes($_POST['nomP']);
-        
+
         // Le formulaire transmet le nom de la ville, nous souhaitons de notre côté le 'depcom'
         $nomV = $_POST['nomV'];
-        $requete1 = $bd->query("SELECT depcom FROM ville WHERE  nomV = '".$nomV."';");
+        $requete1 = $bd->query("SELECT depcom FROM ville WHERE  nomV = '" . $nomV . "';");
         $depcom = $requete1->fetch();
         $depcom = $depcom[0];
         $email = $_POST['email'];
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $nbEnfants = $_POST['nbEnfants'];
+        var_dump($nbEnfants);
+
 
 
         // Après avoir vérifié que l'utilisateur n'est pas déjà inscrit, on l'insère dans notre BDD.
         if (!verifyEmail($bd, $email, 'parent')) {
 
-         
-            $requete2 =  "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $depcom . "')";
+
+            $requete2 = "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $depcom . "')";
             $bd->exec($requete2);
-            
-            /*echo "<p> \n Felicitation votre inscription est réussie. <br /> \n ";
-            if($nbEnfants > 1){
-                echo "Il ne vous reste plus qu'à lister vos ". $nbEnfants ." enfants.<br /></p>"; // if nbEnfant = 1 ... sinon mettre au pluriel
-            } else { // == 1
-                echo "Il ne vous reste plus qu'à lister votre enfant.<br /></p>";
-            }*/
-            
+
+            /* echo "<p> \n Felicitation votre inscription est réussie. <br /> \n ";
+              if($nbEnfants > 1){
+              echo "Il ne vous reste plus qu'à lister vos ". $nbEnfants ." enfants.<br /></p>"; // if nbEnfant = 1 ... sinon mettre au pluriel
+              } else { // == 1
+              echo "Il ne vous reste plus qu'à lister votre enfant.<br /></p>";
+              } */
         } else {
             echo "Vous êtes déjà inscrit";
         }
@@ -51,7 +53,6 @@ if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
 
 
 <?php
-
 /*
  * 
  * FORM ENFANT PHP
@@ -83,15 +84,15 @@ include 'header.php';
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-        <?php
-        stylesheet("animate.css");
-        stylesheet("bootstrap.min.css");
-        stylesheet("font-awesome.min.css");
-        stylesheet("owl.carousel.css");
-        stylesheet("owl.theme.default.min.css");
-        // Main CSS tooplate-style.css
-        stylesheet("tooplate-style.css");
-        ?>
+<?php
+stylesheet("animate.css");
+stylesheet("bootstrap.min.css");
+stylesheet("font-awesome.min.css");
+stylesheet("owl.carousel.css");
+stylesheet("owl.theme.default.min.css");
+// Main CSS tooplate-style.css
+stylesheet("tooplate-style.css");
+?>
 
     </head>
     <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
@@ -111,62 +112,63 @@ include 'header.php';
             <div class="container">
                 <div class="row">
 
-
-
-                    <div class="col-md-12 col-sm-12">
-                        <!-- FORMULAIRE D'INSCRIPTION DES ENFANTS -->
+                    <?php
+                    for ($nbEnfInscrit = 1; $nbEnfInscrit <= $nbEnfants; $nbEnfInscrit = $nbEnfInscrit + 1) {
+                        echo'<div class="col-md-12 col-sm-12">
+                        <!-- FORMULAIRE D INSCRIPTION DES ENFANTS -->
                         <form id="appointment-form" role="form" method="post" action="form_enfant_action.php" enctype="multipart/form-data">
 
                             <!-- SECTION TITLE -->
-                            <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
-                                <h2 align="center">Ajout de votre enfant</h2>
-                            </div>
+                            <div class="section-title wow fadeInUp" data-wow-delay="0.4s">';
+                        echo '<h2 align="center">Inscription Enfant n°' . $nbEnfInscrit . '</h2>';
 
-                            <div class="wow fadeInUp" data-wow-delay="0.8s">
+
+                        echo'<div class="wow fadeInUp" data-wow-delay="0.8s">
                                 <div class="col-md-0 col-sm-4">
-                                  
+
                                     <label for="prenomE" >Prenom</label> <br />
-                                    <input id="prenomE" type="text" name="prenomE" placeholder="Son Prenom" required>
+                                    <input id="prenomE" type="text" name="prenomE[]" placeholder="Son Prenom" required>
 
                                 </div>
                                 <div class="col-md-4 col-sm-8">
                                     <label for="dateE">Date de naissance</label>
-                                    <input type="date" name="dateE" id="dateE" class="form-control" required>
+                                    <input type="date" name="dateE[]" id="dateE" class="form-control" required>
                                 </div>
-                                
+
                                 <div class="col-md-8 col-sm-12">
-                                        <label for="restrE">Restriction Alimentaires</label>
-                                        <p>Si "non", ecrivez le</p>
-                                        <textarea class="form-control" rows="5" id="presentation" name="restrE" placeholder="Si votre enfant a des restrictions alimentaires"></textarea>
+                                    <label for="restrE">Restriction Alimentaires</label>
+                                    <p>Saisir "Non" ou sinon les lister :</p>
+                                    <textarea class="form-control" rows="5" id="presentation" name="restrE[]" placeholder="Si votre enfant a des restrictions alimentaires"></textarea>
                                 </div>
-                                
-                                
+
+
                                 <div class="col-md-12 col-sm-12">
                                     <label for="infoE">Informations générales</label>
                                     <p>Si "non", ecrivez le</p>
-                                    <textarea class="form-control" rows="5" id="infoE" name="infoE" placeholder="Si vous avez d'autres éléments important à déclarer"></textarea>
-                                </div>
-                                
-                                
-                                <!--On veut transmettre l'ID des Parents via un champ caché !-->
-                                <?php
-                                
-                                // Recheche de l'IDP
-                                
-                                $requete3 = $bd->query("SELECT idP FROM parent WHERE  emailP = '".$email."';");
-                                //var_dump($requete1);
-                                $idP = $requete3->fetch();
-                                        //var_dump($depcom);
-                                $idP = $idP[0];
-                                
-                                echo'<input type="hidden" name="idP" value="'.$idP.'"/>';
-                                ?>
-                                
-                                <button type="submit" class="form-control" id="cf-submit">Envoyer</button>
+                                    <textarea class="form-control" rows="5" id="infoE[]" name="infoE[]" placeholder="Si vous avez d autres éléments important à déclarer"></textarea>
+                                </div>';
+                    }
+                    // Recheche de l'IDP
 
-                            </div>
-                        </form>
-                    </div>
+                    $requete3 = $bd->query("SELECT idP FROM parent WHERE  emailP = '" . $email . "';");
+                    //var_dump($requete1);
+                    $idP = $requete3->fetch();
+                    //var_dump($depcom);
+                    $idP = $idP[0];
+
+                    echo'<input type="hidden" name="idP" value="' . $idP . '"/>';
+                    
+                    echo'<input type="hidden" name="nbEnfants" value="' . $nbEnfants . '"/>';
+                    
+                    if($nbEnfants == 1){
+                        echo'<button type="submit" class="form-control" id="cf-submit">Inscrire votre enfant</button>';
+                    } else {
+                        echo'<button type="submit" class="form-control" id="cf-submit">Inscrire vos '.$nbEnfants.' enfants</button>';
+                    }
+                    
+
+                    echo'</div> </form> </div>';
+                    ?>
                 </div>
 
             </div>
@@ -175,22 +177,14 @@ include 'header.php';
 
 
     <!-- SCRIPTS -->
-    <?php
-    script("bootstrap.min.js");
-    script("jquery.sticky.js");
-    script("jquery.stellar.min.js");
-    script("wow.min.js");
-    script("smoothscroll.js");
-    script("owl.carousel.min.js");
-    script("custom.js");
-    ?>
-    <script>
-        $(function () {
-            $("#nomV").autocomplete({
-                source: 'rechercheVille.php',
-                minLength: 2 // on indique qu'il faut taper au moins 3 caractères pour afficher l'autocomplétion
-            });
-        });
-    </script>
+<?php
+script("bootstrap.min.js");
+script("jquery.sticky.js");
+script("jquery.stellar.min.js");
+script("wow.min.js");
+script("smoothscroll.js");
+script("owl.carousel.min.js");
+script("custom.js");
+?>
 </body>
 </html>

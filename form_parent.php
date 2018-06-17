@@ -104,7 +104,7 @@ include 'header.php';
                                     <textarea class="form-control" rows="5" id="remarques" name="remarques" placeholder="Si vos enfants ont des contraintes alimentaires, des allergies..."></textarea>
                                 </div>-->
 
-                                <button type="submit" class="form-control" id="cf-submit"><a href="form_enfant.php">Envoyer</a></button>
+                                <button type="submit" class="form-control" id="cf-submit">Envoyer</button>
 
                             </div>
                         </form>
