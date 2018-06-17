@@ -38,7 +38,7 @@ if (verifyDefinedName(['nom', 'prenom', 'date', 'telephone', 'email', 'password'
 
         // Après avoir vérifié que l'utilisateur n'est pas déjà inscrit, on l'insère dans notre BDD.
         if (!verifyEmail($bd, $email, 'nounou')) {
-            $queryInsert = "INSERT INTO nounou (nomN, prenomN, dateN, telephoneN, emailN, passwordN, presentationN, experienceN, photoN, depcom) VALUES ('" . $nom . "', '" . $prenom . "', '" . $dateNaissance . "', " . $telephone . ", '" . $email . "', '" . $password . "', '" . $presentation . "', '" . $experience . "', '" . $namefile . $ext . "', " . $depcom . ");";
+            $queryInsert = "INSERT INTO nounou (nomN, prenomN, dateN, telephoneN, emailN, passwordN, presentationN, experienceN, photoN, depcom) VALUES ('" . $nom . "', '" . $prenom . "', '" . $dateNaissance . "', " . $telephone . ", '" . $email . "', '" . $password . "', '" . $presentation . "', '" . $experience . "', '" . $namefile . "." . $ext . "', " . $depcom . ");";
 //            foreach($langue as $key){
 //                $id = whichId4Mail($bd, 'nounou', $email);
 //                $quelLangue = $bd->query('SELECT abreviation FROM langue WHERE langue=' . $key . "';");

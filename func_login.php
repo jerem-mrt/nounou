@@ -10,8 +10,9 @@
 
 // On vérifie que l'utilisateur n'est pas déjà inscrit. Retourne TRUE s'il n'est pas déjà inscrit. 
 function verifyEmail($bd, $table, $email) {
-
-    $requete = $bd->prepare('SELECT count(*) NB_RES FROM ' . $table . ' WHERE emailN=:email'); //j'effectue ma requête SQL grâce au mot-clé LIKE
+    $champs = whichChamp($bd, $table);
+    $champMail = $champs[1];
+    $requete = $bd->prepare('SELECT count(*) NB_RES FROM ' . $table . ' WHERE ' . $champMail . ' = :email'); //j'effectue ma requête SQL grâce au mot-clé LIKE
     $data = array(
         'email' => $email
     );

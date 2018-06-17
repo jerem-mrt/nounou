@@ -1,6 +1,6 @@
 <?php
 
-include 'database.php';
+//include 'database.php';
 
 // Vérifier que chacun des champs est bien rempli.
 // Retourne vrai si la liste des champs envoyée est bien défini
