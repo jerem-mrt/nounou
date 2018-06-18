@@ -1,5 +1,7 @@
 <?php
 require_once 'database.php';
+require_once 'func_action.php';
+require_once 'func_login.php';
 require_once 'form.php';
 require_once 'css.php';
 ?>
