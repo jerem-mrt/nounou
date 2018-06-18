@@ -49,14 +49,14 @@ require_once 'func_action.php';
             </div>
         </section>
 
-        <!-- PARTIE FORMULAIRE A COPIER DE FORM RECHERCHE NOUNOU-->
+        <!-- PARTIE FORMULAIRE-->
         <section id="appointment" data-stellar-background-ratio="3">
             <div class="container">
                 <div class="row">
 
                     <div class="col-md-12 col-sm-12">
                         <!-- FORMULAIRE RECHERCHE NOUNOU -->
-                        <form id="appointment-form" role="form" method="post" action="form_recherche_nounou.php" enctype="multipart/form-data">
+                        <form id="appointment-form" role="form" method="post" action="form_recherche_nounou_action.php" enctype="multipart/form-data">
 
                             <!-- SECTION TITLE -->
                             <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
@@ -68,37 +68,42 @@ require_once 'func_action.php';
                                 <!-- Ville -->
 
                                 <div class="col-md-0 col-sm-4 ui-widget">
-                                    <label for="nomV">Ville</label><p></p>
+                                    <label for="nomV">Ville</label></p>
                                     <input id="nomV" type="text" name="nomV" placeholder="Votre ville">
                                 </div>
 
                                 <!-- Département -->
-                                <!-- Faire en sorte que l'utilisateur ne saisisse que des chiffres -->
-                                <!-- ????????????????? -->
-
-                                <!-- Date de recherche --> 
-                                <div class="col-md-4 col-sm-8">
-                                    <label for="date">Jour de garde</label>
-                                    <input type="date" name="date" id="date" class="form-control">
-                                </div>
+                                
+                                <!-- Faire en sorte que l'utilisateur ne saisisse que des chiffres
+                                et surtout que lorsqu'il saisit la ville, que ça change automatiquement le num du département
+                                
+                                <div class="col-md-3 col-sm-6">
+                                    <label for="dep">Departement</label>
+                                    <input id="nomV" type="text" name="dep" placeholder="Votre departement">
+                                </div>--> 
 
                                 <!-- Plage horaire -->
-                                <!-- ????????????????? -->
+                                
+                                <div class="col-md-4 col-sm-12">
+                                    <label>Garde ponctuelle </label><p></p>
+                                    <input type="date" name="dispo[date][]" required> de <input type="time" name="dispo[heureD][]" required> à <input type="time" name="dispo[heureF][]" required>.
+                                </div>
 
-
-
-
-
+                                <!-- Langue parlée -->
+                                <!-- ????????????? -->
+                                
                                 <button type="submit" class="form-control" id="cf-submit">Rechercher</button>
 
                             </div>
                         </form>
-
                     </div>
+
                 </div>
 
             </div>
-        </section>
+        </div>
+    </section>
+
         <?php
         
         // RECUPERATION DES DONNEE(S) SAISIE(S) PAR L'UTILISATEUR
