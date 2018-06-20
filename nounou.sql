@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 15 juin 2018 à 14:22
+-- Généré le :  mer. 20 juin 2018 à 17:00
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `disponibilite` (
 --
 
 INSERT INTO `disponibilite` (`idN`, `idD`, `date`, `recurrence`, `heureD`, `heureF`) VALUES
-(4, 1, NULL, 0, '00:00:00', '00:00:00'),
+(4, 1, '2018-06-20', 0, '08:30:00', '14:00:00'),
 (4, 2, NULL, 0, '00:00:00', '00:00:00'),
 (4, 3, NULL, 0, '11:00:00', '14:00:00'),
 (4, 4, NULL, 0, '00:00:00', '00:00:00'),
@@ -84,9 +84,23 @@ CREATE TABLE IF NOT EXISTS `enfant` (
   `idE` int(5) NOT NULL AUTO_INCREMENT,
   `prenomE` varchar(25) NOT NULL,
   `dateE` date NOT NULL,
-  `restrE` varchar(25) NOT NULL,
+  `restrE` varchar(25) DEFAULT NULL,
+  `infoE` varchar(255) DEFAULT NULL COMMENT 'Informations sur l''enfant à savoir',
   PRIMARY KEY (`idE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `enfant`
+--
+
+INSERT INTO `enfant` (`idE`, `prenomE`, `dateE`, `restrE`, `infoE`) VALUES
+(14, 'Tito', '2009-12-09', 'Non', 'Aime les churros'),
+(15, 'Titi', '2007-07-07', 'Allergie tapas', 'Non'),
+(16, 'Tita', '2012-12-12', 'Non', 'Non'),
+(17, 'boby', '2002-06-07', 'NON', 'NON'),
+(18, 'Titouan', '2009-12-06', 'Non', 'Gay'),
+(19, 'Tim', '2018-02-12', 'Non', 'Gentil'),
+(20, 'Tam', '2019-05-04', 'Non', 'Gay');
 
 -- --------------------------------------------------------
 
@@ -176,6 +190,19 @@ CREATE TABLE IF NOT EXISTS `lie` (
   KEY `fk-lieP` (`idP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `lie`
+--
+
+INSERT INTO `lie` (`idP`, `idE`) VALUES
+(16, 14),
+(16, 15),
+(16, 16),
+(17, 17),
+(17, 18),
+(18, 19),
+(18, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -226,14 +253,17 @@ CREATE TABLE IF NOT EXISTS `parent` (
   `depcom` int(5) NOT NULL,
   PRIMARY KEY (`idP`),
   KEY `fk-habiteP` (`depcom`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `parent`
 --
 
 INSERT INTO `parent` (`idP`, `nomP`, `emailP`, `passwordP`, `depcom`) VALUES
-(1, 'MArotte', 'jeremie.marotte@gmail.com', '$2y$10$hKpg/1fQa05vVTU4YS67s.VjLSJqVr6YkAFJLP4g1dy9nBLelzu3G', 4061);
+(16, 'Chicharito', 'mexique@gmail.com', '$2y$10$UokgSh7th1MST.8IAdaDBerCCjLgybh5Ezn0yNcvakBnPU.Npxe4a', 1244),
+(17, 'Bernales', 'bernales@gmail.com', '$2y$10$JhxLfHWrWeS8xddHjz6Wbe/YZ9/2wUJ8UHZkF.G/QIVsKDN/5/fdi', 19122),
+(18, 'Galliot', 'galliot@gmail.com', '$2y$10$SXpLcGSLOvEc7VQfMjVTz.ta.OHKXgR5oKTdPXGakrGlTgRDfZFXC', 14462),
+(19, 'Galliot', 'galliot@gmail.com', '$2y$10$wIRC4NpPaP2QkAGkB5HrWuuD.SJxFuM.X/GUeLN7t9/.Qs1ZnlzFm', 14462);
 
 -- --------------------------------------------------------
 
