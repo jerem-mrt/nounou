@@ -1,4 +1,12 @@
 <?php
+
+/*
+ * FORMULAIRE DE RECHERCHE DE NOUNOU
+ * +
+ * ACTION DU FORMULAIRE
+ */
+
+
 include 'database.php';
 include 'form.php';
 include 'css.php';
@@ -27,13 +35,13 @@ require_once 'func_action.php';
 
 
         <?php
-        stylesheet("animate.css");
-        stylesheet("bootstrap.min.css");
-        stylesheet("font-awesome.min.css");
-        stylesheet("owl.carousel.css");
-        stylesheet("owl.theme.default.min.css");
+        //stylesheet("animate.css");
+//        stylesheet("bootstrap.min.css");
+//        stylesheet("font-awesome.min.css");
+//        stylesheet("owl.carousel.css");
+//        stylesheet("owl.theme.default.min.css");
 // Main CSS tooplate-style.css
-        stylesheet("tooplate-style.css");
+//        stylesheet("tooplate-style.css");
         ?>
 
     </head>
@@ -73,7 +81,7 @@ require_once 'func_action.php';
                                 </div>
 
                                 <!-- Département -->
-                                
+
                                 <!-- Faire en sorte que l'utilisateur ne saisisse que des chiffres
                                 et surtout que lorsqu'il saisit la ville, que ça change automatiquement le num du département
                                 
@@ -83,15 +91,15 @@ require_once 'func_action.php';
                                 </div>--> 
 
                                 <!-- Plage horaire -->
-                                
+
                                 <div class="col-md-4 col-sm-12">
                                     <label>Garde ponctuelle </label><p></p>
-                                    <input type="date" name="dispo[date][]" required> de <input type="time" name="dispo[heureD][]" required> à <input type="time" name="dispo[heureF][]" required>.
+                                    <input type="date" name="dispo[date]" required> de <input type="time" name="dispo[heureD]" required> à <input type="time" name="dispo[heureF]" required>.
                                 </div>
 
                                 <!-- Langue parlée -->
                                 <!-- ????????????? -->
-                                
+
                                 <button type="submit" class="form-control" id="cf-submit">Rechercher</button>
 
                             </div>
@@ -101,13 +109,20 @@ require_once 'func_action.php';
                 </div>
 
             </div>
-        </div>
-    </section>
+            <script>
+                $(function () {
+                    $("#nomV").autocomplete({
+                        source: 'rechercheVille.php',
+                        minLength: 2 // on indique qu'il faut taper au moins 3 caractères pour afficher l'autocomplétion
+                    });
+                });
+            </script>
+
+        </section>
 
         <?php
-        
         // RECUPERATION DES DONNEE(S) SAISIE(S) PAR L'UTILISATEUR
-        
+
         /*
          * 2 cas possibles :
          * - les parents font seulement une recherche sur la plage horaire : affichage de toutes les nounous disponible sur ce créneau
@@ -117,22 +132,10 @@ require_once 'func_action.php';
          */
         var_dump($_POST);
         var_dump(verifyEmptyName(['nomV']));
-        
-        if (verifyEmptyName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]', 'nomV'])) {
-            if ((!verifyEmptyName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]'])) && (verifyEmptyName(['nomV']))) {
-                //L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville
-                echo "L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville";
-            } elseif (!verifyEmptyName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]', 'nomV'])) {
-                //L'utilisateur a realise une recherche sur une plage horaire ET sur une ville
-                echo "L'utilisateur a realise une recherche sur une plage horaire ET sur une ville";
-            } else {
-                echo "Aucun champ rempli";
-            }
-        } else {
-            echo "Aucun champ n'est défini";
-        }
 
-
+        /*
+         * TYPES DE RECHERCHES A METTRE DANS LA BOUCLE TANT QUE
+         */
 
 // Création du tableau des nounous en lien avec la recherche
         echo'<table class="table">
@@ -146,41 +149,132 @@ require_once 'func_action.php';
     </tr>
   </thead>
   <tbody>';
-
-// On recupere tout le contenu de la table news
+        // On recupere tout le contenu de la table nounou
         $reponse = $bd->query('SELECT prenomN, nomN, dateN, depcom FROM nounou');
 
+        if (verifyDefinedName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]', 'nomV'])) {
 
-// On affiche le resultat
-        while ($donnees = $reponse->fetch()) {
-            //On affiche les données dans le tableau
-            echo "<tr>";
-            echo "<td> $donnees[prenomN] </td>";
-            echo "<td> $donnees[nomN] </td>";
-            echo "<td> $donnees[dateN] </td>";
+            $nomVRecherche = $_POST['nomV'];
+            $dateRecherche = $_POST['dispo']['date'];
+            $heureDRecherche = $_POST['dispo']['heureD'];
+            $heureFRecherche = $_POST['dispo']['heureF'];
+            
+          
+          //$resultatRechercheNounou = $executeRechercheNounouDispo->fetchAll();
 
-            // Equivalent depcom - nom ville
 
-            $requete1 = $bd->query("SELECT nomV FROM ville WHERE  depcom = '" . $donnees['depcom'] . "';");
-            //var_dump($requete1);
-            $nomV = $requete1->fetch();
-            //var_dump($depcom);x
-            $nomV = $nomV[0];
+            if (!empty($_POST['dispo']['date']) && !empty($_POST['dispo']['heureD']) && !empty($_POST['dispo']['heureF']) && empty($_POST['nomV'])) {
+                //L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville
+                echo "L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville";
+                
+                $queryRechercheNounouDispo = $bd->prepare('SELECT nounou.idN, prenomN, nomN, date, heureD, heureF FROM disponibilite, nounou WHERE  nounou.idN = disponibilite.idN AND date = :date AND heureD >= :heureD AND heureF <= :heureF');
+          $executeRechercheNounouDispo = $queryRechercheNounouDispo->execute(array(
+              ':date' => $dateRecherche,
+              ':heureD' => $heureDRecherche,
+              ':heureF' => $heureFRecherche
+          ));
+                
+                while ($donnees = $executeRechercheNounouDispo->fetch()) {
+                    //On affiche les données dans le tableau
+                    // On vérifie dans un premier temps que les champs saisis
+                    // correspondent à la nounou qui va s'afficher
+                    // Equivalent depcom - nom ville
 
-            echo "<td> $nomV </td>";
+                    /*$requete1 = $bd->query("SELECT nomV FROM ville WHERE  depcom = '" . $donnees['depcom'] . "';");
+                    //var_dump($requete1);
+                    $nomV = $requete1->fetch();
+                    //var_dump($depcom);x
+                    $nomV = $nomV[0];*/
+                    
+                    /*
+                     * SELECT nounou.idN, prenomN, nomN, date, heureD, heureF 
+                     * FROM disponibilite, nounou 
+                     * WHERE  nounou.idN = disponibilite.idN AND date = '2018-06-20' AND heureD >= '7:30' AND heureF <= '14:00'
+                     */
+                    
+                    
+                    
 
-            // Bouton de réservation
-            // Ouverture d'un formulaire, et tous les champs sont hidden (valeurs ci-dessus)
-            // Et la méthode post ira vers form_reservation_action.php
-            // /!\ RAJOUTER DES HIDDENS DE L'HEURE ET DE LA DATE /!\ 
-            echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation_action.php" enctype="multipart/form-data">'
-            . '<input type="hidden" value="' . $donnees['prenomN'] . '" />'
-            . '<input type="hidden" value="' . $donnees['nomN'] . '" />'
-            . '<button type="submit" class="form-control" id="cf-submit">Réserver</button>'
-            . '</form></td>';
+                    //if ($nomV == $nomVRecherche) {
+                        echo "<tr>";
+                        echo "<td> $donnees[prenomN] </td>";
+                        echo "<td> $donnees[nomN] </td>";
+                        echo "<td> $donnees[dateN] </td>";
 
-            echo "</tr>";
+
+                        echo "<td> $nomV </td>";
+
+                        // Bouton de réservation
+                        // Ouverture d'un formulaire, et tous les champs sont hidden (valeurs ci-dessus)
+                        // Et la méthode post ira vers form_reservation_action.php
+                        // /!\ RAJOUTER DES HIDDENS DE L'HEURE ET DE LA DATE /!\ 
+                        echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation_action.php" enctype="multipart/form-data">'
+                        . '<input type="hidden" value="' . $donnees['prenomN'] . '" />'
+                        . '<input type="hidden" value="' . $donnees['nomN'] . '" />'
+                        . '<button type="submit" class="form-control" id="cf-submit">Réserver</button>'
+                        . '</form></td>';
+
+                        echo "</tr>";
+                    //}
+                }
+                
+                
+            } else if (!empty($_POST['dispo']['date']) && !empty($_POST['dispo']['heureD']) && !empty($_POST['dispo']['heureF']) && !empty($_POST['nomV'])) {
+                //L'utilisateur a realise une recherche sur une plage horaire ET sur une ville
+                echo "L'utilisateur a realise une recherche sur une plage horaire ET sur une ville";
+
+                // On affiche le resultat
+                while ($donnees = $reponse->fetch()) {
+                    //On affiche les données dans le tableau
+                    // On vérifie dans un premier temps que les champs saisis
+                    // correspondent à la nounou qui va s'afficher
+                    // Equivalent depcom - nom ville
+
+                    $requete1 = $bd->query("SELECT nomV FROM ville WHERE  depcom = '" . $donnees['depcom'] . "';");
+                    //var_dump($requete1);
+                    $nomV = $requete1->fetch();
+                    //var_dump($depcom);x
+                    $nomV = $nomV[0];
+
+                    //if ($nomV == $nomVRecherche) {
+                        echo "<tr>";
+                        echo "<td> $donnees[prenomN] </td>";
+                        echo "<td> $donnees[nomN] </td>";
+                        echo "<td> $donnees[dateN] </td>";
+
+
+                        echo "<td> $nomV </td>";
+
+                        // Bouton de réservation
+                        // Ouverture d'un formulaire, et tous les champs sont hidden (valeurs ci-dessus)
+                        // Et la méthode post ira vers form_reservation_action.php
+                        // /!\ RAJOUTER DES HIDDENS DE L'HEURE ET DE LA DATE /!\ 
+                        echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation_action.php" enctype="multipart/form-data">'
+                        . '<input type="hidden" value="' . $donnees['prenomN'] . '" />'
+                        . '<input type="hidden" value="' . $donnees['nomN'] . '" />'
+                        . '<button type="submit" class="form-control" id="cf-submit">Réserver</button>'
+                        . '</form></td>';
+
+                        echo "</tr>";
+                    //}
+                }
+            } else {
+                echo "Aucun champ rempli";
+                var_dump($_POST['dispo']['date']);
+            }
+        } else {
+            echo "Aucun champ n'est défini";
         }
+
+
+
+
+
+
+
+
+
+
         echo '</tbody></table>';
 
         $reponse->closeCursor();
