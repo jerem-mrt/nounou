@@ -861,7 +861,6 @@ http://www.tooplate.com/view/2098-health
   }
 
   .stories-image img {
-    border-radius: 100%;
     width: 65px;
     height: 65px;
   }
@@ -876,7 +875,7 @@ http://www.tooplate.com/view/2098-health
 
   .stories-info span {
     color: #858585;
-    font-size: 12px;
+    font-size: 18px;
   }
 
   .opening-hours p {

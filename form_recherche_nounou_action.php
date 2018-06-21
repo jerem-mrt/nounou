@@ -78,8 +78,8 @@ require_once 'func_action.php';
                                     <label for="nomV">Ville</label></p>
                                     <input id="nomV" type="text" name="nomV" 
                                     <?php
-                                    if (isset($_POST['dispo']['nomV'])) {
-                                        echo ('value="' . $_POST['dispo']['nomV'] . "'");
+                                    if (isset($_POST['nomV'])) {
+                                        echo ('value="' . $_POST['nomV'] . "'");
                                     } else {
                                         echo('placeholder="Votre ville"');
                                     }
