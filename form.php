@@ -56,7 +56,7 @@ function case_a_cocher($liste) {
 ;
 
 function fromTimetoTime($name) {
-    echo "de <input type='time' name='creneaux" . $name . "[]' > à <input type='time' name='creneaux". $name . "[]' > ";
+    echo "de <input type='time' name='creneaux" . $name . "[]' > à <input type='time' name='creneaux" . $name . "[]' > ";
 }
 
 function listeCreneauxJours($liste) {
@@ -76,35 +76,57 @@ $listeJours = ['Lundis', 'Mardis', 'Mercredis', 'Jeudis', 'Vendredis', 'Samedis'
 
 function numJours($jour) {
     $a;
-    if ($jour === 'lundis'){
+    if ($jour === 'lundis') {
         return $a = 1;
-    }
-    else if ($jour === 'mardis'){
+    } else if ($jour === 'mardis') {
         return $a = 2;
-    }
-    else if ($jour === 'mercredis'){
+    } else if ($jour === 'mercredis') {
         return $a = 3;
-    }
-    else if ($jour === 'jeudis'){
+    } else if ($jour === 'jeudis') {
         return $a = 4;
-    }
-    else if ($jour === 'vendredis'){
+    } else if ($jour === 'vendredis') {
         return $a = 5;
-    }
-    else if ($jour === 'samedis'){
+    } else if ($jour === 'samedis') {
         return $a = 6;
-    }
-    else if ($jour === 'dimanches'){
+    } else if ($jour === 'dimanches') {
         return $a = 7;
     }
 }
 
-function normaliser_array($liste){
+function normaliser_array($liste) {
     $res = [];
-    foreach($liste as $value) {
+    foreach ($liste as $value) {
         $a = normaliser_text($value);
         $res[] = $a;
     }
     return $res;
 }
+
+function formDemieHeure($name) {
+    $minutes = ['00', '30'];
+    $heures;
+    for ($i = 0; $i < 24; $i++) {
+        if ($i < 10) {
+            $h = "0$i";
+            $heures[] = $h;
+        } else {
+            $heures[] = $i;
+        }
+    }
+    
+    echo "<select name='hcreneaux" . $name . "[]'>";
+    foreach ($heures as $key) {
+            echo "<option>$key</option>";
+    }
+    echo "</select>";
+    
+    echo " : <select name='mcreneaux" . $name . "[]'>";
+    
+    foreach ($minutes as $key) {
+            echo "<option>$key</option>";
+    }
+    echo "</select>";
+}
+
+
 ?>

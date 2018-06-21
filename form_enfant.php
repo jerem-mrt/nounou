@@ -132,7 +132,7 @@ stylesheet("tooplate-style.css");
                                 </div>
                                 <div class="col-md-4 col-sm-8">
                                     <label for="dateE">Date de naissance</label>
-                                    <input type="date" name="dateE[]" id="dateE" class="form-control" required>
+                                    <input type="date" name="dateE[]" id="dateE" class="form-control" max='<?php echo date("Y-m-d"); ?>' required>
                                 </div>
 
                                 <div class="col-md-8 col-sm-12">

@@ -789,7 +789,8 @@ http://www.tooplate.com/view/2098-health
   }
 
   #appointment input {
-    height: 45px;
+    height: 20px;
+    width : auto;
   }
 
   #appointment select {
@@ -1075,4 +1076,26 @@ http://www.tooplate.com/view/2098-health
       letter-spacing: 1px;
     }
 
+  }
+
+  .champProfile {
+      margin-top: 10;
+      font-weight: bold;
+      vertical-align: middle;
+      text-align: left;
+      padding-top: 20;
+  }
+  
+    .champProfile .top, .description .top {
+      margin-top: 10;
+      padding-top : 10;
+      vertical-align: middle;
+      text-align: center;
+  }
+  
+    .description {
+      margin-top: 10;
+      vertical-align: middle;
+      text-align: center;
+      padding-top: 20;
   }

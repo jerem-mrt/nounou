@@ -36899,7 +36899,7 @@ autocomplete(document.getElementById("nomV"), nomVilles);
 
                                    <div class="col-md-12 col-sm-12">
                                         <label for="date">Date de naissance</label>
-                                        <input type="date" name="date" id="date" class="form-control">
+                                        <input type="date" name="date" id="date" class="form-control" max='<?php echo date("Y-m-d"); ?>'>
                                    </div>
                                   
                                   <div class="col-md-12 col-sm-12">
