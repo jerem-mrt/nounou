@@ -35,13 +35,13 @@ require_once 'func_action.php';
 
 
         <?php
-        //stylesheet("animate.css");
-//        stylesheet("bootstrap.min.css");
-//        stylesheet("font-awesome.min.css");
-//        stylesheet("owl.carousel.css");
-//        stylesheet("owl.theme.default.min.css");
+        stylesheet("animate.css");
+        stylesheet("bootstrap.min.css");
+        stylesheet("font-awesome.min.css");
+        stylesheet("owl.carousel.css");
+        stylesheet("owl.theme.default.min.css");
 // Main CSS tooplate-style.css
-//        stylesheet("tooplate-style.css");
+        stylesheet("tooplate-style.css");
         ?>
 
     </head>
@@ -149,8 +149,12 @@ require_once 'func_action.php';
     </tr>
   </thead>
   <tbody>';
+        
+        
         // On recupere tout le contenu de la table nounou
-        $reponse = $bd->query('SELECT prenomN, nomN, dateN, depcom FROM nounou');
+        $reponse = $bd->query('SELECT prenomN, nomN, dateN, depcom, date, heureD, heureF'
+                . ' FROM disponibilite, nounou '
+                . 'WHERE  nounou.idN = disponibilite.idN');
 
         if (verifyDefinedName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]', 'nomV'])) {
 
@@ -167,24 +171,25 @@ require_once 'func_action.php';
                 //L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville
                 echo "L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville";
                 
-                $queryRechercheNounouDispo = $bd->prepare('SELECT nounou.idN, prenomN, nomN, date, heureD, heureF FROM disponibilite, nounou WHERE  nounou.idN = disponibilite.idN AND date = :date AND heureD >= :heureD AND heureF <= :heureF');
+              /*  $queryRechercheNounouDispo = $bd->prepare('SELECT nounou.idN, prenomN, nomN, date, heureD, heureF FROM disponibilite, nounou WHERE  nounou.idN = disponibilite.idN AND date = :date AND heureD >= :heureD AND heureF <= :heureF');
           $executeRechercheNounouDispo = $queryRechercheNounouDispo->execute(array(
               ':date' => $dateRecherche,
               ':heureD' => $heureDRecherche,
               ':heureF' => $heureFRecherche
-          ));
+          ));*/
                 
-                while ($donnees = $executeRechercheNounouDispo->fetch()) {
+                //while ($donnees = $executeRechercheNounouDispo->fetch()) {
+                while ($donnees = $reponse->fetch()) {
                     //On affiche les données dans le tableau
                     // On vérifie dans un premier temps que les champs saisis
                     // correspondent à la nounou qui va s'afficher
                     // Equivalent depcom - nom ville
 
-                    /*$requete1 = $bd->query("SELECT nomV FROM ville WHERE  depcom = '" . $donnees['depcom'] . "';");
+                    $requete1 = $bd->query("SELECT nomV FROM ville WHERE  depcom = '" . $donnees['depcom'] . "';");
                     //var_dump($requete1);
                     $nomV = $requete1->fetch();
-                    //var_dump($depcom);x
-                    $nomV = $nomV[0];*/
+                    //var_dump($depcom);
+                    $nomV = $nomV[0];
                     
                     /*
                      * SELECT nounou.idN, prenomN, nomN, date, heureD, heureF 
@@ -192,10 +197,42 @@ require_once 'func_action.php';
                      * WHERE  nounou.idN = disponibilite.idN AND date = '2018-06-20' AND heureD >= '7:30' AND heureF <= '14:00'
                      */
                     
+                    /*
+                     * Nous récupérons les données associées à la nounou en question
+                     */
                     
+                    $requeteA = $bd->query("SELECT heureD FROM disponibilite WHERE  heureD = '" . $donnees['heureD'] . "';");
+                    $heureD = $requeteA->fetch();
+                    $heureD = $heureD[0];
+                                       
                     
+                    $requeteB = $bd->query("SELECT heureF FROM disponibilite WHERE  heureF = '" . $donnees['heureF'] . "';");
+                    $heureF = $requeteB->fetch();
+                    $heureF = $heureF[0];
+                    
+                    $requeteC = $bd->query("SELECT date FROM disponibilite WHERE  date = '" . $donnees['date'] . "';");
+                    $date = $requeteC->fetch();
+                    $date = $date[0];
+                    
+                    echo($donnees['prenomN'].' '.$donnees['nomN']);
+                    
+                    var_dump($heureD);
+                    var_dump($heureDRecherche);
+                    var_dump($heureD >= $heureDRecherche);
+                    
+                    var_dump($heureF);
+                    var_dump($heureFRecherche);
+                    var_dump($heureF <= $heureFRecherche);
+                    
+                    var_dump($date);
+                    var_dump($dateRecherche);
+                    var_dump($date == $dateRecherche);
 
-                    //if ($nomV == $nomVRecherche) {
+                    if (($heureD >= $heureDRecherche) && ($heureF <= $heureFRecherche) && ($date == $dateRecherche)) {
+                        
+                        // Nous devons étudier le fait qu'une nounou ne doit pas apparaître 2 fois !
+                        // A moins que l'on part de l'idée qu'il se n'est pas possible
+                        
                         echo "<tr>";
                         echo "<td> $donnees[prenomN] </td>";
                         echo "<td> $donnees[nomN] </td>";
@@ -215,7 +252,7 @@ require_once 'func_action.php';
                         . '</form></td>';
 
                         echo "</tr>";
-                    //}
+                    }
                 }
                 
                 
@@ -233,7 +270,7 @@ require_once 'func_action.php';
                     $requete1 = $bd->query("SELECT nomV FROM ville WHERE  depcom = '" . $donnees['depcom'] . "';");
                     //var_dump($requete1);
                     $nomV = $requete1->fetch();
-                    //var_dump($depcom);x
+                    //var_dump($depcom);
                     $nomV = $nomV[0];
 
                     //if ($nomV == $nomVRecherche) {
