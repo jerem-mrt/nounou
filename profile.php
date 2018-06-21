@@ -15,17 +15,17 @@ if (isset($_GET['id'])) {
         ':idN' => $id
     ));
     $resProfileNounou = $queryProfileNounou->fetchAll();
-    var_dump($resProfileNounou);
+//    var_dump($resProfileNounou);
     $prenom = $resProfileNounou[0][0];
     $nom = $resProfileNounou[0][1];
 
     // On récupère la date de naissance, la date du jour et on stock l'intervalle dans une variable qu'on réutilise pour dire l'âge.
     $dateNaissance = new DateTime($resProfileNounou[0][2]);
     $dateAujourdhui = date("Y-m-d");;
-var_dump($dateAujourdhui);
+//var_dump($dateAujourdhui);
     $joursARetirer = date("N") - 1;
-    var_dump($joursARetirer);
-    $debutSemaine = new DateTime($debutSemaine);
+//    var_dump($joursARetirer);
+    $debutSemaine = new DateTime();
 $debutSemaine = $debutSemaine->format('Y-m-d');
 $debutSemaine = date('Y-m-d', strtotime("-$joursARetirer  day"));
 
@@ -33,9 +33,10 @@ $joursAajouter = 6 - date("N") + 1;
 $finSemaine = new DateTime($debutSemaine);
 $finSemaine = $finSemaine->format('Y-m-d');
 $finSemaine = date('Y-m-d', strtotime("+$joursAajouter  day"));
-var_dump($finSemaine);
+//var_dump($finSemaine);
 
-var_dump($debutSemaine);
+//var_dump($debutSemaine);
+$dateAujourdhui = new DateTime($dateAujourdhui);
 //    $debutSemaine = date($dateAujourdhui,  "-$joursARetirer day");
 //    $debutSemaine  = mktime(0, 0, 0, date("m")  , date("d")-$joursARetirer, date("Y"));
 //        echo $debutSemaine;
@@ -150,11 +151,11 @@ var_dump($debutSemaine);
         <section id="vueplanning">
             <?php 
             $requeteDispo = $bd->prepare('SELECT idD, date, heureD, heureF FROM disponibilite WHERE idN=:idN and date=>:dateDebutSemaine and date=<:dateFinSemaine');
-//            $executeDispo = $requeteDispo->execute(array(
-//                ':idN' => $idN,
-//                ':dateDebutSemaine' => ,
-//                ':dateFinSemaine' =>
-//            ))
+            $executeDispo = $requeteDispo->execute(array(
+                ':idN' => $id,
+                ':dateDebutSemaine' => $debutSemaine,
+                ':dateFinSemaine' => $finSemaine
+            ))
             ?>
             
             <div class="col-md-12 col-sm-12">
