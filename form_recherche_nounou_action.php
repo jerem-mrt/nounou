@@ -1,5 +1,4 @@
 <?php
-
 /*
  * FORMULAIRE DE RECHERCHE DE NOUNOU
  * +
@@ -77,7 +76,15 @@ require_once 'func_action.php';
 
                                 <div class="col-md-0 col-sm-4 ui-widget">
                                     <label for="nomV">Ville</label></p>
-                                    <input id="nomV" type="text" name="nomV" placeholder="Votre ville">
+                                    <input id="nomV" type="text" name="nomV" 
+                                    <?php
+                                    if (isset($_POST['dispo']['nomV'])) {
+                                        echo ('value="' . $_POST['dispo']['nomV'] . "'");
+                                    } else {
+                                        echo('placeholder="Votre ville"');
+                                    }
+                                    ?>
+                                           ">
                                 </div>
 
                                 <!-- Département -->
@@ -94,8 +101,16 @@ require_once 'func_action.php';
 
                                 <div class="col-md-4 col-sm-12">
                                     <label>Garde ponctuelle </label><p></p>
-                                    <input type="date" name="dispo[date]" required> de <input type="time" name="dispo[heureD]" required> à <input type="time" name="dispo[heureF]" required>.
-                                </div>
+                                    <input type="date" name="dispo[date]" value="<?php if (isset($_POST['dispo']['date'])) {
+                                        echo ($_POST['dispo']['date']);
+                                    } ?>" required> 
+                                    de <input type="time" name="dispo[heureD]" value="<?php if (isset($_POST['dispo']['heureD'])) {
+                                        echo ($_POST['dispo']['heureD']);
+                                    } ?>" required> 
+                                    à <input type="time" name="dispo[heureF]" value="<?php if (isset($_POST['dispo']['heureF'])) {
+                                        echo ($_POST['dispo']['heureF']);
+                                    } ?>" required>.
+                                </div></p>
 
                                 <!-- Langue parlée -->
                                 <!-- ????????????? -->
@@ -130,8 +145,8 @@ require_once 'func_action.php';
          * 
          * A.N. : le cas d'affichage de toutes les nounous n'est pas possible ici
          */
-        var_dump($_POST);
-        var_dump(verifyEmptyName(['nomV']));
+        //var_dump($_POST);
+        //var_dump(verifyEmptyName(['nomV']));
 
         /*
          * TYPES DE RECHERCHES A METTRE DANS LA BOUCLE TANT QUE
@@ -149,8 +164,8 @@ require_once 'func_action.php';
     </tr>
   </thead>
   <tbody>';
-        
-        
+
+
         // On recupere tout le contenu de la table nounou
         $reponse = $bd->query('SELECT prenomN, nomN, dateN, depcom, date, heureD, heureF'
                 . ' FROM disponibilite, nounou '
@@ -162,23 +177,14 @@ require_once 'func_action.php';
             $dateRecherche = $_POST['dispo']['date'];
             $heureDRecherche = $_POST['dispo']['heureD'];
             $heureFRecherche = $_POST['dispo']['heureF'];
-            
-          
-          //$resultatRechercheNounou = $executeRechercheNounouDispo->fetchAll();
+
+
+            //$resultatRechercheNounou = $executeRechercheNounouDispo->fetchAll();
 
 
             if (!empty($_POST['dispo']['date']) && !empty($_POST['dispo']['heureD']) && !empty($_POST['dispo']['heureF']) && empty($_POST['nomV'])) {
                 //L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville
                 echo "L'utilisateur a seulement realise une recherche sur une plage horaire mais pas sur une ville";
-                
-              /*  $queryRechercheNounouDispo = $bd->prepare('SELECT nounou.idN, prenomN, nomN, date, heureD, heureF FROM disponibilite, nounou WHERE  nounou.idN = disponibilite.idN AND date = :date AND heureD >= :heureD AND heureF <= :heureF');
-          $executeRechercheNounouDispo = $queryRechercheNounouDispo->execute(array(
-              ':date' => $dateRecherche,
-              ':heureD' => $heureDRecherche,
-              ':heureF' => $heureFRecherche
-          ));*/
-                
-                //while ($donnees = $executeRechercheNounouDispo->fetch()) {
                 while ($donnees = $reponse->fetch()) {
                     //On affiche les données dans le tableau
                     // On vérifie dans un premier temps que les champs saisis
@@ -190,49 +196,40 @@ require_once 'func_action.php';
                     $nomV = $requete1->fetch();
                     //var_dump($depcom);
                     $nomV = $nomV[0];
-                    
-                    /*
-                     * SELECT nounou.idN, prenomN, nomN, date, heureD, heureF 
-                     * FROM disponibilite, nounou 
-                     * WHERE  nounou.idN = disponibilite.idN AND date = '2018-06-20' AND heureD >= '7:30' AND heureF <= '14:00'
-                     */
-                    
-                    /*
-                     * Nous récupérons les données associées à la nounou en question
-                     */
-                    
+
+
                     $requeteA = $bd->query("SELECT heureD FROM disponibilite WHERE  heureD = '" . $donnees['heureD'] . "';");
                     $heureD = $requeteA->fetch();
                     $heureD = $heureD[0];
-                                       
-                    
+
+
                     $requeteB = $bd->query("SELECT heureF FROM disponibilite WHERE  heureF = '" . $donnees['heureF'] . "';");
                     $heureF = $requeteB->fetch();
                     $heureF = $heureF[0];
-                    
+
                     $requeteC = $bd->query("SELECT date FROM disponibilite WHERE  date = '" . $donnees['date'] . "';");
                     $date = $requeteC->fetch();
                     $date = $date[0];
-                    
-                    echo($donnees['prenomN'].' '.$donnees['nomN']);
-                    
-                    var_dump($heureD);
-                    var_dump($heureDRecherche);
-                    var_dump($heureD >= $heureDRecherche);
-                    
-                    var_dump($heureF);
-                    var_dump($heureFRecherche);
-                    var_dump($heureF <= $heureFRecherche);
-                    
-                    var_dump($date);
-                    var_dump($dateRecherche);
-                    var_dump($date == $dateRecherche);
+                    /*
+                     * echo($donnees['prenomN'].' '.$donnees['nomN']);
 
-                    if (($heureD >= $heureDRecherche) && ($heureF <= $heureFRecherche) && ($date == $dateRecherche)) {
-                        
+                      var_dump($heureD);
+                      var_dump($heureDRecherche);
+                      var_dump($heureD >= $heureDRecherche);
+
+                      var_dump($heureF);
+                      var_dump($heureFRecherche);
+                      var_dump($heureF <= $heureFRecherche);
+
+                      var_dump($date);
+                      var_dump($dateRecherche);
+                      var_dump($date == $dateRecherche); */
+
+                    if (($heureD <= $heureDRecherche) && ($heureF >= $heureFRecherche) && ($date == $dateRecherche)) {
+
                         // Nous devons étudier le fait qu'une nounou ne doit pas apparaître 2 fois !
                         // A moins que l'on part de l'idée qu'il se n'est pas possible
-                        
+
                         echo "<tr>";
                         echo "<td> $donnees[prenomN] </td>";
                         echo "<td> $donnees[nomN] </td>";
@@ -254,13 +251,9 @@ require_once 'func_action.php';
                         echo "</tr>";
                     }
                 }
-                
-                
             } else if (!empty($_POST['dispo']['date']) && !empty($_POST['dispo']['heureD']) && !empty($_POST['dispo']['heureF']) && !empty($_POST['nomV'])) {
                 //L'utilisateur a realise une recherche sur une plage horaire ET sur une ville
                 echo "L'utilisateur a realise une recherche sur une plage horaire ET sur une ville";
-
-                // On affiche le resultat
                 while ($donnees = $reponse->fetch()) {
                     //On affiche les données dans le tableau
                     // On vérifie dans un premier temps que les champs saisis
@@ -273,7 +266,39 @@ require_once 'func_action.php';
                     //var_dump($depcom);
                     $nomV = $nomV[0];
 
-                    //if ($nomV == $nomVRecherche) {
+
+                    $requeteA = $bd->query("SELECT heureD FROM disponibilite WHERE  heureD = '" . $donnees['heureD'] . "';");
+                    $heureD = $requeteA->fetch();
+                    $heureD = $heureD[0];
+
+
+                    $requeteB = $bd->query("SELECT heureF FROM disponibilite WHERE  heureF = '" . $donnees['heureF'] . "';");
+                    $heureF = $requeteB->fetch();
+                    $heureF = $heureF[0];
+
+                    $requeteC = $bd->query("SELECT date FROM disponibilite WHERE  date = '" . $donnees['date'] . "';");
+                    $date = $requeteC->fetch();
+                    $date = $date[0];
+                    /*
+                     * echo($donnees['prenomN'].' '.$donnees['nomN']);
+
+                      var_dump($heureD);
+                      var_dump($heureDRecherche);
+                      var_dump($heureD >= $heureDRecherche);
+
+                      var_dump($heureF);
+                      var_dump($heureFRecherche);
+                      var_dump($heureF <= $heureFRecherche);
+
+                      var_dump($date);
+                      var_dump($dateRecherche);
+                      var_dump($date == $dateRecherche); */
+
+                    if (($heureD <= $heureDRecherche) && ($heureF >= $heureFRecherche) && ($date == $dateRecherche) && ($nomV == $nomVRecherche)) {
+
+                        // Nous devons étudier le fait qu'une nounou ne doit pas apparaître 2 fois !
+                        // A moins que l'on part de l'idée qu'il se n'est pas possible
+
                         echo "<tr>";
                         echo "<td> $donnees[prenomN] </td>";
                         echo "<td> $donnees[nomN] </td>";
@@ -293,7 +318,7 @@ require_once 'func_action.php';
                         . '</form></td>';
 
                         echo "</tr>";
-                    //}
+                    }
                 }
             } else {
                 echo "Aucun champ rempli";
