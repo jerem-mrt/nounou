@@ -7,12 +7,15 @@
                 <div class="col-md-6 col-sm-6">
                     <div class="footer-thumb">
                         <h4 class="wow fadeInUp" data-wow-delay="0.4s">Objectif du projet</h4>
-                        <p>L'objectif de ce projet est de concevoir, de développer et de tester un site Web dynamique pour la mise en relation de nounous avec des parents.
-
-
+                        <p>
+                            L'objectif de ce projet est de concevoir, de développer et de tester un <strong>site Web dynamique</strong> pour la mise en relation de nounous avec des parents.
+                        </p>
+                        <p>
                             Les parents choisissent dès lors les nounous en fonction de plusieurs critères comme notamment la disponibilité, les compétences ou les évaluations réalisées par les autres parents.
-                            Notre site web doit différencier trois types d’utilisateur, à savoir les nounous et les parents ainsi que l’administrateur du site.
-                            
+                        </p>
+                        <p>
+                            Notre site web doit différencier trois types d’utilisateur, à savoir les <strong>nounous</strong> et les <strong>parents</strong> ainsi que l’<strong>administrateur</strong> du site.
+
                         </p>
 
 

@@ -40,7 +40,7 @@ if (isset($_GET['id'])) {
      */
     
     
-        $reponse = $bd->query("SELECT prenomE, dateE, restrE, infoE "
+        $reponse = $bd->query("SELECT DISTINCT prenomE, dateE, restrE, infoE "
                 . "FROM enfant, lie, parent "
                 . "WHERE ".$id."=lie.idP AND lie.idE = enfant.idE");
     
