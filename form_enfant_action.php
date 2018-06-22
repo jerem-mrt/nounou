@@ -60,7 +60,7 @@ if (verifyDefinedName(['prenomE[]', 'dateE[]', 'restrE[]', 'infoE[]', 'idP', 'nb
         $bd->exec($requeteC);
         
         }
-        echo"Inscription réussie !";
+        //echo"Inscription réussie !";
         
         /*
          * TENTATIVE D'AJOUTER +SIEURS ENFANTS
@@ -71,9 +71,13 @@ if (verifyDefinedName(['prenomE[]', 'dateE[]', 'restrE[]', 'infoE[]', 'idP', 'nb
             include('form_enfant.php');
         }*/
         
+        header('Location: ' . SITE_URL . 'login.php');
+        exit();
+
+        
     } else {
         echo "Votre enfant déjà inscrit";
     }
 } else {
-    echo "Vous allez être redirigé vers la page d'inscription afin de la compléter.";
+    echo "Inscription incomplète !";
 }

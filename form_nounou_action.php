@@ -51,6 +51,8 @@ if (verifyDefinedName(['nom', 'prenom', 'date', 'telephone', 'email', 'password'
             $bd->query($queryInsert);
             var_dump($queryInsert);
             echo "<p> \n Felicitation votre inscription est réussie. <br /> \n Il ne vous reste plus qu'à attendre que votre compte soit confirmé par l'administrateur.<br /></p>";
+            header('Location: ' . SITE_URL . 'index.php');
+            exit();
         } else {
             echo "Vous êtes déjà inscrit";
         }
