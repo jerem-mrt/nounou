@@ -21,7 +21,7 @@ if (isset($_GET['id'])) {
 
     // On récupère la date de naissance, la date du jour et on stock l'intervalle dans une variable qu'on réutilise pour dire l'âge.
     $dateNaissance = new DateTime($resProfileNounou[0][2]);
-    $dateAujourdhui = date("Y-m-d");;
+    $dateAujourdhui = date("Y-m-d");
 //var_dump($dateAujourdhui);
     $joursARetirer = date("N") - 1;
 //    var_dump($joursARetirer);
