@@ -51,7 +51,7 @@ http://www.tooplate.com/view/2098-health
 
 
      <!-- MAKE AN APPOINTMENT -->
-    <section id="container-login data-stellar-background-ratio="3">
+    <section id="container" - login data-stellar-background-ratio="3">
           <div class="container">
                <div class="row">
                    <div class="col-md-12 col-sm-12" align='center'>
@@ -60,17 +60,21 @@ http://www.tooplate.com/view/2098-health
                        </div>
                        
                        <div class="col-md-12 col-sm-12">
-                           <h5>Avant de vous connecter, merci de nous préciser si ...</h5>
+                           <h5>Avant de vous connecter, merci de nous préciser si vous voulez ...</h5>
                        </div>
                     
                     <div class="col-md-6 col-sm-6">
-                      <h3><a href="form_parent.php">Vous voulez vous inscrire en tant que parent ?</a></h3>   
-                           <i>Insérer une icône ici</i>
+                      <h3><a href="form_parent.php">Vous inscrire en tant que parent ?</a></h3>   
+                           <i><div class="stories-image">
+                                   <a href="form_parent.php"><img src="avatars/icones/parent_icon.png" class="img-responsive" alt=""></a>
+                            </div></i>
                    </div>
                    
                    <div class="col-md-6 col-sm-6">
-                       <h3><a href="form_nounou.php">Vous voulez vous inscrire en tant que nounou ?</a></h3>  
-                       <i>Insérer une icône ici</i>
+                       <h3><a href="form_nounou.php">Vous inscrire en tant que nounou ?</a></h3>  
+                       <i><div class="stories-image">
+                                   <a href="form_nounou.php"><img src="avatars/icones/nounou_icon.png" class="img-responsive" alt=""></a>
+                            </div></i>
                    </div>
                        
                   
@@ -85,6 +89,7 @@ http://www.tooplate.com/view/2098-health
 
      <!-- SCRIPTS -->
      <?php 
+     include 'footer.php';
      script("jquery.js");
      script("bootstrap.min.js");
      script("jquery.sticky.js");
