@@ -5,49 +5,31 @@
  * 
  * 
  */
+session_start();
 require_once 'func_action.php';
 require_once 'func_login.php';
 require_once 'database.php';
+redirectUnconnected('parent', SITE_URL . 'login_parent.php');
 
 // On vérifie que l'utilisateur est bien passé par le boutton submit.
-if (verifyDefinedName(['nomP', 'nomV', 'email', 'password', 'nbEnfants'])) {
+if (verifyDefinedName(['idN', 'dateReserv', 'heureDReserv', 'heureFReserv'])) {
 
     // On vérifie que l'utilisateur a rempli chaque champ.
     if (verifierChamps()) {
         //var_dump($_POST);
-        $nomP = addslashes($_POST['nomP']);
+        // Le formulaire transmet id de la nounou
+        // Nous voulons son nom et son prenom
+        $idN = $_POST['idN'];
+        $requete1 = $bd->query("SELECT nomN FROM nounou WHERE  idN = '" . $idN . "';");
+        $nomN = $requete1->fetch();
+        $nomN = $nomN[0];
 
-        // Le formulaire transmet le nom de la ville, nous souhaitons de notre côté le 'depcom'
-        $nomV = $_POST['nomV'];
-        $requete1 = $bd->query("SELECT depcom FROM ville WHERE  nomV = '" . $nomV . "';");
-        $depcom = $requete1->fetch();
-        $depcom = $depcom[0];
-        $email = $_POST['email'];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $nbEnfants = $_POST['nbEnfants'];
-        var_dump($nbEnfants);
-
-
-
-        // Après avoir vérifié que l'utilisateur n'est pas déjà inscrit, on l'insère dans notre BDD.
-        if (!verifyEmail($bd, $email, 'parent')) {
-
-
-            $requete2 = "INSERT INTO parent (nomP, emailP, passwordP, depcom) VALUES ('" . $nomP . "', '" . $email . "', '" . $password . "', '" . $depcom . "')";
-            $bd->exec($requete2);
-
-            /* echo "<p> \n Felicitation votre inscription est réussie. <br /> \n ";
-              if($nbEnfants > 1){
-              echo "Il ne vous reste plus qu'à lister vos ". $nbEnfants ." enfants.<br /></p>"; // if nbEnfant = 1 ... sinon mettre au pluriel
-              } else { // == 1
-              echo "Il ne vous reste plus qu'à lister votre enfant.<br /></p>";
-              } */
-        } else {
-            echo "Vous êtes déjà inscrit";
-        }
+        $dateReserv = $_POST['dateReserv'];
+        $heureDReserv = $_POST['heureDReserv'];
+        $heureFReserv = $_POST['heureFReserv'];
     }
 } else {
-    echo "Vous allez être redirigé vers la page d'inscription afin de la compléter.";
+    echo "Tous les champs n'ont pas été envoyé !";
 }
 ?>
 
@@ -70,7 +52,7 @@ include 'header.php';
 
     <head>
 
-        <title>Looking For Nounou</title>
+        <title>Looking For Nounou - Réservation</title>
 
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -84,15 +66,14 @@ include 'header.php';
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-<?php
-stylesheet("animate.css");
-stylesheet("bootstrap.min.css");
-stylesheet("font-awesome.min.css");
-stylesheet("owl.carousel.css");
-stylesheet("owl.theme.default.min.css");
-// Main CSS tooplate-style.css
-stylesheet("tooplate-style.css");
-?>
+        <?php
+        stylesheet("animate.css");
+        stylesheet("bootstrap.min.css");
+        stylesheet("font-awesome.min.css");
+        stylesheet("owl.carousel.css");
+        stylesheet("owl.theme.default.min.css");
+        stylesheet("tooplate-style.css");
+        ?>
 
     </head>
     <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
@@ -112,16 +93,20 @@ stylesheet("tooplate-style.css");
             <div class="container">
                 <div class="row">
 
+                    <!-- FORMULAIRE RESERVATION NOUNOU -->
+
+
+
                     <?php
-                    for ($nbEnfInscrit = 1; $nbEnfInscrit <= $nbEnfants; $nbEnfInscrit = $nbEnfInscrit + 1) {
-                        echo'<div class="col-md-12 col-sm-12">
+                    echo'<div class="col-md-12 col-sm-12">
                         <!-- FORMULAIRE D INSCRIPTION DES ENFANTS -->
                         <form id="appointment-form" role="form" method="post" action="form_enfant_action.php" enctype="multipart/form-data">
 
                             <!-- SECTION TITLE -->
                             <div class="section-title wow fadeInUp" data-wow-delay="0.4s">';
-                        echo '<h2 align="center">Inscription Enfant n°' . $nbEnfInscrit . '</h2>';
-
+                    echo '<h2 align="center">Inscription Enfant n°' . $nbEnfInscrit . '</h2>';
+                    
+                    for ($nbEnfInscrit = 1; $nbEnfInscrit <= $nbEnfants; $nbEnfInscrit = $nbEnfInscrit + 1) {
 
                         echo'<div class="wow fadeInUp" data-wow-delay="0.8s">
                                 <div class="col-md-0 col-sm-4">
@@ -148,24 +133,24 @@ stylesheet("tooplate-style.css");
                                     <textarea class="form-control" rows="5" id="infoE[]" name="infoE[]" placeholder="Si vous avez d autres éléments important à déclarer"></textarea>
                                 </div>';
                     }
-                    // Recheche de l'IDP
+// Recheche de l'IDP
 
                     $requete3 = $bd->query("SELECT idP FROM parent WHERE  emailP = '" . $email . "';");
-                    //var_dump($requete1);
+//var_dump($requete1);
                     $idP = $requete3->fetch();
-                    //var_dump($depcom);
+//var_dump($depcom);
                     $idP = $idP[0];
 
                     echo'<input type="hidden" name="idP" value="' . $idP . '"/>';
-                    
+
                     echo'<input type="hidden" name="nbEnfants" value="' . $nbEnfants . '"/>';
-                    
-                    if($nbEnfants == 1){
+
+                    if ($nbEnfants == 1) {
                         echo'<button type="submit" class="form-control" id="cf-submit">Inscrire votre enfant</button>';
                     } else {
-                        echo'<button type="submit" class="form-control" id="cf-submit">Inscrire vos '.$nbEnfants.' enfants</button>';
+                        echo'<button type="submit" class="form-control" id="cf-submit">Inscrire vos ' . $nbEnfants . ' enfants</button>';
                     }
-                    
+
 
                     echo'</div> </form> </div>';
                     ?>
@@ -177,14 +162,14 @@ stylesheet("tooplate-style.css");
 
 
     <!-- SCRIPTS -->
-<?php
-script("bootstrap.min.js");
-script("jquery.sticky.js");
-script("jquery.stellar.min.js");
-script("wow.min.js");
-script("smoothscroll.js");
-script("owl.carousel.min.js");
-script("custom.js");
-?>
+    <?php
+    script("bootstrap.min.js");
+    script("jquery.sticky.js");
+    script("jquery.stellar.min.js");
+    script("wow.min.js");
+    script("smoothscroll.js");
+    script("owl.carousel.min.js");
+    script("custom.js");
+    ?>
 </body>
 </html>

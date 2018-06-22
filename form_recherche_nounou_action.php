@@ -1,18 +1,20 @@
 <?php
+session_start();
 /*
  * FORMULAIRE DE RECHERCHE DE NOUNOU
  * +
  * ACTION DU FORMULAIRE
  */
 
-
+//session_start();
 include 'database.php';
 include 'form.php';
 include 'css.php';
 include 'header.php';
-
 require_once 'func_login.php';
 require_once 'func_action.php';
+//redirectUnconnected('parent', SITE_URL . 'login_parent.php');
+
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -101,15 +103,21 @@ require_once 'func_action.php';
 
                                 <div class="col-md-4 col-sm-12">
                                     <label>Garde ponctuelle </label><p></p>
-                                    <input type="date" name="dispo[date]" value="<?php if (isset($_POST['dispo']['date'])) {
+                                    <input type="date" name="dispo[date]" value="<?php
+                                    if (isset($_POST['dispo']['date'])) {
                                         echo ($_POST['dispo']['date']);
-                                    } ?>" required> 
-                                    de <input type="time" name="dispo[heureD]" value="<?php if (isset($_POST['dispo']['heureD'])) {
+                                    }
+                                    ?>" required> 
+                                    de <input type="time" name="dispo[heureD]" value="<?php
+                                    if (isset($_POST['dispo']['heureD'])) {
                                         echo ($_POST['dispo']['heureD']);
-                                    } ?>" required> 
-                                    à <input type="time" name="dispo[heureF]" value="<?php if (isset($_POST['dispo']['heureF'])) {
-                                        echo ($_POST['dispo']['heureF']);
-                                    } ?>" required>.
+                                    }
+                                    ?>" required> 
+                                    à <input type="time" name="dispo[heureF]" value="<?php
+                                             if (isset($_POST['dispo']['heureF'])) {
+                                                 echo ($_POST['dispo']['heureF']);
+                                             }
+                                    ?>" required>.
                                 </div></p>
 
                                 <!-- Langue parlée -->
@@ -167,7 +175,7 @@ require_once 'func_action.php';
 
 
         // On recupere tout le contenu de la table nounou
-        $reponse = $bd->query('SELECT prenomN, nomN, dateN, depcom, date, heureD, heureF'
+        $reponse = $bd->query('SELECT nounou.idN, prenomN, nomN, dateN, depcom, date, heureD, heureF'
                 . ' FROM disponibilite, nounou '
                 . 'WHERE  nounou.idN = disponibilite.idN');
 
@@ -242,9 +250,14 @@ require_once 'func_action.php';
                         // Ouverture d'un formulaire, et tous les champs sont hidden (valeurs ci-dessus)
                         // Et la méthode post ira vers form_reservation_action.php
                         // /!\ RAJOUTER DES HIDDENS DE L'HEURE ET DE LA DATE /!\ 
-                        echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation_action.php" enctype="multipart/form-data">'
-                        . '<input type="hidden" value="' . $donnees['prenomN'] . '" />'
-                        . '<input type="hidden" value="' . $donnees['nomN'] . '" />'
+
+                        
+
+                        echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation.php" enctype="multipart/form-data">'
+                        . '<input type="hidden" name="idN"  value="' . $donnees['idN'] . '" />'
+                        . '<input type="hidden" name="dateReserv" value="' . $dateRecherche . '" />'
+                        . '<input type="hidden" name="heureDReserv" value="' . $heureDRecherche . '" />'
+                        . '<input type="hidden" name="heureFReserv" value="' . $heureFRecherche . '" />'
                         . '<button type="submit" class="form-control" id="cf-submit">Réserver</button>'
                         . '</form></td>';
 
