@@ -97,7 +97,7 @@ if (isset($_GET['id'])) {
 
 
         <!-- MAKE AN APPOINTMENT -->
-        <section id="container-login data-stellar-background-ratio=3">
+        <section id="container" - login data-stellar-background-ratio="3">
             <div class="container">
                 <div class="row">
                     <div class="row">
@@ -176,7 +176,15 @@ if (isset($_GET['id'])) {
         </section>  
 
         <!--Bouton pour lancer une recherche pour une nounou-->
-
+        
+        <div class="collapse navbar-collapse">
+            <h1>Rechercher une nounou </h1>
+                    <ul class="nav navbar-nav navbar-right">
+                        
+                        <li class="inscription-btn"><a href="form_recherche_nounou_action.php">Pour une garde ponctuelle</a></li>'                         
+                        <li class="inscription-btn"><a href="form_recherche_nounou_langue_action.php">Pour une garde d'enfant en langues étrangères</a></li>
+                    </ul>
+               </div>
         <!--Bouton pour une recherche sur une nounou en fonction de la langue-->
 
 
