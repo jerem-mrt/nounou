@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mer. 20 juin 2018 à 17:00
+-- Généré le :  ven. 22 juin 2018 à 13:52
 -- Version du serveur :  5.7.19
 -- Version de PHP :  5.6.31
 
@@ -56,22 +56,29 @@ CREATE TABLE IF NOT EXISTS `disponibilite` (
   `recurrence` int(1) NOT NULL,
   `heureD` time NOT NULL,
   `heureF` time NOT NULL,
+  `disponible` int(1) NOT NULL COMMENT '0 = Dispo / 1 = Non-Dispo',
   PRIMARY KEY (`idD`),
   KEY `fk-idN` (`idN`),
   KEY `fk-idJ` (`recurrence`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `disponibilite`
 --
 
-INSERT INTO `disponibilite` (`idN`, `idD`, `date`, `recurrence`, `heureD`, `heureF`) VALUES
-(4, 1, '2018-06-20', 0, '08:30:00', '14:00:00'),
-(4, 2, NULL, 0, '00:00:00', '00:00:00'),
-(4, 3, NULL, 0, '11:00:00', '14:00:00'),
-(4, 4, NULL, 0, '00:00:00', '00:00:00'),
-(4, 5, NULL, 0, '11:00:00', '14:00:00'),
-(4, 6, NULL, 0, '00:00:00', '00:00:00');
+INSERT INTO `disponibilite` (`idN`, `idD`, `date`, `recurrence`, `heureD`, `heureF`, `disponible`) VALUES
+(4, 1, '2018-06-20', 0, '08:30:00', '14:00:00', 0),
+(4, 2, '2018-06-21', 0, '08:00:00', '12:00:00', 0),
+(4, 3, '2018-06-19', 0, '11:00:00', '14:00:00', 0),
+(4, 4, '2018-06-21', 0, '15:30:00', '20:00:00', 0),
+(4, 6, '2018-06-23', 0, '18:00:00', '23:45:00', 0),
+(1, 14, '2018-06-23', 0, '18:00:00', '23:30:00', 0),
+(5, 15, '2018-06-22', 0, '12:18:00', '15:40:00', 0),
+(5, 16, '2018-06-26', 0, '13:00:00', '15:00:00', 0),
+(1, 17, '2018-06-25', 0, '13:00:00', '19:00:00', 0),
+(5, 18, '2018-06-25', 0, '14:00:00', '17:30:00', 0),
+(4, 19, '2018-06-25', 0, '12:00:00', '15:00:00', 0),
+(5, 20, '2018-06-25', 0, '20:30:00', '23:50:00', 0);
 
 -- --------------------------------------------------------
 
@@ -112,6 +119,9 @@ DROP TABLE IF EXISTS `garde`;
 CREATE TABLE IF NOT EXISTS `garde` (
   `idE` int(5) NOT NULL,
   `idN` int(5) NOT NULL,
+  `date` date NOT NULL,
+  `heureD` time NOT NULL,
+  `heureF` time NOT NULL,
   KEY `fk-gardeN` (`idN`),
   KEY `fk-gardeE` (`idE`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
