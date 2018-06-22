@@ -24,8 +24,14 @@
                          <li><a href="#google-map" class="smoothScroll">Contact</a></li>-->
                          <?php 
                          if(isset($_SESSION['id'])) {
+                             if($_SESSION['role'] !== 'parent'){
+                                 $prenom = $_SESSION['prenom'];
+                             }
+                             else {
+                                 $prenom = '';
+                             }
                              
-                             echo '<li ><b>' . $_SESSION['prenom'] .' ' . $_SESSION['nom'] . '</b></li>';
+                             echo '<li ><b>' . $prenom .' ' . $_SESSION['nom'] . '</b></li>';
                              echo '<li> (' . $_SESSION['role'] . ')</li>';
                              echo '<li class="appointment-btn deconnexion"><a href="disconnect.php">Se déconnecter</a></li>';
                          

@@ -1,4 +1,5 @@
 <?php
+// Si l'utilisateur n'est pas passé par le formulaire de connexion, on prépare le $_SESSION
 if (!isset($_POST['email'])) {
     session_start();
 }
@@ -7,6 +8,23 @@ require_once 'func_action.php';
 require_once 'func_login.php';
 require_once 'form.php';
 require_once 'css.php';
+
+
+// Procédure de connexion:
+// On vérifie que l'utilisateur est bien passé par le formulaire de connexion
+                        if (verifyDefinedName(['email', 'password'])) {
+                            $email = $_POST['email'];
+                            $password = $_POST['password'];
+
+                            // On vérifie que l'utilisateur est dans la base de données et on le connecte s'il a saisi le bon mot de passe.
+                            if (verifyEmail($bd, 'admin', $email)) {
+                                connectMail($bd, 'admin', $email, $password);
+                                
+                            } else {
+                                echo 'Mot de passe ou identifiant incorrect.';
+                            }
+                        }
+                        redirectUnconnected('admin', SITE_URL."login_admin.php");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -69,19 +87,7 @@ require_once 'css.php';
                 <div class="row">
                     <div class="col-md-12 col-sm-12" align='center'>
                         <?php
-// Procédure de connexion:
-// On vérifie que l'utilisateur est bien passé par le formulaire de connexion
-                        if (verifyDefinedName(['email', 'password'])) {
-                            $email = $_POST['email'];
-                            $password = $_POST['password'];
 
-                            // On vérifie que l'utilisateur est dans la base de données et on le connecte s'il a saisi le bon mot de passe.
-                            if (verifyEmail($bd, 'admin', $email)) {
-                                connectMail($bd, 'admin', $email, $password);
-                            } else {
-                                echo 'Mot de passe ou identifiant incorrect.';
-                            }
-                        }
 
 // Si l'administrateur est connecté
                         if (isset($_SESSION['role'])) {
@@ -97,13 +103,13 @@ require_once 'css.php';
                                         }
 
                                         // S'il s'agit d'une nounou à bloquer
-                                        if (isset($_GET['bloquer'])) {
-                                            if ($_GET['bloquer'] === 'yes') {
-                                                $queryBloquer = $bd->query('UPDATE nounou SET bloqueN = 1 WHERE idN=' . $_GET['idN'] . ';');
-                                            }
-                                            else if ($_GET['bloquer'] === 'undo') {
-                                                $queryBloquer = $bd->query('UPDATE nounou SET bloqueN = 0 WHERE idN=' . $_GET['idN'] . ';');
-                                            }
+                                    }
+                                    if (isset($_GET['bloquer'])) {
+                                        if ($_GET['bloquer'] === 'yes') {
+                                            $q = 'UPDATE nounou SET bloqueN = 1 WHERE idN=' . $_GET['idN'] . ';';
+                                            $queryBloquer = $bd->query('UPDATE nounou SET bloqueN = 1 WHERE idN=' . $_GET['idN'] . ';');
+                                        } else if ($_GET['bloquer'] === 'undo') {
+                                            $queryBloquer = $bd->query('UPDATE nounou SET bloqueN = 0 WHERE idN=' . $_GET['idN'] . ';');
                                         }
                                     }
                                 }
@@ -114,7 +120,7 @@ require_once 'css.php';
 
                                 $queryRecupNounou = $bd->query('SELECT idN, photoN, nomN, prenomN, dateN, emailN, experienceN, presentationN FROM nounou WHERE accepteN = 1 and bloqueN = 0;');
                                 $listeNounouActives = $queryRecupNounou->fetchAll();
-                                
+
                                 $queryRecupNounouBloques = $bd->query('SELECT idN, photoN, nomN, prenomN, dateN, emailN, experienceN, presentationN FROM nounou WHERE accepteN = 1 and bloqueN = 1;');
                                 $listeNounouBloques = $queryRecupNounouBloques->fetchAll();
 
@@ -204,8 +210,8 @@ require_once 'css.php';
                                 echo "</tbody>
 </table>";
                                 echo "</div>";
-                                
-                                 echo "<div id='tabs-3'>
+
+                                echo "<div id='tabs-3'>
  <table class='table'>                                   
         <thead>
     <tr>
@@ -241,7 +247,7 @@ require_once 'css.php';
                                 echo "</div>";
                             }
                         } else {
-                            redirectUnconnected('admin', SITE_URL . 'login_admin.php');
+//                            redirectUnconnected('admin', SITE_URL . 'login_admin.php');
                         }
                         ?>
                     </div>
@@ -249,14 +255,14 @@ require_once 'css.php';
         </section>  
 
         <!-- SCRIPTS -->
-        <?php
-        script("bootstrap.min.js");
-        script("jquery.sticky.js");
-        script("jquery.stellar.min.js");
-        script("wow.min.js");
-        script("smoothscroll.js");
-        script("owl.carousel.min.js");
-        script("custom.js");
-        ?>
+<?php
+script("bootstrap.min.js");
+script("jquery.sticky.js");
+script("jquery.stellar.min.js");
+script("wow.min.js");
+script("smoothscroll.js");
+script("owl.carousel.min.js");
+script("custom.js");
+?>
     </body>
 </html>

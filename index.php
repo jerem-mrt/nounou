@@ -1,4 +1,5 @@
 <?php
+session_start();
 include 'database.php';
 include 'form.php';
 include 'css.php';

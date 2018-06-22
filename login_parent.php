@@ -61,7 +61,7 @@ require_once 'css.php';
                             <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Adresse mail" required autofocus><br>
 
                             <label for="inputPassword">Mot de passe</label>
-                            <input type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
                         
                                 
                                     <input type="hidden" name="role" value="parent">

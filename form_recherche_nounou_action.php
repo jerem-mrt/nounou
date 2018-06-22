@@ -1,20 +1,18 @@
 <?php
 session_start();
+var_dump($_SESSION);
 /*
  * FORMULAIRE DE RECHERCHE DE NOUNOU
  * +
  * ACTION DU FORMULAIRE
  */
-
-//session_start();
 include 'database.php';
 include 'form.php';
 include 'css.php';
 include 'header.php';
 require_once 'func_login.php';
 require_once 'func_action.php';
-//redirectUnconnected('parent', SITE_URL . 'login_parent.php');
-
+redirectUnconnected('parent', SITE_URL . 'login_parent.php');
 ?><!DOCTYPE html>
 <html lang="en">
 
@@ -78,10 +76,10 @@ require_once 'func_action.php';
 
                                 <div class="col-md-0 col-sm-4 ui-widget">
                                     <label for="nomV">Ville</label></p>
-                                    <input id="nomV" type="text" name="nomV" 
+                                <input id="nomV" type="text" name="nomV"
                                     <?php
-                                    if (isset($_POST['nomV'])) {
-                                        echo ('value="' . $_POST['nomV'] . "'");
+                                    if (isset($_POST['nomV']) && !empty($_POST['nomV'])) {
+                                        echo ('value="' . $_POST['nomV'] . '"');
                                     } else {
                                         echo('placeholder="Votre ville"');
                                     }
@@ -114,9 +112,9 @@ require_once 'func_action.php';
                                     }
                                     ?>" required> 
                                     à <input type="time" name="dispo[heureF]" value="<?php
-                                             if (isset($_POST['dispo']['heureF'])) {
-                                                 echo ($_POST['dispo']['heureF']);
-                                             }
+                                    if (isset($_POST['dispo']['heureF'])) {
+                                        echo ($_POST['dispo']['heureF']);
+                                    }
                                     ?>" required>.
                                 </div></p>
 
@@ -177,7 +175,7 @@ require_once 'func_action.php';
         // On recupere tout le contenu de la table nounou
         $reponse = $bd->query('SELECT nounou.idN, prenomN, nomN, dateN, depcom, date, heureD, heureF'
                 . ' FROM disponibilite, nounou '
-                . 'WHERE  nounou.idN = disponibilite.idN');
+                . 'WHERE  nounou.idN = disponibilite.idN and disponibilite.disponible = 1');
 
         if (verifyDefinedName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]', 'nomV'])) {
 
@@ -251,13 +249,15 @@ require_once 'func_action.php';
                         // Et la méthode post ira vers form_reservation_action.php
                         // /!\ RAJOUTER DES HIDDENS DE L'HEURE ET DE LA DATE /!\ 
 
-                        
+
 
                         echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation.php" enctype="multipart/form-data">'
                         . '<input type="hidden" name="idN"  value="' . $donnees['idN'] . '" />'
-                        . '<input type="hidden" name="dateReserv" value="' . $dateRecherche . '" />'
-                        . '<input type="hidden" name="heureDReserv" value="' . $heureDRecherche . '" />'
-                        . '<input type="hidden" name="heureFReserv" value="' . $heureFRecherche . '" />'
+                        . '<input type="hidden" name="nomNounou"  value="' . $donnees['nomN'] . '" />' .
+                        '<input name="prenomNounou" type="hidden" value="' . $donnees['prenomN'] . '" />'
+                        . '<input type="hidden" name="dateReserv" value="' . $_POST['dispo']['date'] . '" />'
+                        . '<input type="hidden" name="heureDReserv" value="' . $_POST['dispo']['heureD'] . '" />'
+                        . '<input type="hidden" name="heureFReserv" value="' . $_POST['dispo']['heureF'] . '" />'
                         . '<button type="submit" class="form-control" id="cf-submit">Réserver</button>'
                         . '</form></td>';
 
@@ -324,9 +324,13 @@ require_once 'func_action.php';
                         // Ouverture d'un formulaire, et tous les champs sont hidden (valeurs ci-dessus)
                         // Et la méthode post ira vers form_reservation_action.php
                         // /!\ RAJOUTER DES HIDDENS DE L'HEURE ET DE LA DATE /!\ 
-                        echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation_action.php" enctype="multipart/form-data">'
-                        . '<input type="hidden" value="' . $donnees['prenomN'] . '" />'
-                        . '<input type="hidden" value="' . $donnees['nomN'] . '" />'
+                        echo'<td> <form id="appointment-form" role="form" method="post" action="form_reservation.php" enctype="multipart/form-data">'
+                        . '<input name="idN" type="hidden" value="' . $donnees['idN'] . '" />'
+                        . '<input name="prenomNounou" type="hidden" value="' . $donnees['prenomN'] . '" />'
+                        . '<input name="nomNounou" type="hidden" value="' . $donnees['nomN'] . '" />'
+                        . '<input name="dateReserv" type="hidden" value="' . $_POST['dispo']['date'] . '" />'
+                        . '<input name="heureDReserv" type="hidden" value="' . $_POST['dispo']['heureD'] . '" />'
+                        . '<input name="heureFReserv" type="hidden" value="' . $_POST['dispo']['heureF'] . '" />'
                         . '<button type="submit" class="form-control" id="cf-submit">Réserver</button>'
                         . '</form></td>';
 

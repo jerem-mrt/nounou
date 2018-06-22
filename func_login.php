@@ -116,7 +116,10 @@ function connectMail($bd, $table, $email, $password) {
                 session_start();
                 $id = whichId4Mail($bd, $table, $email);
                 $_SESSION['id'] = $id;
+                // Les parents ne disposent pas d'un prénom.
+                if($table !== 'parent'){
                 $_SESSION['prenom'] = whichPrenom4Id($bd, $table, $id);
+                }
                 $_SESSION['nom'] = whichNom4Id($bd, $table, $id);
                 $_SESSION['role'] = $table;
                 ;
