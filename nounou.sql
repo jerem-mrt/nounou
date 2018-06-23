@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  ven. 22 juin 2018 à 13:52
--- Version du serveur :  5.7.19
--- Version de PHP :  5.6.31
+-- Généré le :  sam. 23 juin 2018 à 15:50
+-- Version du serveur :  5.7.21
+-- Version de PHP :  5.6.35
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,7 +40,14 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `telephoneA` float(10,0) NOT NULL,
   `presentationA` varchar(255) NOT NULL,
   PRIMARY KEY (`idA`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `admin`
+--
+
+INSERT INTO `admin` (`idA`, `prenomA`, `nomA`, `dateA`, `emailA`, `passwordA`, `sessionA`, `telephoneA`, `presentationA`) VALUES
+(1, 'Admin', 'Admin', '1999-12-31', 'admin@admin.fr', '$2y$10$b4x.iDHUMtPkX4DHSSo5IeGvkOR0jlqpKDEDVRRmJ4lK7gxQL7TEC', NULL, 0, '0');
 
 -- --------------------------------------------------------
 
@@ -56,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `disponibilite` (
   `recurrence` int(1) NOT NULL,
   `heureD` time NOT NULL,
   `heureF` time NOT NULL,
-  `disponible` int(1) NOT NULL COMMENT '0 = Dispo / 1 = Non-Dispo',
+  `disponible` int(1) NOT NULL DEFAULT '1' COMMENT '0 = Non-Dispo / 1 = Dispo',
   PRIMARY KEY (`idD`),
   KEY `fk-idN` (`idN`),
   KEY `fk-idJ` (`recurrence`)
@@ -73,12 +80,12 @@ INSERT INTO `disponibilite` (`idN`, `idD`, `date`, `recurrence`, `heureD`, `heur
 (4, 4, '2018-06-21', 0, '15:30:00', '20:00:00', 0),
 (4, 6, '2018-06-23', 0, '18:00:00', '23:45:00', 0),
 (1, 14, '2018-06-23', 0, '18:00:00', '23:30:00', 0),
-(5, 15, '2018-06-22', 0, '12:18:00', '15:40:00', 0),
-(5, 16, '2018-06-26', 0, '13:00:00', '15:00:00', 0),
+(5, 15, '2018-06-22', 0, '12:18:00', '15:40:00', 1),
+(5, 16, '2018-06-26', 0, '13:00:00', '15:00:00', 1),
 (1, 17, '2018-06-25', 0, '13:00:00', '19:00:00', 0),
-(5, 18, '2018-06-25', 0, '14:00:00', '17:30:00', 0),
+(5, 18, '2018-06-25', 0, '14:00:00', '17:30:00', 1),
 (4, 19, '2018-06-25', 0, '12:00:00', '15:00:00', 0),
-(5, 20, '2018-06-25', 0, '20:30:00', '23:50:00', 0);
+(5, 20, '2018-06-25', 0, '20:30:00', '23:50:00', 1);
 
 -- --------------------------------------------------------
 
@@ -94,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `enfant` (
   `restrE` varchar(25) DEFAULT NULL,
   `infoE` varchar(255) DEFAULT NULL COMMENT 'Informations sur l''enfant à savoir',
   PRIMARY KEY (`idE`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `enfant`
@@ -107,7 +114,10 @@ INSERT INTO `enfant` (`idE`, `prenomE`, `dateE`, `restrE`, `infoE`) VALUES
 (17, 'boby', '2002-06-07', 'NON', 'NON'),
 (18, 'Titouan', '2009-12-06', 'Non', 'Gay'),
 (19, 'Tim', '2018-02-12', 'Non', 'Gentil'),
-(20, 'Tam', '2019-05-04', 'Non', 'Gay');
+(20, 'Tam', '2019-05-04', 'Non', 'Gay'),
+(21, 'Mathilde', '2010-01-01', 'Gluten.', ''),
+(22, 'Zélie', '2005-01-02', 'Lactose.', ''),
+(23, 'Juliette', '2017-09-02', 'Poisson.', '');
 
 -- --------------------------------------------------------
 
@@ -117,14 +127,34 @@ INSERT INTO `enfant` (`idE`, `prenomE`, `dateE`, `restrE`, `infoE`) VALUES
 
 DROP TABLE IF EXISTS `garde`;
 CREATE TABLE IF NOT EXISTS `garde` (
+  `idG` int(11) NOT NULL AUTO_INCREMENT,
   `idE` int(5) NOT NULL,
   `idN` int(5) NOT NULL,
   `date` date NOT NULL,
   `heureD` time NOT NULL,
   `heureF` time NOT NULL,
+  `note` int(1) DEFAULT NULL,
+  `appreciation` varchar(255) DEFAULT NULL,
+  `cout` int(11) DEFAULT NULL,
+  `heureDreel` time DEFAULT NULL,
+  `heureFreel` time DEFAULT NULL,
+  PRIMARY KEY (`idG`),
   KEY `fk-gardeN` (`idN`),
   KEY `fk-gardeE` (`idE`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `garde`
+--
+
+INSERT INTO `garde` (`idG`, `idE`, `idN`, `date`, `heureD`, `heureF`, `note`, `appreciation`, `cout`, `heureDreel`, `heureFreel`) VALUES
+(1, 21, 1, '2018-06-25', '14:00:00', '15:00:00', NULL, '', NULL, NULL, NULL),
+(2, 22, 1, '2018-06-25', '14:00:00', '15:00:00', NULL, '', NULL, NULL, NULL),
+(3, 21, 1, '2018-06-25', '14:00:00', '15:00:00', NULL, '', NULL, NULL, NULL),
+(4, 22, 1, '2018-06-25', '14:00:00', '15:00:00', NULL, '', NULL, NULL, NULL),
+(5, 21, 4, '2018-06-25', '14:00:00', '15:00:00', NULL, '', NULL, NULL, NULL),
+(6, 22, 4, '2018-06-25', '14:00:00', '15:00:00', NULL, '', NULL, NULL, NULL),
+(7, 21, 5, '2018-06-01', '00:00:00', '23:00:00', 5, 'Giselle s\'est très bien occupée de nos enfants.', 84, '00:00:00', '12:00:00');
 
 -- --------------------------------------------------------
 
@@ -211,7 +241,10 @@ INSERT INTO `lie` (`idP`, `idE`) VALUES
 (17, 17),
 (17, 18),
 (18, 19),
-(18, 20);
+(18, 20),
+(20, 21),
+(20, 22),
+(21, 23);
 
 -- --------------------------------------------------------
 
@@ -244,8 +277,8 @@ CREATE TABLE IF NOT EXISTS `nounou` (
 --
 
 INSERT INTO `nounou` (`idN`, `prenomN`, `nomN`, `dateN`, `emailN`, `passwordN`, `sessionN`, `telephoneN`, `presentationN`, `experienceN`, `photoN`, `accepteN`, `bloqueN`, `depcom`) VALUES
-(1, 'Jeanne', 'Garros', '1995-01-01', 'jgarros@gmail.com', '$2y$10$has7fNx5XDj1P0zA1EqSdOLTRrFOjNkw.bSaqV7Cd8DKOemcD2gZK', NULL, 630959808, 'fgd\'sfg', 'fgdg', '0f0d55d5b773ce54f32e9a9ad570087fjpg', 0, 0, 1012),
-(4, 'Jérémie', 'Marotte', '1997-11-07', 'jeremie.marotte@gmail.com', '$2y$10$RB5yK/c.2SqjdbOvZYKpneVmR0ByLwezVkJvmYl7tFHZaf0W6Jt12', NULL, 750247808, 'efv', 'efb', '388859d5de1241b7d9a01d96e66d38d7jpg', 0, 0, 80679),
+(1, 'Jeanne', 'Garros', '1985-01-01', 'jgarros@gmail.com', '$2y$10$has7fNx5XDj1P0zA1EqSdOLTRrFOjNkw.bSaqV7Cd8DKOemcD2gZK', NULL, 630959808, 'J\'ai toujours aimé garder des enfants depuis mon plus tendre jeune âge.', 'Baby-sitting quand j\'étais jeune.', '0f0d55d5b773ce54f32e9a9ad570087f.jpg', 0, 0, 59350),
+(4, 'Jérémie', 'Marotte', '1997-11-07', 'jeremie.marotte@gmail.com', '$2y$10$RB5yK/c.2SqjdbOvZYKpneVmR0ByLwezVkJvmYl7tFHZaf0W6Jt12', NULL, 750247808, 'Picard de naissance, je vis à Troyes pour les études.', '-', '388859d5de1241b7d9a01d96e66d38d7.jpg', 1, 0, 80679),
 (5, 'Giselle', 'Wamp', '1960-12-23', 'g.wamp@gmail.com', '$2y$10$kyvgPpxqg5by3JQ48AlDeujfSIsoAF1DpzlcheHGt7ZA51bo4350C', NULL, 687567744, 'Troyenne de naissance, je vis maintenant pres de l UTT', 'A deja garde plusieurs fois les enfants du maire', 'db505117684ee9741034c6c6a2c2e2adpng', 0, 0, 10325);
 
 -- --------------------------------------------------------
@@ -263,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `parent` (
   `depcom` int(5) NOT NULL,
   PRIMARY KEY (`idP`),
   KEY `fk-habiteP` (`depcom`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `parent`
@@ -273,7 +306,8 @@ INSERT INTO `parent` (`idP`, `nomP`, `emailP`, `passwordP`, `depcom`) VALUES
 (16, 'Chicharito', 'mexique@gmail.com', '$2y$10$UokgSh7th1MST.8IAdaDBerCCjLgybh5Ezn0yNcvakBnPU.Npxe4a', 1244),
 (17, 'Bernales', 'bernales@gmail.com', '$2y$10$JhxLfHWrWeS8xddHjz6Wbe/YZ9/2wUJ8UHZkF.G/QIVsKDN/5/fdi', 19122),
 (18, 'Galliot', 'galliot@gmail.com', '$2y$10$SXpLcGSLOvEc7VQfMjVTz.ta.OHKXgR5oKTdPXGakrGlTgRDfZFXC', 14462),
-(19, 'Galliot', 'galliot@gmail.com', '$2y$10$wIRC4NpPaP2QkAGkB5HrWuuD.SJxFuM.X/GUeLN7t9/.Qs1ZnlzFm', 14462);
+(20, 'Azavant', 'fanny.azavant@gmail.com', '$2y$10$Uhj6OAUGR3X.AlsRq6pEceaKYikO/lPKQ74xaE9dEKFqC5MMpnkNi', 80679),
+(21, 'Texaco', 'texaco@gmail.com', '$2y$10$vXqbmh.COq4393b9lnjzk.41.UanZwDQnm4KGLJT9BmxxjRxeGFx6', 75056);
 
 -- --------------------------------------------------------
 
