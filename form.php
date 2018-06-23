@@ -55,9 +55,14 @@ function case_a_cocher($liste) {
 
 ;
 
-function fromTimetoTime($name) {
-    echo "de <input type='time' name='creneaux" . $name . "[]' > à <input type='time' name='creneaux" . $name . "[]' > ";
+function inputTime($name){
+    echo "<input type='time' name='" . $name . "' " . "id='" . $name . "'>";
 }
+
+function fromTimetoTime($name) {
+    echo "de " . inputTime('creneaux'.$name.'[]') . " à " . inputTime('creneaux'.$name.'[]');
+}
+
 
 function listeCreneauxJours($liste) {
     foreach ($liste as $value) {
@@ -114,13 +119,13 @@ function formDemieHeure($name) {
         }
     }
     
-    echo "<select name='hcreneaux" . $name . "[]'>";
+    echo "<select name='" . $name . "[]'>";
     foreach ($heures as $key) {
             echo "<option>$key</option>";
     }
     echo "</select>";
     
-    echo " : <select name='mcreneaux" . $name . "[]'>";
+    echo " : <select name=" . $name . "[]'>";
     
     foreach ($minutes as $key) {
             echo "<option>$key</option>";

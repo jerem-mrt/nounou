@@ -175,7 +175,7 @@ redirectUnconnected('parent', SITE_URL . 'login_parent.php');
         // On recupere tout le contenu de la table nounou
         $reponse = $bd->query('SELECT nounou.idN, prenomN, nomN, dateN, depcom, date, heureD, heureF'
                 . ' FROM disponibilite, nounou '
-                . 'WHERE  nounou.idN = disponibilite.idN and disponibilite.disponible = 1');
+                . 'WHERE  nounou.idN = disponibilite.idN and disponibilite.disponible = 1 AND bloqueN = 0');
 
         if (verifyDefinedName(['dispo[date]', 'dispo[heureD]', 'dispo[heureF]', 'nomV'])) {
 

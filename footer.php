@@ -1,5 +1,4 @@
 <!-- FOOTER -->
-<html>
     <footer data-stellar-background-ratio="5">
         <div class="container">
             <div class="row">

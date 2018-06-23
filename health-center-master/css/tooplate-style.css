@@ -789,7 +789,7 @@ http://www.tooplate.com/view/2098-health
   }
 
   #appointment input {
-    height: 30px;
+    height: 20px;
     width : auto;
   }
 
@@ -1078,25 +1078,25 @@ http://www.tooplate.com/view/2098-health
   }
 
   .champProfile {
-      margin-top: 10;
+      margin-top: 10px;
       font-weight: bold;
       vertical-align: middle;
       text-align: left;
-      padding-top: 20;
+      padding-top: 20px;
   }
   
     .champProfile .top, .description .top {
-      margin-top: 10;
-      padding-top : 10;
+      margin-top: 10px;
+      padding-top : 10px;
       vertical-align: middle;
       text-align: center;
   }
   
     .description {
-      margin-top: 10;
+      margin-top: 10px;
       vertical-align: middle;
       text-align: center;
-      padding-top: 20;
+      padding-top: 20px;
   }
   
   .bouton-garde {
@@ -1113,10 +1113,10 @@ http://www.tooplate.com/view/2098-health
   }
 
   .bouton-garde {
-    background: e0e0e0;
+    background: #e0e0e0;
     color: #ffffff !important;
   }
   
   .confirmerGardes .alert {
-      margin-top: 15;
+      margin-top: 15px;
   }
