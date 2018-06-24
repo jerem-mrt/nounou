@@ -53,13 +53,13 @@ redirectUnconnected('admin', SITE_URL . "login_admin.php");
             });
         </script>
         <?php
-//        stylesheet("animate.css");
-//        stylesheet("bootstrap.min.css");
-//        stylesheet("font-awesome.min.css");
-//        stylesheet("owl.carousel.css");
-//        stylesheet("owl.theme.default.min.css");
-//// Main CSS tooplate-style.css
-//        stylesheet("tooplate-style.css");
+        stylesheet("animate.css");
+        stylesheet("bootstrap.min.css");
+        stylesheet("font-awesome.min.css");
+        stylesheet("owl.carousel.css");
+        stylesheet("owl.theme.default.min.css");
+// Main CSS tooplate-style.css
+        stylesheet("tooplate-style.css");
         ?>
 
     </head>
@@ -139,7 +139,7 @@ redirectUnconnected('admin', SITE_URL . "login_admin.php");
     <li><a href='#tabs-4'>Statistiques du site</a></li>
   </ul>";
 // On ouvre un tableau dans lequel on va les lister
-                                echo "<div id='tabs-1'>;
+                                echo "<div id='tabs-1'>
             <table class='table'>
   <thead>
     <tr>

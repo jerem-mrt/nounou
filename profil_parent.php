@@ -43,12 +43,7 @@ $reponse = $bd->query("SELECT DISTINCT prenomE, dateE, restrE, infoE "
 <html lang="fr">
     <head>
 
-        <title>Looking for Nounou - Connection Parent</title>
-
-
-        Template 2098 Health
-
-        http://www.tooplate.com/view/2098-health
+        
 
 
         <meta charset="UTF-8">
@@ -58,7 +53,7 @@ $reponse = $bd->query("SELECT DISTINCT prenomE, dateE, restrE, infoE "
         <meta name="author" content="Tooplate">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-        //<?php
+        <?php
         stylesheet("animate.css");
         stylesheet("bootstrap.min.css");
         stylesheet("font-awesome.min.css");
@@ -70,7 +65,6 @@ $reponse = $bd->query("SELECT DISTINCT prenomE, dateE, restrE, infoE "
     </head>
     <body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
 
-        PRE LOADER 
         <section class="preloader">
             <div class="spinner">
 
@@ -253,7 +247,7 @@ $reponse = $bd->query("SELECT DISTINCT prenomE, dateE, restrE, infoE "
                                 
                                 $reqlisteGardesConfirmees = $bd->query("SELECT idN, date, heureDreel, heureFreel, cout, note FROM garde WHERE note IS NOT NULL AND date <= CURRENT_DATE() and idE IN (SELECT idE FROM lie WHERE idP=" . $_SESSION['id'] . ")");
                                 $listeGardesConfirmees = $reqlisteGardesConfirmees->fetchAll();
-                                var_dump($listeGardesConfirmees);
+//                                var_dump($listeGardesConfirmees);
                                 echo "<h3>Gardes confirmées</h3>";
                                 echo "<table class='table'>
   <thead>
