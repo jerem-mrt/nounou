@@ -12,19 +12,18 @@ require_once 'css.php';
 
 // Procédure de connexion:
 // On vérifie que l'utilisateur est bien passé par le formulaire de connexion
-                        if (verifyDefinedName(['email', 'password'])) {
-                            $email = $_POST['email'];
-                            $password = $_POST['password'];
+if (verifyDefinedName(['email', 'password'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-                            // On vérifie que l'utilisateur est dans la base de données et on le connecte s'il a saisi le bon mot de passe.
-                            if (verifyEmail($bd, 'admin', $email)) {
-                                connectMail($bd, 'admin', $email, $password);
-                                
-                            } else {
-                                echo 'Mot de passe ou identifiant incorrect.';
-                            }
-                        }
-                        redirectUnconnected('admin', SITE_URL."login_admin.php");
+    // On vérifie que l'utilisateur est dans la base de données et on le connecte s'il a saisi le bon mot de passe.
+    if (verifyEmail($bd, 'admin', $email)) {
+        connectMail($bd, 'admin', $email, $password);
+    } else {
+        echo 'Mot de passe ou identifiant incorrect.';
+    }
+}
+redirectUnconnected('admin', SITE_URL . "login_admin.php");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -54,13 +53,13 @@ require_once 'css.php';
             });
         </script>
         <?php
-        stylesheet("animate.css");
-        stylesheet("bootstrap.min.css");
-        stylesheet("font-awesome.min.css");
-        stylesheet("owl.carousel.css");
-        stylesheet("owl.theme.default.min.css");
-// Main CSS tooplate-style.css
-        stylesheet("tooplate-style.css");
+//        stylesheet("animate.css");
+//        stylesheet("bootstrap.min.css");
+//        stylesheet("font-awesome.min.css");
+//        stylesheet("owl.carousel.css");
+//        stylesheet("owl.theme.default.min.css");
+//// Main CSS tooplate-style.css
+//        stylesheet("tooplate-style.css");
         ?>
 
     </head>
@@ -76,7 +75,8 @@ require_once 'css.php';
         </section>
 
 
-        <?php include 'menu.php'; ?>
+        <?php include 'menu.php';
+        ?>
 
 
 
@@ -87,11 +87,9 @@ require_once 'css.php';
                 <div class="row">
                     <div class="col-md-12 col-sm-12" align='center'>
                         <?php
-
-
 // Si l'administrateur est connecté
                         if (isset($_SESSION['role'])) {
-                            if ($_SESSION['role'] = 'admin') {
+                            if ($_SESSION['role'] === 'admin') {
                                 // ... et qu'il a lancé une demande d'acceptation ou de refus (à travers les liens $_GET on traite sa demande
                                 if (isset($_GET['idN'])) {
                                     // S'il s'agit d'une candidature à traiter
@@ -138,6 +136,7 @@ require_once 'css.php';
     <li><a href='#tabs-1'>Candidatures en attente de validation</a></li>
     <li><a href='#tabs-2'>Nounous</a></li>
     <li><a href='#tabs-3'>Nounous bloquées</a></li>
+    <li><a href='#tabs-4'>Statistiques du site</a></li>
   </ul>";
 // On ouvre un tableau dans lequel on va les lister
                                 echo "<div id='tabs-1'>;
@@ -243,11 +242,34 @@ require_once 'css.php';
                                 }
 
                                 echo "</tbody>
-</table>";
+</table>
+</div>";
+                                echo "<div id='tabs-4'>";
+                                echo "<form method='post' action='admin.php#tabs-4'>";
+                                echo"Je souhaite connaître le bénéfice réalisé entre ";
+                                echo "le <input type='date' name='dateA'> et le <input type='date' name='dateB'>";
+                                echo "<button type ='submit'>Calculer le bénéfice</button>"
+                                . "</form>";
+
+                                function profit($bd, $dateA, $dateB) {
+                                    $queryresultatMois = $bd->query("SELECT sum(cout) BENEFICE FROM garde WHERE note IS NOT NULL AND date BETWEEN '" . $dateA . "' AND '" . $dateB . "';");
+                                    $resultatMois = $queryresultatMois->fetch();
+                                    if ($resultatMois[0] != 0 ) {
+                                        $res = $resultatMois[0] . "€ ont été récoltés entre le " . $dateA . " et le " . $dateB . ".";
+                                    } else {
+                                        $res = "Aucun bénéfice n'a été réalisé entre le " . $dateA . " et le " . $dateB . ".";
+                                    }
+
+                                    return $res;
+                                }
+
+                                if (isset($_POST['dateA']) && isset($_POST['dateB'])) {
+                                    echo profit($bd, $_POST['dateA'], $_POST['dateB']);
+                                }
                                 echo "</div>";
                             }
                         } else {
-//                            redirectUnconnected('admin', SITE_URL . 'login_admin.php');
+                            redirectUnconnected('admin', SITE_URL . 'login_admin.php');
                         }
                         ?>
                     </div>
