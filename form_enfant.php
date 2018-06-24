@@ -144,7 +144,7 @@ stylesheet("tooplate-style.css");
 
                                 <div class="col-md-12 col-sm-12">
                                     <label for="infoE">Informations générales</label>
-                                    <p>Si "non", ecrivez le</p>
+                                    <p>Saisir "Non" ou sinon les lister :</p>
                                     <textarea class="form-control" rows="5" id="infoE[]" name="infoE[]" placeholder="Si vous avez d autres éléments important à déclarer"></textarea>
                                 </div>';
                     }
