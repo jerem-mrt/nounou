@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  sam. 23 juin 2018 à 15:50
--- Version du serveur :  5.7.21
--- Version de PHP :  5.6.35
+-- Généré le :  Dim 24 juin 2018 à 16:04
+-- Version du serveur :  5.7.19
+-- Version de PHP :  5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -111,13 +111,13 @@ INSERT INTO `enfant` (`idE`, `prenomE`, `dateE`, `restrE`, `infoE`) VALUES
 (14, 'Tito', '2009-12-09', 'Non', 'Aime les churros'),
 (15, 'Titi', '2007-07-07', 'Allergie tapas', 'Non'),
 (16, 'Tita', '2012-12-12', 'Non', 'Non'),
-(17, 'boby', '2002-06-07', 'NON', 'NON'),
-(18, 'Titouan', '2009-12-06', 'Non', 'Gay'),
+(17, 'boby', '2002-06-07', 'NON', 'Non'),
+(18, 'Titouan', '2009-12-06', 'Non', 'Aime regarder la télé avant d\'aller se coucher.'),
 (19, 'Tim', '2018-02-12', 'Non', 'Gentil'),
-(20, 'Tam', '2019-05-04', 'Non', 'Gay'),
-(21, 'Mathilde', '2010-01-01', 'Gluten.', ''),
-(22, 'Zélie', '2005-01-02', 'Lactose.', ''),
-(23, 'Juliette', '2017-09-02', 'Poisson.', '');
+(20, 'Tam', '2019-05-04', 'Non', 'Sommeil léger'),
+(21, 'Mathilde', '2010-01-01', 'Gluten.', 'Non'),
+(22, 'Zélie', '2005-01-02', 'Lactose', 'Non'),
+(23, 'Juliette', '2017-09-02', 'Poisson.', 'Non');
 
 -- --------------------------------------------------------
 
@@ -326,20 +326,6 @@ CREATE TABLE IF NOT EXISTS `parle` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `possederest`
---
-
-DROP TABLE IF EXISTS `possederest`;
-CREATE TABLE IF NOT EXISTS `possederest` (
-  `idE` int(5) NOT NULL,
-  `idR` int(3) NOT NULL,
-  KEY `fk_idERest` (`idE`),
-  KEY `fk_idRRest` (`idR`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `reserve`
 --
 
@@ -350,19 +336,6 @@ CREATE TABLE IF NOT EXISTS `reserve` (
   KEY `fk-reserveN` (`idN`),
   KEY `fk-reserveP` (`idP`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `restrictional`
---
-
-DROP TABLE IF EXISTS `restrictional`;
-CREATE TABLE IF NOT EXISTS `restrictional` (
-  `idR` int(3) NOT NULL AUTO_INCREMENT,
-  `nomR` varchar(25) NOT NULL,
-  PRIMARY KEY (`idR`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -36742,13 +36715,6 @@ ALTER TABLE `parent`
 ALTER TABLE `parle`
   ADD CONSTRAINT `fk-parleA` FOREIGN KEY (`abreviation`) REFERENCES `langue` (`abreviation`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk-parleN` FOREIGN KEY (`idN`) REFERENCES `nounou` (`idN`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `possederest`
---
-ALTER TABLE `possederest`
-  ADD CONSTRAINT `fk_idERest` FOREIGN KEY (`idE`) REFERENCES `enfant` (`idE`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_idRRest` FOREIGN KEY (`idR`) REFERENCES `restrictional` (`idR`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `reserve`
