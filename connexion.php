@@ -12,9 +12,9 @@ include 'database.php';
         if (isset($_POST) && isset($_POST['email']) && isset($_POST['password'])) {
             $email = $_POST['email'];
             $password = $_POST['password'];
-            //    var_dump($password);
-
+            var_dump($_POST);
             if ($_POST['role'] === 'nounou') {
+
                 if (verifyEmail($bd, 'nounou', $email)) {
                     $id = whichId4Mail($bd, 'nounou', $email);
                     if (checkOutBloque($bd, $id)) {
@@ -33,14 +33,14 @@ include 'database.php';
                         //                var_dump(checkOutBloque($bd, $id));
                         //                var_dump(checkOutCandidature($bd, $id));
                     }
-                } else if ($_POST === 'parent' && verifyEmail($bd, 'parent', $email)) {
-                    connectMail($bd, 'parent', $email, $password);
-                    $id = whichId4Mail($bd, 'parent', $email);
-                    connectMail($bd, 'parent', $email, $password);
-                    echo redirectConnexion('parent', $id);
-                } else {
-                    echo 'Mot de passe ou identifiant incorrect.';
                 }
+            } else if (($_POST['role'] === 'parent') && (verifyEmail($bd, 'parent', $email))) {
+                connectMail($bd, 'parent', $email, $password);
+                $id = whichId4Mail($bd, 'parent', $email);
+                echo redirectConnexion('parent', $id);
+                echo "Vous allez être redirigé vers votre profil.";
+            } else {
+                echo 'Mot de passe ou identifiant incorrect.';
             }
         }
         ?>

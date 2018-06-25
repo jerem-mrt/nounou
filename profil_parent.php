@@ -200,6 +200,7 @@ $reponse = $bd->query("SELECT DISTINCT prenomE, dateE, restrE, infoE "
                                     echo "<input type='hidden' name='heureD' value='" . $value['heureD'] . "'> \n";
                                     echo "<input type='hidden' name='heureF' value='" . $value['heureF'] . "'><br>\n";
                                     echo "<button class='btn btn-primary' type='submit'>Confirmer la garde</button>";
+                                    echo "</div>";
                                     echo "</form>";
                                 }
                             } else {

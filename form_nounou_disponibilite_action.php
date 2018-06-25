@@ -93,6 +93,7 @@ echo 'je suis là';
                 }
             }
         }
-//        echo redirectConnexion('nounou', $_SESSION['id']);
+        echo "Vos disponibilités ont bien été ajoutées. Vous allez être redirigés vers votre profil.";
+        echo redirectConnexion('nounou', $_SESSION['id']);
     }
     ?>
