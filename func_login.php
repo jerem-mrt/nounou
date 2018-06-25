@@ -221,7 +221,7 @@ function redirectConnexion($role, $id){
     
     return "<script>setTimeout(function() {
   window.location.href='".SITE_URL. $chemin ."';"."
-},5000);
+},4000);
 </script>";
     
 }

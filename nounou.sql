@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  Dim 24 juin 2018 à 17:59
+-- Généré le :  lun. 25 juin 2018 à 09:39
 -- Version du serveur :  5.7.21
 -- Version de PHP :  5.6.35
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `disponibilite` (
   `idN` int(5) NOT NULL,
   `idD` int(5) NOT NULL AUTO_INCREMENT,
   `date` date DEFAULT NULL,
-  `recurrence` int(1) NOT NULL,
+  `recurrence` int(1) DEFAULT NULL,
   `heureD` time NOT NULL,
   `heureF` time NOT NULL,
   `disponible` int(1) NOT NULL DEFAULT '1' COMMENT '0 = Non-Dispo / 1 = Dispo',
@@ -266,7 +266,7 @@ CREATE TABLE IF NOT EXISTS `nounou` (
   `depcom` int(5) NOT NULL,
   PRIMARY KEY (`idN`),
   KEY `fk-habiteN` (`depcom`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `nounou`

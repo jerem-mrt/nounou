@@ -12,7 +12,7 @@ redirectUnconnected('nounou', SITE_URL . 'login_nounou.php');
 
 <div class="col-md-12 col-sm-12">
     <?php
-    var_dump($_POST);
+//    var_dump($_POST);
     if (verifierChamps()) {
         //Si le choix a été fait d'ajouter une disponibilité récurrente, on récupère laquelle.
         $recurrence = $_POST['recurrence'];
@@ -93,5 +93,6 @@ echo 'je suis là';
                 }
             }
         }
+//        echo redirectConnexion('nounou', $_SESSION['id']);
     }
     ?>
