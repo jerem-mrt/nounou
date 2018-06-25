@@ -136,7 +136,7 @@ script("wow.min.js");
 script("smoothscroll.js");
 script("owl.carousel.min.js");
 script("custom.js");
-//script("autocompleteVille.js");
+
 ?>
     </body>
 
