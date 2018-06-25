@@ -184,7 +184,7 @@ if (isset($_GET['id'])) {
                                 $reqlisteDispoO = $bd->query("SELECT count(*) NB_RES FROM disponibilite WHERE idN=" . $id . " AND disponible = 1;");
                                 $listeDispoO = $reqlisteDispoO->fetchAll();
                                 if ($listeDispoO[0][0] !== 0) {
-                                    $reqlisteDispo = $bd->query("SELECT date, heureD, heureF FROM disponibilite WHERE idN=" . $id . " AND disponible = 1;");
+                                    $reqlisteDispo = $bd->query("SELECT date, heureD, heureF FROM disponibilite WHERE idN=" . $id . " AND disponible = 1 ORDER BY date, heureD;");
                                     $listeDispo = $reqlisteDispo->fetchAll();
                                     echo "<ul>Je suis disponible :";
                                     foreach ($listeDispo as $key => $value) {

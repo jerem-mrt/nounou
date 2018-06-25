@@ -206,5 +206,26 @@ function verifyPonctuelleAlreadySaved($bd, $idN, $date, $heureD, $heureF) {
     
 }
 
+// Cette fonction génère un JS de redirection vers la page principale correspondant à l'utilisateur.
+function redirectConnexion($role, $id){
+    if ($role === 'nounou'){
+        $chemin = 'profil_nounou.php?id='.$id;
+    }
+    else if ($role === 'parent') {
+        $chemin = 'profil_parent.php';
+    }
+    
+    else {
+        $chemin = 'index.php';
+    }
+    
+    return "<script>setTimeout(function() {
+  window.location.href='".SITE_URL. $chemin ."';"."
+},5000);
+</script>";
+    
+}
+    
+
 ?>
 
