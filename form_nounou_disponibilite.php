@@ -106,47 +106,7 @@ redirectUnconnected('nounou', SITE_URL . 'login_nounou.php');
         <?php include 'menu.php'; ?>
 
 
-        <!-- HOME -->
-        <section id="home" class="slider" data-stellar-background-ratio="0.5">
-            <div class="container">
-                <div class="row">
-
-                    <div class="owl-carousel owl-theme">
-                        <div class="item item-first">
-                            <div class="caption">
-                                <div class="col-md-offset-1 col-md-10">
-                                    <h3>Let's make your life happier</h3>
-                                    <h1>Healthy Living</h1>
-                                    <a href="#team" class="section-btn btn btn-default smoothScroll">Meet Our Doctors</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item item-second">
-                            <div class="caption">
-                                <div class="col-md-offset-1 col-md-10">
-                                    <h3>Aenean luctus lobortis tellus</h3>
-                                    <h1>New Lifestyle</h1>
-                                    <a href="#about" class="section-btn btn btn-default btn-gray smoothScroll">More About Us</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="item item-third">
-                            <div class="caption">
-                                <div class="col-md-offset-1 col-md-10">
-                                    <h3>Pellentesque nec libero nisi</h3>
-                                    <h1>Your Health Benefits</h1>
-                                    <a href="#news" class="section-btn btn btn-default btn-blue smoothScroll">Read Stories</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </section>
-
+        
 
         <!-- MAKE AN APPOINTMENT -->
         <section id="appointment" data-stellar-background-ratio="3">
@@ -251,7 +211,7 @@ redirectUnconnected('nounou', SITE_URL . 'login_nounou.php');
                             <h4>Ajouter une disponibilité ponctuelle</h4>
                             <div id="creneau">
                                 <!-- Je suis disponible le <input type="date" name="dateDispoPonctuelle[]"> de <input type="time" name="dateDispoHeureD[]"> à <input type="time" name="dateDispoHeureF[]">. -->
-                                Je suis disponible le <input type="date" name="dispo[date][]"> de <?php                                        formDemieHeure("D") ?> à <?php            formDemieHeure("F") ?> >.
+                                Je suis disponible le <input type="date" name="dispo[date][]"> de <input type="time" name="dispo[heureD][]"> à <input type="time" name="dispo[heureF][]">.
                                 <img id="add" src="./img/plus.png" height="15"></div>
 
 

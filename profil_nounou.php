@@ -96,7 +96,7 @@ if (isset($_GET['id'])) {
 
 
         <!-- MAKE AN APPOINTMENT -->
-        <section id="container"-login data-stellar-background-ratio="3">
+        <section id="container" data-stellar-background-ratio="3">
             <div class="container">
                 <div class="row">
                     <div class="row">
@@ -179,21 +179,28 @@ if (isset($_GET['id'])) {
                             ?>
 
 
-                            <table class="table-bordered">
+                           
                                 <?php
                                 $reqlisteDispoO = $bd->query("SELECT count(*) NB_RES FROM disponibilite WHERE idN=" . $id . " AND disponible = 1;");
                                 $listeDispoO = $reqlisteDispoO->fetchAll();
                                 if ($listeDispoO[0][0] !== 0) {
                                     $reqlisteDispo = $bd->query("SELECT date, heureD, heureF FROM disponibilite WHERE idN=" . $id . " AND disponible = 1 ORDER BY date, heureD;");
                                     $listeDispo = $reqlisteDispo->fetchAll();
-                                    echo "<ul>Je suis disponible :";
+                                    echo "Je suis disponible :"
+                                    . "<ul>";
                                     foreach ($listeDispo as $key => $value) {
                                         echo "<li>";
                                         echo "le " . date("d-m-Y", strtotime($value['date'])) . " de " . $value['heureD'] . " à " . $value['heureF'];
+
+                                        echo "</li>";
                                     }
-                                    echo "</li>";
+
 
                                     echo "</ul>";
+
+                                    if (isset($_SESSION['role']) && $_SESSION['role'] === 'nounou') {
+                                        echo "<a href='" . SITE_URL . "form_nounou_disponibilite.php' class='btn btn-default' >Compléter vos disponibilités</button>";
+                                    }
 //                                $jour = array(null, "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche");
 //                                $rdv["Dimanche"]["16:30"] = "Dermatologue";
 //                                $rdv["Lundi"]["9"] = "Mémé -_-";
